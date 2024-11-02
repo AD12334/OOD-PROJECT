@@ -1,9 +1,9 @@
-public class Position {
+public class HourlyPosition {
     private int salary;
     private int scale;
     private String position;
     private String Field;
-    public Position(String Field,String position,int salary,int scale){
+    public HourlyPosition(String Field,String position,int salary,int scale){
         this.salary = salary;
         this.scale = scale;
         this.position = position;
@@ -23,9 +23,9 @@ public class Position {
     public String getField() {
         return Field;
     }
-    public double calculatePRSI(){
+    public double calculatePRSI(int hours){
         double prsi=0;
-        double grosspay = getSalary();
+        double weeklyPay = getHourlyPay() * hours;
         double credit = 0;
 //https://www.gov.ie/en/publication/14ecbe-the-different-classes-of-pay-related-social-insurance-prsi/#class-a
         //We are assumming that all our employees are subject to the rates of prsi class A
@@ -35,33 +35,34 @@ public class Position {
 
 From 1 October 2024, a person earning €352.01 pays €14.43 PRSI (4.1%). After the €12 credit is deducted they will pay PRSI of €2.43. For people earning between €352.01 and €424, the credit of €12 is reduced by one-sixth of earnings over €352.01. There is no PRSI credit once earnings exceed €424.
          */
-        double weeklyPay = (double) grosspay /52;
+
         weeklyPay = Math.round(weeklyPay * 100.0) / 100.0;
         if (weeklyPay <352.0){
             prsi = 0;
         }else if(weeklyPay == 352.01){
             credit = 12;
             prsi = ((weeklyPay) * 0.041 ) - credit;
-            prsi = prsi*52;
+
         }
         else if (weeklyPay > 352.01 && weeklyPay <= 424.0){
             credit = 12 - (weeklyPay-352)/6;
 
             prsi = ((weeklyPay) * 0.041 ) - credit;
-            prsi = prsi * 52;
+
         }else{
             credit = 0;
             prsi = ((weeklyPay) * 0.041 ) - credit;
-            prsi = prsi * 52;
+
         }
         prsi = Math.round(prsi * 100.0) / 100.0;
 
 
         return prsi;
     }
-    public double calculatePAYE(){
+    public double calculatePAYE(int hours){
         double HigherRate;
-        double grosspay = getSalary();
+
+        double grosspay = getHourlyPay()* hours;
         double part1;//Tax on first 42000
         double part2;//Tax on over 42000
         /*
@@ -74,31 +75,31 @@ From 1 October 2024, a person earning €352.01 pays €14.43 PRSI (4.1%). After
         Personal Tax Credit
 
          */
-        if(grosspay<= 42000){
+        if(grosspay<= 42000/52){
             HigherRate = 0;
             part1 = grosspay * 0.2;
             part2 = HigherRate * 0.4;
         }else{
-            HigherRate = grosspay - 42000;
-            part1 = 42000 * 0.2;
+            HigherRate = grosspay - 42000/52;
+            part1 = (42000/52) * 0.2;
             part2 = HigherRate * 0.4;
         }
         double part3 = part1 + part2;
-        double Paye = part3 - 1875*2; //sum of tax - employee tax credit and personal tax credit
+        double Paye = part3 - (1875*2)/52; //sum of tax - employee tax credit and personal tax credit
         return Math.max(Paye,0);
     }
-    public double calculateUSC(){
+    public double calculateUSC(int hours){
         double USC=0;
-        double grosspay = getSalary();
+        double grosspay = (getHourlyPay()) * hours;
         double[] rates = {0.005,0.02,0.04,0.08};
-        double[] thresholds = {12012, 25760, 70044};
+        double[] thresholds = {12012/52, 25760/52, 70044/52};
         /*
         https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/universal-social-charge/#:~:text=The%20Universal%20Social%20Charge%20is,do%20not%20pay%20any%20USC.
         If your total income is €13,000 or less per year, you do not pay any USC. If it is more than €13,000 per year, you pay USC on your full income.
          */
         //For ease, we will be assuming that our employees are not eligible to receive reduced rates of USC
-        double rate;
-        if(grosspay <= 13000){
+
+        if(grosspay <= 13000/52){
             return USC;
         }else {
             USC += thresholds[0] * rates[0];
@@ -120,17 +121,17 @@ From 1 October 2024, a person earning €352.01 pays €14.43 PRSI (4.1%). After
         }
         return USC;
     }
-    public double calculateNetPay(){
-        double NetPay= getSalary() - calculateUSC() - calculatePAYE() - calculatePRSI();
-        NetPay = Math.round(NetPay * 100.0) / 100.0;
 
-        return NetPay;
+    public double getHourlyPay(){
+        double hourlypay =  (double)((getSalary()/52.0)/40.0);
+        hourlypay = Math.round(hourlypay * 100.0) / 100.0;
+        return hourlypay;
     }
 
 
     @Override
     public String toString(){
-        return "Field : " + getField() + "\n Position : " + getPosition() + "\n Salary : " + getSalary() + "\n Scale : " + getScale() + "\n Net Pay :" + calculateNetPay();
+        return "Field : " + getField() + "\n Position : " + getPosition() + "\n Salary : " + getSalary() + "\n Scale : " + getScale();
     }
 
 }
