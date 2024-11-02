@@ -1,31 +1,16 @@
-public class Position {
-    private int salary;
-    private int scale;
-    private String position;
-    private String Field;
-    public Position(String Field,String position,int salary,int scale){
-        this.salary = salary;
-        this.scale = scale;
-        this.position = position;
-        this.Field = Field;
-    }
-    public int getSalary() {
-        return salary;
-    }
+public class PayDeductions {
 
-    public int getScale() {
-        return scale;
+    private int grosspay;
+    private int netpay;
+    public PayDeductions(int grosspay) {
+        this.grosspay = grosspay;
     }
-    public String getPosition() {
-        return position;
+    public int getGrosspay() {
+        return grosspay;
     }
-    public String getField() {
-        return Field;
-    }
-    public double calculatePRSI(){
-        double prsi=0;
-        double grosspay = getSalary();
-        double credit = 0;
+    public double calculatePRSI(int grosspay){
+       double prsi=0;
+       double credit = 0;
 //https://www.gov.ie/en/publication/14ecbe-the-different-classes-of-pay-related-social-insurance-prsi/#class-a
         //We are assumming that all our employees are subject to the rates of prsi class A
         /*According to class A prsi is charged at a rate of 4.1% as of October 1st 2024 for a weekly income of 352.01 or greater
@@ -37,7 +22,7 @@ From 1 October 2024, a person earning €352.01 pays €14.43 PRSI (4.1%). After
         double weeklyPay = (double) grosspay /52;
         weeklyPay = Math.round(weeklyPay * 100.0) / 100.0;
         if (weeklyPay <352.0){
-            prsi = 0;
+           prsi = 0;
         }else if(weeklyPay == 352.01){
             credit = 12;
             prsi = ((weeklyPay) * 0.041 ) - credit;
@@ -46,21 +31,20 @@ From 1 October 2024, a person earning €352.01 pays €14.43 PRSI (4.1%). After
         else if (weeklyPay > 352.01 && weeklyPay <= 424.0){
             credit = 12 - (weeklyPay-352)/6;
 
-            prsi = ((weeklyPay) * 0.041 ) - credit;
-            prsi = prsi * 52;
+           prsi = ((weeklyPay) * 0.041 ) - credit;
+           prsi = prsi * 52;
         }else{
             credit = 0;
             prsi = ((weeklyPay) * 0.041 ) - credit;
             prsi = prsi * 52;
         }
         prsi = Math.round(prsi * 100.0) / 100.0;
-
-
+        System.out.println("Weekly pay = " + weeklyPay);
+        System.out.println("Credit = " + credit);
         return prsi;
     }
-    public double calculatePAYE(){
+    public double calculatePAYE(int grosspay){
         double HigherRate;
-        double grosspay = getSalary();
         double part1;//Tax on first 42000
         double part2;//Tax on over 42000
         /*
@@ -74,21 +58,21 @@ From 1 October 2024, a person earning €352.01 pays €14.43 PRSI (4.1%). After
 
          */
         if(grosspay<= 42000){
-            HigherRate = 0;
-            part1 = grosspay * 0.2;
-            part2 = HigherRate * 0.4;
+         HigherRate = 0;
+         part1 = grosspay * 0.2;
+         part2 = HigherRate * 0.4;
         }else{
-            HigherRate = grosspay - 42000;
-            part1 = 42000 * 0.2;
-            part2 = HigherRate * 0.4;
+             HigherRate = grosspay - 42000;
+             part1 = 42000 * 0.2;
+             part2 = HigherRate * 0.4;
         }
         double part3 = part1 + part2;
         double Paye = part3 - 1875*2; //sum of tax - employee tax credit and personal tax credit
+        Paye = Math.round(Paye * 100.0) / 100.0;
         return Math.max(Paye,0);
     }
-    public double calculateUSC(){
+    public double calculateUSC(int grosspay){
         double USC=0;
-        double grosspay = getSalary();
         double[] rates = {0.005,0.02,0.04,0.08};
         double[] thresholds = {12012, 25760, 70044};
         /*
@@ -97,39 +81,39 @@ From 1 October 2024, a person earning €352.01 pays €14.43 PRSI (4.1%). After
          */
         //For ease, we will be assuming that our employees are not eligible to receive reduced rates of USC
         double rate;
-        if(grosspay <= 13000){
-            return USC;
-        }else {
+        if(grosspay <= 13000){//If our income is lower than  or equal to 13000 then we do not pay USC
+          return 0;
+        }else {//If our income is greater than 13000 then we pay usc of 0.5% on the first 12012
             USC += thresholds[0] * rates[0];
         }
-        if(grosspay <= thresholds[1]){
+        if(grosspay <= thresholds[1]){//If our income is greater than 13000 and less than 25760 then we pay usc at a rate of 2% on all income between 12012 and 25760
             USC += (grosspay- thresholds[0])*rates[1];
-            return USC;
+
         }
         else{
             USC += (thresholds[1] - thresholds[0]) * rates[1];
         }
         if (grosspay <= thresholds[2]){
-            USC += (grosspay - thresholds[1])*rates[2];
-            return USC;
+                USC += (grosspay - thresholds[1])*rates[2];
+
         }
         else{
             USC+= (thresholds[2] - thresholds[1]) * rates[2];
             USC += (grosspay - thresholds[2])*rates[3];
         }
-        return USC;
-    }
+       return USC;
+        }
     public double calculateNetPay(){
-        double NetPay= getSalary() - calculateUSC() - calculatePAYE() - calculatePRSI();
+        double NetPay= getGrosspay() - calculateUSC(getGrosspay()) - calculatePAYE(getGrosspay()) - calculatePRSI(getGrosspay());
         NetPay = Math.round(NetPay * 100.0) / 100.0;
 
         return NetPay;
     }
 
-
     @Override
-    public String toString(){
-        return "Field : " + getField() + "\n Position : " + getPosition() + "\n Salary : " + getSalary() + "\n Scale : " + getScale() + "\n Net Pay :" + calculateNetPay();
+    public String toString() {
+        return "Grosspay: " + getGrosspay() + "\n Paye : " + calculatePAYE(getGrosspay()) + "\n USC : " + calculateUSC(getGrosspay()) + "\n prsi : " + calculatePRSI(getGrosspay()) + "\n NetPay = " + calculateNetPay();
     }
-
 }
+
+

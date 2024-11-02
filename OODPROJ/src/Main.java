@@ -23,12 +23,14 @@ public class Main {
         int scale = Integer.parseInt(lines[3]);
         Position p = new Position(field, position, salary, scale);
         positions.add(p);
-        System.out.println(positions);
 
-
-
+        //System.out.println(positions);
 
         }
+       for (Position p : positions) {
+           BasicPayslip payslip = new BasicPayslip(p);
+       }
 
     }
+
 }
