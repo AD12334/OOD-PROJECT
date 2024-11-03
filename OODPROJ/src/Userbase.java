@@ -22,14 +22,14 @@ public class Userbase {
     public String getRole() {
         return role;
     }
-    public String roleMeaning(){
-        String c = getRole();
+    public String roleMeaning(User user) {
+      String c =  user.getRole();
         if(c.toUpperCase().equals("EMPLOYEE")){
             return "Employee";
         }else if(c.toUpperCase().equals("ADMIN")){
             return "Admin";
         }else if(c.toUpperCase().equals("HUMAN RESOURCES")){
-            return "HumanResources";
+            return "Human Resources";
         }
         return "";
     }
@@ -66,13 +66,20 @@ public class Userbase {
             System.out.println(e);
             System.out.println("Username is not valid");
         }
+        if (usersbase.get(username).getRole() == "Employee"){
+            System.out.println("View latest payslip");
+        }else if (usersbase.get(username).getRole()  == "Admin"){
+            System.out.println("View all payslips");
+        }else if (usersbase.get(username).getRole()  == "HumanResources"){
+            System.out.println("do hr stuff");
+        }
 
     }
     public void checkPassword(String password) throws Exception{
         User user = usersbase.get(username);
         if (user.getPassword().equals(password)) {
             System.out.println("Password is valid");
-            System.out.println("Logged in successfully as " + roleMeaning());
+            System.out.println("Logged in successfully as " + roleMeaning(usersbase.get(username)));
         }else{
             throw new Exception();
         }
