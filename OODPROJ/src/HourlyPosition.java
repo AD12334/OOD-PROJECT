@@ -23,7 +23,7 @@ public class HourlyPosition {
     public String getField() {
         return Field;
     }
-    public double calculatePRSI(int hours){
+    public double calculatePRSI(float hours){
         double prsi=0;
         double weeklyPay = getHourlyPay() * hours;
         double credit = 0;
@@ -59,7 +59,7 @@ From 1 October 2024, a person earning €352.01 pays €14.43 PRSI (4.1%). After
 
         return prsi;
     }
-    public double calculatePAYE(int hours){
+    public double calculatePAYE(float hours){
         double HigherRate;
 
         double grosspay = getHourlyPay()* hours;
@@ -88,7 +88,7 @@ From 1 October 2024, a person earning €352.01 pays €14.43 PRSI (4.1%). After
         double Paye = part3 - (1875*2)/52; //sum of tax - employee tax credit and personal tax credit
         return Math.max(Paye,0);
     }
-    public double calculateUSC(int hours){
+    public double calculateUSC(float hours){
         double USC=0;
         double grosspay = (getHourlyPay()) * hours;
         double[] rates = {0.005,0.02,0.04,0.08};

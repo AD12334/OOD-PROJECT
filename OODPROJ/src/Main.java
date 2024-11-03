@@ -56,10 +56,12 @@ public class Main {
 
 
         }
-       for (HourlyPosition p : positions2) {
-           BasicPayslip basicPayslip = new BasicPayslip(p);
+      // for (HourlyPosition p : positions2) {
+        //   BasicPayslip basicPayslip = new BasicPayslip(p);
+        User user1 = new User("Joe Biden","MAGA","Employee");
+        Userbase userbase = new Userbase();
+        userbase.addUser(user1);
+        userbase.Login();
        }
 
-
     }
-}

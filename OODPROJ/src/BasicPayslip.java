@@ -28,15 +28,15 @@ public class BasicPayslip  {
 
     }
     public BasicPayslip(HourlyPosition position) {
-int hoursworked1;
-int hoursworked2;
-int hoursworked3;
-int hoursworked4;
+float hoursworked1;
+float hoursworked2;
+float hoursworked3;
+float hoursworked4;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your total amount of hours worked during the first week of the current working period ");
 
         try{
-             hoursworked1 = scanner.nextInt();
+             hoursworked1 = scanner.nextFloat();
             checkHour(hoursworked1);
         }catch(HoursException e){
             System.out.println("Invalid hours worked during the first week of the current working period" + e);
@@ -53,7 +53,7 @@ int hoursworked4;
 
 
         try{
-           hoursworked2 = scanner.nextInt();
+           hoursworked2 = scanner.nextFloat();
             checkHour(hoursworked2);
         }catch(HoursException e){
             System.out.println("Invalid hours worked during the second week of the current working period" + e);
@@ -70,7 +70,7 @@ int hoursworked4;
         System.out.println("Enter your total amount of hours worked during the third week of the current working period");
 
         try{
-            hoursworked3 = scanner.nextInt();
+            hoursworked3 = scanner.nextFloat();
             checkHour(hoursworked3);
         }catch(HoursException e){
             System.out.println("Invalid hours worked during the third week of the current working period" + e);
@@ -86,7 +86,7 @@ int hoursworked4;
         System.out.println("Enter your total amount of hours worked during the final week of the current working period");
 
         try{
-            hoursworked4 = scanner.nextInt();
+            hoursworked4 = scanner.nextFloat();
             checkHour(hoursworked4);
         }catch(HoursException e){
             System.out.println("Invalid hours worked during the final week of the current working period" + e);
@@ -99,12 +99,16 @@ int hoursworked4;
         double paye4 =  position.calculatePAYE(hoursworked4);
         double prsi4 = position.calculatePRSI(hoursworked4);
         double usc4 = position.calculateUSC(hoursworked4);
-        int totalworked = hoursworked1 + hoursworked2 + hoursworked3 + hoursworked4;
+        double totalworked = hoursworked1 + hoursworked2 + hoursworked3 + hoursworked4;
+        totalworked = Math.round(totalworked*100)/100;
         double totalpaye = paye1 + paye2 + paye3 + paye4;
         double totalprsi = prsi1 + prsi2 + prsi3 + prsi4;
         double totalusc = usc1 + usc2 + usc3 + usc4;
+        totalusc = Math.round(totalusc * 100.0) / 100.0;
         double totaldeductions= totalpaye +totalprsi+totalusc;
+        totaldeductions = Math.round(totaldeductions * 100.0) / 100.0;
         double netpay = position.getHourlyPay()*totalworked - totaldeductions;
+        netpay = Math.round(netpay * 100.0) / 100.0;
 
 //Make it continuously prompt the user for a valid input
 
@@ -120,13 +124,14 @@ int hoursworked4;
         System.out.println("PAYE: " + totalpaye);
         System.out.println("PRSI: " + totalprsi);
         System.out.println("USC: " + totalusc);
+        System.out.println("Gross pay: " + position.getHourlyPay()*totalworked);
         System.out.println("Total Deductions: " +(totaldeductions));
         System.out.println("Net pay: " + (netpay));
         System.out.println("Pay method: PayPath");
         System.out.println("----------------------------------------------------------------------------------------");
 
     }
-    public int checkHour(int hour) throws HoursException{
+    public float checkHour(float hour) throws HoursException{
         if ((hour) <0 || hour > 100 ){
 
             throw new HoursException("Hour is not valid");
