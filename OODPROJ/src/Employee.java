@@ -1,4 +1,5 @@
 public class Employee {
+    // Need Employee unique ID
     private int salary;
     private int scale;
     private String Employee;

@@ -7,7 +7,7 @@ public class Main {
     private static ArrayList<Employee> Employees;
 
     public static void main(String[] args) throws FileNotFoundException {
-        Scanner sc = new Scanner(new File("OODPROJ/src/OODCSV.csv"));
+        Scanner sc = new Scanner(new File("OODCSV.csv"));
         ArrayList<Employee> Employees = new ArrayList<>();
         // SETTING THE DELIMITER
         sc.useDelimiter(",");
@@ -33,7 +33,7 @@ public class Main {
          * BasicPayslip payslip = new BasicPayslip(p);
          * }
          */
-        Scanner sc2 = new Scanner(new File("OODPROJ/src/HourlyPaidEmployees(Sheet1).csv"));
+        Scanner sc2 = new Scanner(new File("HourlyPaidEmployees(Sheet1).csv"));
         ArrayList<HourlyEmployee> Employees2 = new ArrayList<>();
         // Hourly paid employees have salaries based on 40 hour work weeks
         // We can get the hourly rate by dividing by 52 and then dividing by 40
