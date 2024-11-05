@@ -9,7 +9,7 @@ public class PayDeductions {
         return grosspay;
     }
     public double calculatePRSI(int grosspay){
-       double prsi=0;
+       double prsi=0; 
        double credit = 0;
 //https://www.gov.ie/en/publication/14ecbe-the-different-classes-of-pay-related-social-insurance-prsi/#class-a
         //We are assumming that all our employees are subject to the rates of prsi class A

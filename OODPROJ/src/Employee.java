@@ -1,15 +1,68 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class Employee {
-    // Need Employee unique ID
     private int salary;
     private int scale;
     private String Employee;
     private String Field;
+    private int promotion;
+    private int EmployeeID;
 
-    public Employee(String Field, String Employee, int salary, int scale) {
+
+
+    public Employee( String Field, String Employee, int salary, int scale,int promotionint) {
         this.salary = salary;
         this.scale = scale;
         this.Field = Field;
+        this.Employee = Employee;
+        this.promotion = promotionint;
+
     }
+    public Employee(int employment_id) throws FileNotFoundException {
+        Scanner sc = new Scanner(new File("OODPROJ/src/OODCSV.csv"));
+        // SETTING THE DELIMITER
+        sc.useDelimiter(",");
+        sc.useDelimiter("\n");
+        while (sc.hasNext()) {
+            String line = sc.next();
+
+            line = line.trim();
+            String[] lines = line.split(",");
+            String field = lines[0];
+            String Employee = lines[1];
+            int salary = Integer.parseInt(lines[2]);
+            int scale = Integer.parseInt(lines[3]);
+            int promotion = Integer.parseInt(lines[4]);
+            int employeeID = Integer.parseInt(lines[5]);
+
+            if(employeeID == employment_id){
+                this.Field = field;
+                this.EmployeeID = employeeID;
+
+                this.Employee = Employee;
+                this.salary = salary;
+                this.scale = scale;
+                this.promotion = promotion;
+                break;
+
+            }
+        }
+        }
+        public int getpromotionid(){
+        return promotion;
+        }
+        public int getEmployeeID(){
+        return EmployeeID;
+        }
+
+
+
+
+
+
+
 
     public int getSalary() {
         return salary;
@@ -26,6 +79,7 @@ public class Employee {
     public String getField() {
         return Field;
     }
+
 
     public double calculatePRSI() {
         double prsi = 0;
@@ -150,11 +204,18 @@ public class Employee {
 
         return NetPay;
     }
+    public String promotiondue(){
+        if (this.promotion == 0){
+            return "Promotion not due";
+        }
+        return "Promotion due!!!";
+    }
+
 
     @Override
     public String toString() {
-        return "Field : " + getField() + "\n Employee : " + getEmployee() + "\n Salary : " + getSalary() + "\n Scale : "
-                + getScale() + "\n Net Pay :" + calculateNetPay();
+        return  "Field : " + getField() + "\n Employee : " + getEmployee() + "\n Salary : " + getSalary() + "\n Scale : "
+                + getScale() + "\n Net Pay :" + calculateNetPay() + " \nPromotion due: " + promotiondue() + "\n";
     }
 
 }
