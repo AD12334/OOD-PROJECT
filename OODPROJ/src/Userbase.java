@@ -72,9 +72,9 @@ public class Userbase {
     if (usersbase.get(username).getType() == "Employee") {
       EmployeeUI();
     } else if (usersbase.get(username).getType() == "Admin") {
-      System.out.println("View all payslips");
+      AdminUI();
     } else if (usersbase.get(username).getType() == "HumanResources") {
-      System.out.println("do hr stuff");
+      HrUI();
     }
   }
 
@@ -127,7 +127,7 @@ public class Userbase {
   public void AdminUI() {
     Scanner input = new Scanner(System.in);
     int command;
-    System.out.println("1)List all payslips   2)List all employees 3)Logout");
+    System.out.println("1)List all payslips   2)List all employees  3)Logout");
     command = input.nextInt();
     input.close();
     if (command == 1) {
