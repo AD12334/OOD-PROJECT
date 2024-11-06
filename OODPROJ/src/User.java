@@ -1,42 +1,30 @@
 import java.io.FileNotFoundException;
 
-public class User extends Employee {
+public abstract class User {
     private String username;
     private String password;
-    private String type;
-    private String position;
-    private String role;
-    private int salary;
-    private int scale;
-    private int promotionid;
 
-    public User(String username, String password, String type,int employment_id) throws FileNotFoundException {
-        super(employment_id);
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
-        this.type = type;
-        this.position = getEmployee();
-
-        this.salary = getSalary();
-        this.scale = getScale();
-        this.role = getEmployee();
-        this.promotionid = getpromotionid();
-
-        // 'Employee' = Employee
-        // 'Admin' = Admin
-        // 'Human resources' = Human resources
     }
 
     public String getUsername() {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     public String getPassword() {
         return password;
-
     }
 
-    public String getType() {
-        return type;
+    public void setPassword(String password) {
+        this.password = password;
     }
+
+    // Abstract method to be implemented by subclasses
+    public abstract void displayOptions();
 }
