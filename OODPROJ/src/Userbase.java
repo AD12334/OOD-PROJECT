@@ -84,11 +84,11 @@ public class Userbase {
     }
     if (loggedin) {
       if (usersbase.get(username).getType() == "Employee") {
-        System.out.println("View latest payslip");
+        FullTimeEmployeeUI();
       } else if (usersbase.get(username).getType() == "Admin") {
-        System.out.println("View all payslips");
+        AdminUI();
       } else if (usersbase.get(username).getType() == "HumanResources") {
-        System.out.println("do hr stuff");
+        HrUI();
       }
     }
   }
