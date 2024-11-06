@@ -71,7 +71,7 @@ public class Employee extends User {
 
     // }
     // public Employee(int employment_id) throws FileNotFoundException {
-    // Scanner sc = new Scanner(new File("OODPROJ/src/OODCSV.csv"));
+    // Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
     // // SETTING THE DELIMITER
     // sc.useDelimiter(",");
     // sc.useDelimiter("\n");
