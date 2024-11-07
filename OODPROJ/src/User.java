@@ -1,5 +1,3 @@
-import java.io.FileNotFoundException;
-
 public abstract class User {
     private String username;
     private String password;

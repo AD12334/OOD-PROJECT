@@ -63,10 +63,10 @@ public class Main {
         User user2 = new User("Jill Biden", "MABA", "Admin", 3);
         User user3 = new User("Donald Biden", "MACA", "Human Resources", 5);
 
-        Userbase userbase = new Userbase();
-        userbase.addUser(user1);
-        userbase.addUser(user2);
-        userbase.addUser(user3);
+        // Userbase userbase = new Userbase();
+        // userbase.addUser(user1);
+        // userbase.addUser(user2);
+        // userbase.addUser(user3);
         userbase.Login();
 
     }

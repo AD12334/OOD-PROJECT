@@ -3,41 +3,36 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Employee extends User {
-    private int employeeID;
+    private String name;
+    private String employeeID;
     private int salary;
-    private int scale;
     private String field;
+    private String role;
+    private int scale;
+    private int promotion;
 
-    public Employee(String username, String password, int employeeID, int salary, int scale, String field) {
-        super(username, password);
+    public Employee(String name, String employeeID, String field, String role, int scale) {
+        super("t" + employeeID, employeeID);
+        this.name = name;
         this.employeeID = employeeID;
-        this.salary = salary;
+        try {
+            this.salary = getSalaryFromCSV(field.toUpperCase(), role.toUpperCase(), scale);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            this.salary = 0; // or handle it appropriately
+        }
+        this.field = field.toUpperCase();
+        this.role = role.toUpperCase();
         this.scale = scale;
-        this.field = field;
+        this.promotion = 0;
     }
 
-    public int getEmployeeID() {
+    public String getName() {
+        return name;
+    }
+
+    public String getEmployeeID() {
         return employeeID;
-    }
-
-    public void setEmployeeID(int employeeID) {
-        this.employeeID = employeeID;
-    }
-
-    public int getSalary() {
-        return salary;
-    }
-
-    public void setSalary(int salary) {
-        this.salary = salary;
-    }
-
-    public int getScale() {
-        return scale;
-    }
-
-    public void setScale(int scale) {
-        this.scale = scale;
     }
 
     public String getField() {
@@ -48,12 +43,69 @@ public class Employee extends User {
         this.field = field;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public int getScale() {
+        return scale;
+    }
+
+    public void setScale(int scale) {
+        this.scale = scale;
+    }
+
+    public int getSalary() {
+        return salary;
+    }
+
+    public void promote() {
+        this.promotion = 1;
+    }
+
+    private int getSalaryFromCSV(String field, String role, int scale) throws FileNotFoundException {
+        File csvFile = new File("salary_scales.csv");
+        Scanner scanner = new Scanner(csvFile);
+
+        // Skip the header line if present
+        if (scanner.hasNextLine()) {
+            scanner.nextLine();
+        }
+
+        // Process each line to find matching salary
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine();
+            String[] values = line.split(",");
+
+            // CSV format: field,role,salary,scale
+            String csvField = values[0];
+            String csvRole = values[1];
+            int csvSalary = Integer.parseInt(values[2]);
+            int csvScale = Integer.parseInt(values[3]);
+
+            if (csvField.equals(field) && csvRole.equals(role) && csvScale == scale) {
+                scanner.close();
+                return csvSalary;
+            }
+        }
+
+        scanner.close();
+
+        // If no matching salary found, throw an exception or handle as needed
+        throw new IllegalArgumentException("Salary not found for given field, role, and scale.");
+    }
+
     @Override
     public void displayOptions() {
         System.out.println("Employee Options:");
         System.out.println("1. View Personal Details");
         System.out.println("2. View Payslip");
         System.out.println("3. Submit Pay Claim (if hourly)");
+
         // Add any other options specific to employees
     }
 
