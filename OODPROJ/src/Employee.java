@@ -68,13 +68,10 @@ public class Employee extends User {
     }
 
     private int getSalaryFromCSV(String field, String role, int scale) throws FileNotFoundException {
-        File csvFile = new File("salary_scales.csv");
+        File csvFile = new File("OODPROJ/src/salary_scales.csv");
         Scanner scanner = new Scanner(csvFile);
 
-        // Skip the header line if present
-        if (scanner.hasNextLine()) {
-            scanner.nextLine();
-        }
+
 
         // Process each line to find matching salary
         while (scanner.hasNextLine()) {
@@ -112,6 +109,32 @@ public class Employee extends User {
     public void viewPayslip() {
         // Implementation for viewing payslip
     }
+    public void acceptPromotion() throws FileNotFoundException {
+        Scanner sc = new Scanner(new File("OODPROJ/src/PromotableEmployees.csv"));
+
+        // SETTING THE DELIMITER
+        sc.useDelimiter(",");
+        sc.useDelimiter("\n");
+        while (sc.hasNext()) {
+            String line = sc.next();
+
+            line = line.trim();
+            String[] lines = line.split(",");
+            String name = lines[0];
+            int id = Integer.parseInt(lines[1]);
+            String field = lines[2];
+            String position = lines[3];
+            int scale = Integer.parseInt(lines[4]);
+            int promotion = Integer.parseInt(lines[5]);
+            if (promotion == 1) {
+                System.out.println("Congratulations you have been selected for a promotion");
+
+            }
+
+
+        }
+    }
+    //myWriter.write(name + "," + id + "," + field + "," + position + "," + scale +",1\n");
 
     // public Employee( String Field, String Employee, int salary, int scale,int
     // promotionint) {

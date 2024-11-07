@@ -1,6 +1,10 @@
-import java.time.LocalDate;
-import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
 
 public class Admin extends User {
     public Admin(String username, String password) {
@@ -15,27 +19,104 @@ public class Admin extends User {
         // Other admin-specific options
     }
 
-    public void addEmployee(Employee employee) {
-        System.out.println("Input employee details:");
+    public void addEmployee() throws IOException {
+        System.out.println("Input employee details");
+        System.out.println("----------------------------------------------------------------------------------------");
         // Get employee details from user input
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter employee name:");
-        String name = sc.nextLine();
+        String name = sc.nextLine().toUpperCase();
         Date now = new Date();
         Long longTime = now.getTime() / 1000;
-        String id = longTime.toString();
-        System.out.println("Enter employee field:");
-        String field = sc.nextLine();
-        System.out.println("Enter employee role:");
-        String role = sc.nextLine();
-        System.out.println("Enter employee scale:");
+        String id = longTime.toString().toUpperCase();
+        System.out.println("Enter employee field from options " + Fields());
+        String field = sc.nextLine().toUpperCase();
+        System.out.println("Enter employee role from options " + Positions(field));
+        String role = sc.nextLine().toUpperCase();
+        System.out.println("Enter employee scale from options " + Scales(field,role));
         int scale = sc.nextInt();
+        System.out.println("Employee has been successfully registered to the database ");
         sc.close();
+
 
         // Create a new Employee object with the details
         Employee newEmployee = new Employee(name, id, field, role, scale);
+        FileWriter myWriter = new FileWriter("OODPROJ/src/employee_database.csv",true);
+        myWriter.write(name + "," + id + "," + field + "," + role + "," + scale +"\n");
+        myWriter.close();
+
+
         // Add the new Employee object to the list of employees (into
         // employee_database.csv)
 
+
+
+
     }
-}
+    public ArrayList<String> Fields() throws FileNotFoundException {
+        ArrayList<String> fields = new ArrayList<>();
+        Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
+
+        // SETTING THE DELIMITER
+        sc.useDelimiter(",");
+        sc.useDelimiter("\n");
+        while (sc.hasNext()) {
+            String line = sc.next();
+
+            line = line.trim();
+            String[] lines = line.split(",");
+
+            //Get each field name, if it isnt on our list then put it on our list
+            String field = lines[0];
+            if (fields.contains(field) == false) {
+                fields.add(field);
+            }
+        }
+
+        return fields;
+    }
+    public ArrayList<String> Positions(String Field) throws FileNotFoundException {
+        ArrayList<String> positions = new ArrayList<>();
+        Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
+        sc.useDelimiter(",");
+        sc.useDelimiter("\n");
+        while (sc.hasNext()) {
+            String line = sc.next();
+            line = line.trim();
+            String[] lines = line.split(",");
+            //Get each field and the corresponding positions
+            String position = lines[1];
+            String field = lines[0];
+            if (positions.contains(position) == false && field.equals(Field)){
+                positions.add(position);
+            }
+
+
+        }
+
+        return positions;
+    }
+    public ArrayList<String> Scales(String Field,String Position) throws FileNotFoundException {
+        ArrayList<String> Scales = new ArrayList<>();
+        Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
+        sc.useDelimiter(",");
+        sc.useDelimiter("\n");
+        while (sc.hasNext()) {
+            String line = sc.next();
+            line = line.trim();
+            String[] lines = line.split(",");
+            //Get each field and the corresponding positions
+            String position = lines[1];
+            String scale = lines[3];
+            String field = lines[0];
+            if (Scales.contains(position) == false && field.equals(Field) && position.equals(Position)){
+                Scales.add(scale);
+            }
+
+
+        }
+
+        return Scales;
+    }
+
+    }
