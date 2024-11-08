@@ -13,9 +13,10 @@ public class Employee extends User {
 
   public Employee(String name, String employeeID, String field, String role,
                   int scale) {
-    super("t" + employeeID, employeeID);
+    super("t" + employeeID, employeeID); //Username is t + employee id, password is employeeid
     this.name = name;
     this.employeeID = employeeID;
+    
     try {
       this.salary =
           getSalaryFromCSV(field.toUpperCase(), role.toUpperCase(), scale);
@@ -111,7 +112,7 @@ public class Employee extends User {
   }
 
   public void acceptPromotion() throws FileNotFoundException {
-    Scanner sc = new Scanner(new File("OODPROJ/src/PromotableEmployees.csv"));
+    Scanner sc = new Scanner(new File("OODPROJ/src/PendingPromotions.csv"));
 
     // SETTING THE DELIMITER
     sc.useDelimiter(",");
@@ -128,8 +129,17 @@ public class Employee extends User {
       int scale = Integer.parseInt(lines[4]);
       int promotion = Integer.parseInt(lines[5]);
       if (promotion == 1) {
-        System.out.println(
-            "Congratulations you have been selected for a promotion");
+        System.out.println("Congratulations you have been selected for a promotion");
+        System.out.println("Would you like to accept this promotion Y/N ?");
+        String response = sc.nextLine().toUpperCase();
+        if (response.equals("Y")){
+            System.out.println("You have been promoted congratulations");
+        }else if (response.equals("N")){
+            System.out.println("Promotion has been rejected you will remain as ");
+        }else{
+            System.out.println("Invalid response");
+        }
+
       }
     }
   }

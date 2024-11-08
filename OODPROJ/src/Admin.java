@@ -68,8 +68,8 @@ public class Admin extends User {
     Employee newEmployee = new Employee(name, id, field, role, scale);
     FileWriter myWriter =
         new FileWriter("OODPROJ/src/employee_database.csv", true);
-    myWriter.write(name + "," + id + "," + field + "," + role + "," + scale +
-                   "\n");
+    myWriter.write(name + ",t" + id + "," + field + "," + role + "," + scale + "," + id +
+                   "\n");//The second instance of id is their password
     myWriter.close();
 
     // Add the new Employee object to the list of employees (into

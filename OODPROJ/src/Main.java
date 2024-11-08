@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class Main {
     private static ArrayList<Employee> Employees;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, Exception {
         //System.out.println("Current working directory: " + System.getProperty("user.dir"));
         Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
         ArrayList<Employee> Employees = new ArrayList<>();
@@ -52,8 +52,8 @@ public class Main {
             String Employee = lines[1];
             int salary = Integer.parseInt(lines[2]);
             int scale = Integer.parseInt(lines[3]);
-            HourlyEmployee p = new HourlyEmployee(field, Employee, salary, scale);
-            Employees2.add(p);
+           // HourlyEmployee p = new HourlyEmployee(field, Employee, salary, scale);
+            //Employees2.add(p);
 
             // System.out.println(Employees2);
 
@@ -74,7 +74,11 @@ public class Main {
 
         admin1.addEmployee();
         HumanResources humanResources = new HumanResources();
-       // humanResources.setpromotion();
+        humanResources.setpromotion();
+       Userbase userbase = new Userbase();
+      // userbase.Login();
+        
+       
 
 
     }

@@ -1,4 +1,5 @@
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -6,8 +7,7 @@ import java.util.Scanner;
 public class Userbase {
   private String username;
   private String password;
-  private HashMap<String, User>
-      usersbase; // our userbase with key usernames and values user
+  private HashMap<String, String> usersbase; // our userbase with key usernames and values user
   private String type;
   private int salary;
   private int scale;
@@ -16,7 +16,28 @@ public class Userbase {
   private boolean loggedin = false;
   private int promotion;
 
-  public Userbase() { usersbase = new HashMap<>(); }
+  public Userbase() throws FileNotFoundException { usersbase = new HashMap<>();
+    Scanner sc = new Scanner(new File("OODPROJ/src/employee_database.csv"));
+    sc.useDelimiter(",");
+    sc.useDelimiter("\n");
+    while (sc.hasNext()) {
+      String line = sc.next();
+
+      line = line.trim();
+      String[] lines = line.split(",");
+      String username = lines[0];
+      System.out.println(username);
+      //String id = lines[1];
+      String field = lines[2];
+      String position = lines[3];
+      int scale = Integer.parseInt(lines[4]);
+      String password = lines[5];
+      usersbase.put(username,password);
+      //  myWriter.write(name + ",t" + id + "," + field + "," + role + "," + scale + "," + id +
+      //"\n");//The second instance of id is their password
+      System.out.println(usersbase);
+    }
+  }
 
   // public void addUser(User user) throws FileNotFoundException {
   // username = user.getUsername();
@@ -32,7 +53,7 @@ public class Userbase {
   // usersbase.put(username, new User(username, password, type, employment_id));
   // }
 
-  public String typeMeaning(User user) {
+ /* public String typeMeaning(User user) {
     String c = user.getType();
     if (c.toUpperCase().equals("EMPLOYEE")) {
       return "Employee";
@@ -43,7 +64,7 @@ public class Userbase {
     }
     return "";
   }
-
+*/
   public void checkLogin(String username) throws LoginException {
     if (usersbase.keySet().contains(username)) {
       System.out.println("Username is valid");
@@ -77,28 +98,28 @@ public class Userbase {
       System.out.println("Username is not valid");
       Login();
     }
-    if (loggedin) {
-      if (usersbase.get(username).getType() == "Employee") {
+     if (loggedin) {
+      if (usersbase.get(username) == "Employee") {
         // TODO: call the display options
       } else if (usersbase.get(username).getType() == "Admin") {
         // TODO: call the display options
       } else if (usersbase.get(username).getType() == "HumanResources") {
         // TODO: call the display options
       }
-    }
+    }*/
   }
 
   public void checkPassword(String password) throws Exception {
-    User user = usersbase.get(username);
-    if (user.getPassword().equals(password)) {
+    String realpassword= usersbase.get(username);
+    if (realpassword.equals(password)) {
       System.out.println("Password is valid");
-      System.out.println("Logged in successfully as " +
-                         typeMeaning(usersbase.get(username)));
-      System.out.println("Position: " + user.getEmployee());
+      System.out.println("Logged in successfully");
+                         
+      /*System.out.println("Position: " + .getEmployee());
       System.out.println("Field: " + user.getField());
 
       System.out.println("Promotion: " + user.promotiondue());
-      System.out.println("Scale: " + user.getScale());
+      System.out.println("Scale: " + user.getScale());*/
       loggedin = true;
     } else {
       throw new Exception();
