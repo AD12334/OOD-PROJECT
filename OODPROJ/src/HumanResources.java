@@ -54,7 +54,7 @@ public class HumanResources extends User {
     ArrayList<Integer> IDS = new ArrayList<>();
     System.out.println(
         "Enter the ID of the employee which you wish to promote");
-    int DesiredId = Integer.parseInt(sc.next());
+      	String DesiredId = sc.nextLine();
 
     // We are asking the human resources person the id of the person they want
     // to promote An employee can only be promoted if they are at the max scale
@@ -69,14 +69,14 @@ public class HumanResources extends User {
       // Iterate through every entry in our employees database
 
       String name = lines[0];
-      int id = Integer.parseInt(lines[1]);
+      String id = (lines[1]);
 
       String field = lines[2];
       String position = lines[3];
       int scale = Integer.parseInt(lines[4]);
       // If the id entry for a specific row belongs to the person we want to
       // promote
-      if (id == DesiredId) {
+      if (id.equals(DesiredId)) {
         if (hashMap.containsKey(
                 position)) { // If our hashmap has their position
           if (hashMap.get(position) == scale) { // If they are at the max scale
@@ -93,6 +93,9 @@ public class HumanResources extends User {
             myWriter.close();
           }
         }
+      }else{
+        System.out.println("Employee is not eligible for a promotion ");
+    
       }
     }
   }

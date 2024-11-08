@@ -57,11 +57,26 @@ public class Admin extends User {
         String id = longTime.toString().substring(0, 8); // Exployee ID is just 8 unix digits
         System.out.println("Enter employee field from options " + Fields());
         String field = sc.nextLine().toUpperCase();
+        while(!Fields().contains(field)){
+            System.out.println("INVALID FIELD ENTERED");
+            System.out.println("Enter employee field from options " + Fields());
+            field = sc.nextLine().toUpperCase();
+        }
         System.out.println("Enter employee role from options " + Positions(field));
         String role = sc.nextLine().toUpperCase();
+        while(!Positions(field).contains(role)){
+            System.out.println(role + " is not a valid occupation for the chosen field: " + field);
+            System.out.println("Please enter a valid occupation from the list " + Positions(field));
+            role = sc.nextLine().toUpperCase();
+        }
         System.out.println("Enter employee scale from options " +
                 Scales(field, role));
         int scale = sc.nextInt();
+        while(!Scales(field,role).contains(scale)){
+            System.out.println(scale + " is not a valid scale entry for the occupation " + role);
+            System.out.println("Please enter a valid scale entry from the list shown " + Scales(field,role));
+            scale = sc.nextInt();
+        }
         System.out.println(
                 "Employee has been successfully registered to the database ");
         sc.close();
@@ -96,6 +111,7 @@ public class Admin extends User {
                 fields.add(field);
             }
         }
+       
 
         return fields;
     }
@@ -121,9 +137,9 @@ public class Admin extends User {
         return positions;
     }
 
-    public ArrayList<String> Scales(String Field, String Position)
+    public ArrayList<Integer> Scales(String Field, String Position)
             throws FileNotFoundException {
-        ArrayList<String> Scales = new ArrayList<>();
+        ArrayList<Integer> Scales = new ArrayList<>();
         Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
         sc.useDelimiter(",");
         sc.useDelimiter("\n");
@@ -133,7 +149,7 @@ public class Admin extends User {
             String[] lines = line.split(",");
             // Get each field and the corresponding positions
             String position = lines[1];
-            String scale = lines[3];
+            int scale = Integer.parseInt(lines[3]);
             String field = lines[0];
             if (Scales.contains(position) == false && field.equals(Field) &&
                     position.equals(Position)) {

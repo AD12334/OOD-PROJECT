@@ -72,10 +72,10 @@ public class Main {
         //userbase.Login();
         Admin admin1 = new Admin("k","m");
 
-        admin1.addEmployee();
+     //   admin1.addEmployee();
         HumanResources humanResources = new HumanResources();
         humanResources.setpromotion();
-       Userbase userbase = new Userbase();
+      // Userbase userbase = new Userbase();
       // userbase.Login();
         
        
