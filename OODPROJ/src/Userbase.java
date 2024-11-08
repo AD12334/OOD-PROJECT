@@ -17,11 +17,10 @@ public class Userbase {
             String[] lines = line.split(",");
             String username = lines[0];
             String id = lines[1];
-            String field = lines[2];
-            String role = lines[3];
-            int scale = Integer.parseInt(lines[4]);
-            String password = lines[5];
-
+            String password = lines[2];
+            String field = lines[3];
+            String role = lines[4];
+            int scale = Integer.parseInt(lines[5]);
             // Declare User object only if a valid role is found
             User user = null;
             if (role.equalsIgnoreCase("Admin")) {

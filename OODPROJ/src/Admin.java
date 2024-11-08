@@ -54,7 +54,7 @@ public class Admin extends User {
         String name = sc.nextLine().toUpperCase();
         Date now = new Date();
         Long longTime = now.getTime() / 1000;
-        String id = longTime.toString().substring(0, 8);
+        String id = longTime.toString().substring(0, 8); // Exployee ID is just 8 unix digits
         System.out.println("Enter employee field from options " + Fields());
         String field = sc.nextLine().toUpperCase();
         System.out.println("Enter employee role from options " + Positions(field));
