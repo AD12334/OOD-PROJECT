@@ -6,92 +6,124 @@ import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class HumanResources extends User {
-    // We want a particular employment to correspond to a scale
-    private LinkedHashMap<String, Integer> hashMap;
-    private ArrayList<Integer> scales;
-    private ArrayList<String> positions;
+  // We want a particular employment to correspond to a scale
+  private LinkedHashMap<String, Integer> hashMap;
+  private ArrayList<Integer> scales;
+  private ArrayList<String> positions;
 
-    // The string can be our job titles
-    // The array of ints can be all the scales associated with that specific job
-    // title
-    public HumanResources() throws FileNotFoundException {
-        super("HR", "HR");
-        hashMap = new LinkedHashMap<>();
-        scales = new ArrayList<>();
-        positions = new ArrayList<>();
-        Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
+  // The string can be our job titles
+  // The array of ints can be all the scales associated with that specific job
+  // title
+  public HumanResources() throws FileNotFoundException {
+    super("HR", "HR");
+    hashMap = new LinkedHashMap<>();
+    scales = new ArrayList<>();
+    positions = new ArrayList<>();
+    Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
 
-        // SETTING THE DELIMITER
-        sc.useDelimiter(",");
-        sc.useDelimiter("\n");
-        while (sc.hasNext()) {
-            String line = sc.next();
+    // SETTING THE DELIMITER
+    sc.useDelimiter(",");
+    sc.useDelimiter("\n");
+    while (sc.hasNext()) {
+      String line = sc.next();
 
-            line = line.trim();
-            String[] lines = line.split(",");
-            String field = lines[0];
-            String Employee = lines[1];
-            int salary = Integer.parseInt(lines[2]);
-            int scale = Integer.parseInt(lines[3]);
-            int promotion = Integer.parseInt(lines[4]);
-            int employeeID = Integer.parseInt(lines[5]);
-            scales.add(scale);
-            positions.add(Employee);
+      line = line.trim();
+      String[] lines = line.split(",");
+      String field = lines[0];
+      String Employee = lines[1];
+      int salary = Integer.parseInt(lines[2]);
+      int scale = Integer.parseInt(lines[3]);
+      int promotion = Integer.parseInt(lines[4]);
+      int employeeID = Integer.parseInt(lines[5]);
+      scales.add(scale);
+      positions.add(Employee);
+    }
+    for (int i = 0; i < scales.size(); i++) {
 
-
-        }
-        for (int i = 0; i < scales.size(); i++) {
-
-            hashMap.put(positions.get(i), scales.get(i));
-        }
-
-        //myWriter.write(name + "," + id + "," + field + "," + role + "," + scale +"\n");
-        //JOE,1731007147,PRESIDENTIAL,PRESIDENT,1
-
-
+      hashMap.put(positions.get(i), scales.get(i));
     }
 
+    // myWriter.write(name + "," + id + "," + field + "," + role + "," + scale
+    // +"\n");
+    // JOE,1731007147,PRESIDENTIAL,PRESIDENT,1
+  }
 
-    public void setpromotion() throws Exception {
-        Scanner sc = new Scanner(System.in);
-        ArrayList<Integer> IDS = new ArrayList<>();
-        System.out.println("Enter the ID of the employee which you wish to promote");
-        int DesiredId = Integer.parseInt(sc.next());
+  public void setpromotion() throws Exception {
+    Scanner sc = new Scanner(System.in);
+    ArrayList<Integer> IDS = new ArrayList<>();
+    System.out.println(
+        "Enter the ID of the employee which you wish to promote");
+    int DesiredId = Integer.parseInt(sc.next());
 
-        //We are asking the human resources person the id of the person they want to promote
-        //An employee can only be promoted if they are at the max scale
-        //We need to check if they are at the max scale
-        Scanner sc2 = new Scanner(new File("OODPROJ/src/employee_database.csv"));
-        sc2.useDelimiter(",");
-        sc2.useDelimiter("\n");
-        while (sc2.hasNext()) {
-            String line = sc2.next();
-            line = line.trim();
-            String[] lines = line.split(",");
-            //Iterate through every entry in our employees database
+    // We are asking the human resources person the id of the person they want
+    // to promote An employee can only be promoted if they are at the max scale
+    // We need to check if they are at the max scale
+    Scanner sc2 = new Scanner(new File("OODPROJ/src/employee_database.csv"));
+    sc2.useDelimiter(",");
+    sc2.useDelimiter("\n");
+    while (sc2.hasNext()) {
+      String line = sc2.next();
+      line = line.trim();
+      String[] lines = line.split(",");
+      // Iterate through every entry in our employees database
 
-            String name = lines[0];
-            int id = Integer.parseInt(lines[1]);
+      String name = lines[0];
+      int id = Integer.parseInt(lines[1]);
 
-            String field = lines[2];
-            String position = lines[3];
-            int scale = Integer.parseInt(lines[4]);
-            //If the id entry for a specific row belongs to the person we want to promote
-            if(id ==DesiredId){
-            if (hashMap.containsKey(position)) { //If our hashmap has their position
-                if (hashMap.get(position) == scale) { // If they are at the max scale
+      String field = lines[2];
+      String position = lines[3];
+      int scale = Integer.parseInt(lines[4]);
+      // If the id entry for a specific row belongs to the person we want to
+      // promote
+      if (id == DesiredId) {
+        if (hashMap.containsKey(
+                position)) { // If our hashmap has their position
+          if (hashMap.get(position) == scale) { // If they are at the max scale
 
-                    FileWriter myWriter = new FileWriter("OODPROJ/src/PromotableEmployees.csv", true); //Promote them by putting them onto our promotable employees csv
-                    myWriter.write(name + "," + id + "," + field + "," + position + "," + scale + ",1\n");
-                    myWriter.close();
-                }
-            }
-            }
+            FileWriter myWriter =
+                new FileWriter("OODPROJ/src/PromotableEmployees.csv",
+                               true); // Promote them by
+                                      // putting them onto our
+                                      // promotable employees
+                                      // csv
+            myWriter.write(name + "," + id + "," + field + "," + position +
+                           "," + scale + ",1\n");
+            myWriter.close();
+          }
         }
+      }
     }
+  }
 
-    @Override
-    public void displayOptions() {
-
+  @Override
+  public void displayOptions() {
+    Scanner input = new Scanner(System.in);
+    System.out.println("Human Resources Options:");
+    System.out.println("1. View Employee Details");
+    System.out.println("2. Promote Employee");
+    System.out.println("3. Logout");
+    int command = input.nextInt();
+    switch (command) {
+    case 1:
+      System.out.println("List of Employees");
+      displayOptions();
+      break;
+    case 2:
+      try {
+        setpromotion();
+      } catch (Exception e) {
+        System.out.println("Selected Employee cannot be promoted");
+      }
+      displayOptions();
+      break;
+    case 3:
+      System.out.println("Logging out");
+      System.exit(0);
+      break;
+    default:
+      System.out.println("Incorrect Input");
+      displayOptions();
+      break;
     }
+  }
 }
