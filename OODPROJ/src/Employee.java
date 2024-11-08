@@ -11,10 +11,9 @@ public class Employee extends User {
     private int scale;
     private int promotion;
 
-    public Employee(String name, String employeeID, String field, String role,
-            int scale) {
-        super("t" + employeeID, employeeID); // Username is t + employee id, password is employeeid + 8 digits of
-                                             // current UNIX time
+    public Employee(String name, String employeeID, String field, String role, int scale) {
+        super("t" + employeeID, employeeID); // Username: t + employee id, password: employeeid + 8 digits of current
+                                             // UNIX time
         this.name = name;
         this.employeeID = employeeID;
 

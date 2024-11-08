@@ -9,6 +9,12 @@ public class Userbase {
 
     public Userbase() throws FileNotFoundException {
         usersbase = new HashMap<>();
+
+        // Add the Admin and HumanResources users directly
+        usersbase.put("admin", new Admin("admin", "admin123"));
+        // usersbase.put("hr", new HumanResources("hr", "hr123"));
+
+        // Load all employee records from the employee_database.csv file
         Scanner sc = new Scanner(new File("OODPROJ/src/employee_database.csv"));
         sc.useDelimiter("\n");
 
@@ -19,22 +25,12 @@ public class Userbase {
             String id = lines[1];
             String password = lines[2];
             String field = lines[3];
-            String role = lines[4];
+            String role = lines[4]; // Specific role within Employee category
             int scale = Integer.parseInt(lines[5]);
-            // Declare User object only if a valid role is found
-            User user = null;
-            if (role.equalsIgnoreCase("Admin")) {
-                user = new Admin(username, password);
-            } else if (role.equalsIgnoreCase("Employee")) {
-                user = new Employee(username, id, field, role, scale);
-            } else if (role.equalsIgnoreCase("HumanResources")) {
-                // user = new HumanResources(username, id);
-            }
 
-            // Only add to usersbase if user is not null
-            if (user != null) {
-                usersbase.put(username, user);
-            }
+            // Treat every entry in the CSV as an Employee
+            User employee = new Employee(username, id, field, role, scale);
+            usersbase.put(username, employee);
         }
         sc.close();
     }
@@ -58,11 +54,10 @@ public class Userbase {
             checkLogin(username);
             checkPassword(username, password);
             if (loggedin) {
-                // Call the displayOptions method based on user type
+                // Polymorphic call to displayOptions based on user type
                 User user = usersbase.get(username);
-                user.displayOptions(); // Polymorphic call to the correct displayOptions()
+                user.displayOptions();
             }
-
         } catch (LoginException e) {
             System.out.println(e.getMessage());
             Login();
