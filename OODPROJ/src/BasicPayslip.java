@@ -1,13 +1,36 @@
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class BasicPayslip {
+    private int monthIndex;
+     private int dayofpayment;
 
     public BasicPayslip(Employee Employee) {
+        
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Select the year which you wish to view a payslip for");
+        int year = sc.nextInt();
+        while(year > LocalDate.now().getYear()){   
+            System.out.println("No payslip available for specified year please enter a valid year");
+            year = sc.nextInt();
 
-        System.out.println("---------------------------------------------------------------------------------------");
+        }
+        sc.nextLine(); //Int does not leave a newline character so we gotta go to the next line 
+        System.out.println("Select which month you would like to view a payslip for..... " + monthoptions(year));
+        String month = sc.nextLine().toUpperCase();
+        while (!monthoptions(year).contains(month)){
+            System.out.println("Please select a valid month for which you wish to view a payslip for");
+            month = sc.nextLine().toUpperCase();
+        }
+        System.out.println("Fetching payslip for " + month);
+        
+
+
+
+        /*System.out.println("---------------------------------------------------------------------------------------");
         System.out.println("Date: " + LocalDate.now());
         System.out.println("Name: John Doe");
         System.out.println("PRSI CLASS: A");
@@ -24,7 +47,7 @@ public class BasicPayslip {
         System.out.println("Net pay: " + Employee.calculateNetPay());
         System.out.println("Pay method: PayPath");
         System.out.println("----------------------------------------------------------------------------------------");
-
+*/
     }
 
     public BasicPayslip(HourlyEmployee Employee) {
@@ -121,7 +144,7 @@ public class BasicPayslip {
         System.out.println("Hours Worked: " + totalworked);
         System.out.println("PRSI CLASS: A");
         System.out.println("Field: " + Employee.getField());
-        System.out.println("Employee: " + Employee.getEmployee());
+        System.out.println("Employee: ");
         System.out.println("Scale: " + Employee.getScale());
         System.out.println("Gross hourly pay: " + Employee.getHourlyPay());
         System.out.println("PAYE: " + totalpaye);
@@ -142,6 +165,61 @@ public class BasicPayslip {
 
         }
         return hour;
+    }
+    public ArrayList<String> monthoptions(int year){
+        ArrayList<String> monthoptions = new ArrayList<>();
+        LinkedHashMap<Integer,String> months = new LinkedHashMap<>();
+        months.put(1,"JANUARY");
+        months.put(2,"FEBUARY");
+        months.put(3,"MARCH");
+        months.put(4,"APRIL");
+        months.put(5,"MAY");
+        months.put(6,"JUNE");
+        months.put(7,"JULY");
+        months.put(8,"AUGUST");
+        months.put(9,"SEPTEMBER");
+        months.put(10,"OCTOBER");
+        months.put(11,"NOVEMBER");
+        months.put(12,"DECEMBER");
+        if(year < LocalDate.now().getYear()){
+            for (int i = 1;i < 13;i++){
+                if(LocalDate.now().isAfter(LocalDate.of(year,i,25))){
+                    monthoptions.add(months.get(i));
+                }
+                
+            }
+            return monthoptions; //If we want to view all payslips for a previous year then all months are available to view
+        }else if (year == LocalDate.now().getYear()){//If the year we want to view payslips for is the current year
+            String Month = LocalDate.now().getMonth().toString(); //Find the current month
+           
+            for (int i = 1;i<13;i++){
+                if(months.get(i).equals(Month)){ //Iterate through our hashmap keys and check if their value is equal to the current month
+                    monthIndex = i; // If the value of the month is the current month then we have our month index 
+                    //The month index just corresponds to the number of months that have passed so far in the year
+                }
+            }
+            for(int i = 1;i<monthIndex + 1; i++){
+                LocalDate date = LocalDate.of(year, i, 25);
+                String day = date.getDayOfWeek().toString();
+                //All Monthly Staff, Hourly, Retired Members of Staff and Scholarships are paid on the 25th of the month. 
+                //(Please note if payment date falls on a Saturday then pay day is Friday (24th) and if falls on a Sunday then pay day is Monday(26th)).
+                if (day.equals("SATURDAY")){
+                      dayofpayment = 24;
+                 }
+                else if(day.equals("SUNDAY")){
+                     dayofpayment = 26;
+                 }
+                 else{
+                    dayofpayment = 25;
+                 }
+                if(LocalDate.now().isAfter(LocalDate.of(year,i,dayofpayment))){ // If the current day is past the 25th of a certain month then we can print a payslip (the day has past)
+                    monthoptions.add(months.get(i));
+                }
+                
+            }
+            return monthoptions;
+        }
+        return monthoptions; 
     }
 
 }
