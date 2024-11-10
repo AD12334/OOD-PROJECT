@@ -21,15 +21,15 @@ public class Userbase {
         while (sc.hasNext()) {
             String line = sc.next().trim();
             String[] lines = line.split(",");
-            String username = lines[0];
-            String id = lines[1];
-            String password = lines[2];
+            String name = lines[0];
+            String username = lines[1];
+            String employeeID = lines[2];
             String field = lines[3];
             String role = lines[4]; // Specific role within Employee category
             int scale = Integer.parseInt(lines[5]);
 
             // Treat every entry in the CSV as an Employee
-            User employee = new Employee(username, id, field, role, scale);
+            User employee = new Employee(name, username, employeeID, field, role, scale);
             usersbase.put(username, employee);
         }
         sc.close();

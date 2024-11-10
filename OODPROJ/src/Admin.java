@@ -48,48 +48,58 @@ public class Admin extends User {
         System.out.println("Input employee details");
         System.out.println("-----------------------------------------------------"
                 + "-----------------------------------");
+
         // Get employee details from user input
         Scanner sc = new Scanner(System.in);
+
         System.out.println("Enter employee name:");
         String name = sc.nextLine().toUpperCase();
-        Date now = new Date();
-        Long longTime = now.getTime() / 1000;
-        String id = longTime.toString().substring(0, 8); // Exployee ID is just 8 unix digits
+
+        String id = generateEmployeeID();
+
         System.out.println("Enter employee field from options " + Fields());
         String field = sc.nextLine().toUpperCase();
-        while(!Fields().contains(field)){
+        while (!Fields().contains(field)) {
             System.out.println("INVALID FIELD ENTERED");
             System.out.println("Enter employee field from options " + Fields());
             field = sc.nextLine().toUpperCase();
         }
+
         System.out.println("Enter employee role from options " + Positions(field));
         String role = sc.nextLine().toUpperCase();
-        while(!Positions(field).contains(role)){
+        while (!Positions(field).contains(role)) {
             System.out.println(role + " is not a valid occupation for the chosen field: " + field);
             System.out.println("Please enter a valid occupation from the list " + Positions(field));
             role = sc.nextLine().toUpperCase();
         }
+
         System.out.println("Enter employee scale from options " +
                 Scales(field, role));
         int scale = sc.nextInt();
-        while(!Scales(field,role).contains(scale)){
+        while (!Scales(field, role).contains(scale)) {
             System.out.println(scale + " is not a valid scale entry for the occupation " + role);
-            System.out.println("Please enter a valid scale entry from the list shown " + Scales(field,role));
+            System.out.println("Please enter a valid scale entry from the list shown " + Scales(field, role));
             scale = sc.nextInt();
         }
+
         System.out.println(
                 "Employee has been successfully registered to the database ");
+
         sc.close();
 
-        // Create a new Employee object with the details
-        Employee newEmployee = new Employee(name, id, field, role, scale);
         FileWriter myWriter = new FileWriter("OODPROJ/src/employee_database.csv", true);
-        myWriter.write(name + ",t" + id + "," + field + "," + role + "," + scale + "," + id +
-                "\n");// The second instance of id is their password
-        myWriter.close();
+        // name, username, id (which is also the password), field, role, scale
+        myWriter.write(name + ",t" + id + "," + id + "," + field + "," + role + "," + scale + "," +
+                "\n");
 
-        // Add the new Employee object to the list of employees (into
-        // employee_database.csv)
+        myWriter.close();
+    }
+
+    // Helper method to generate a unique employeeID
+    private String generateEmployeeID() {
+        Date now = new Date();
+        Long unixTime = now.getTime() / 1000;
+        return unixTime.toString().substring(0, 8); // Get the first 8 digits
     }
 
     public ArrayList<String> Fields() throws FileNotFoundException {
@@ -111,8 +121,7 @@ public class Admin extends User {
                 fields.add(field);
             }
         }
-       
-
+        sc.close();
         return fields;
     }
 
@@ -133,7 +142,7 @@ public class Admin extends User {
                 positions.add(position);
             }
         }
-
+        sc.close();
         return positions;
     }
 
@@ -156,7 +165,7 @@ public class Admin extends User {
                 Scales.add(scale);
             }
         }
-
+        sc.close();
         return Scales;
     }
 }
