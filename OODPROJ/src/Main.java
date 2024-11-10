@@ -5,19 +5,22 @@ import java.util.Scanner;
 
 public class Main {
     private static ArrayList<Employee> Employees;
-
+//Reading in the file with our full time employees
     public static void main(String[] args) throws IOException, Exception {
         //System.out.println("Current working directory: " + System.getProperty("user.dir"));
         Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
         ArrayList<Employee> Employees = new ArrayList<>();
         // SETTING THE DELIMITER
-        sc.useDelimiter(",");
+        
         sc.useDelimiter("\n");
+        //Splitting the file via commas and new lines
         while (sc.hasNext()) {
             String line = sc.next();
-
+//If there is still content to read then read it
             line = line.trim();
+            //remove the end and start whitespaces if they exist
             String[] lines = line.split(",");
+            //Split the line in accordance to commas and put the split string onto an array
 
             // System.out.println((lines[3].getClass().getName()));
             String field = lines[0];
@@ -77,7 +80,7 @@ public class Main {
        // humanResources.setpromotion();
       // Userbase userbase = new Userbase();
       // userbase.Login();
-      Employee employee = new Employee("ADAM", "181881818", "ACADEMIC", "PROFESSOR", 5);
+      Employee employee = new Employee("ADAM", "t181881818","181881818", "ACADEMIC", "PROFESSOR", 5);
       BasicPayslip payslip = new BasicPayslip(employee);
 
         

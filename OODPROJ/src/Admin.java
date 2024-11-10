@@ -126,6 +126,7 @@ public class Admin extends User {
     }
 
     public ArrayList<String> Positions(String Field)
+    //This makes it easier for the admin to enter the field in the right format
             throws FileNotFoundException {
         ArrayList<String> positions = new ArrayList<>();
         Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));

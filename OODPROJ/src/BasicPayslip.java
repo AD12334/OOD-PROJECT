@@ -13,7 +13,7 @@ public class BasicPayslip {
         Scanner sc = new Scanner(System.in);
         System.out.println("Select the year which you wish to view a payslip for");
         int year = sc.nextInt();
-        while(year > LocalDate.now().getYear()){   
+        while(year > LocalDate.now().getYear()){    //If the employee wants to view a payslip that they cant have possibly earned that year or in previous years then it doesnt exist
             System.out.println("No payslip available for specified year please enter a valid year");
             year = sc.nextInt();
 
@@ -21,9 +21,10 @@ public class BasicPayslip {
         sc.nextLine(); //Int does not leave a newline character so we gotta go to the next line 
         System.out.println("Select which month you would like to view a payslip for..... " + monthoptions(year));
         String month = sc.nextLine().toUpperCase();
-        while (!monthoptions(year).contains(month)){
+        while (!monthoptions(year).contains(month)){ //If the employee enters an invalid month then we should keep pestering them until we get a valid one
             System.out.println("Please select a valid month for which you wish to view a payslip for");
             month = sc.nextLine().toUpperCase();
+            //Maybe add system.exit if the enter the letter q or something
         }
         System.out.println("Fetching payslip for " + month);
         
@@ -55,6 +56,7 @@ public class BasicPayslip {
         float hoursworked2;
         float hoursworked3;
         float hoursworked4;
+        //Submission for monthly hours for hourly paid employees
         Scanner scanner = new Scanner(System.in);
         System.out.println(
                 "Enter your total amount of hours worked during the first week of the current working period ");
@@ -159,18 +161,22 @@ public class BasicPayslip {
     }
 
     public float checkHour(float hour) throws HoursException {
-        if ((hour) < 0 || hour > 100) {
+        if ((hour) < 0 || hour > 48) {
 
             throw new HoursException("Hour is not valid");
+            //An employee cant work less than 0 hours and
+            //An employee should not work more than 48 hours a week
+            //Does an employee get paid double time if they work more than 39 hours a week?
 
         }
         return hour;
     }
     public ArrayList<String> monthoptions(int year){
         ArrayList<String> monthoptions = new ArrayList<>();
+        //This method is used to make it easier for the employee to enter in the month in the required format
         LinkedHashMap<Integer,String> months = new LinkedHashMap<>();
         months.put(1,"JANUARY");
-        months.put(2,"FEBUARY");
+        months.put(2,"FEBRUARY");
         months.put(3,"MARCH");
         months.put(4,"APRIL");
         months.put(5,"MAY");
@@ -183,7 +189,7 @@ public class BasicPayslip {
         months.put(12,"DECEMBER");
         if(year < LocalDate.now().getYear()){
             for (int i = 1;i < 13;i++){
-                if(LocalDate.now().isAfter(LocalDate.of(year,i,25))){
+                if(LocalDate.now().isAfter(LocalDate.of(year,i,25))){//If the year is in the past then the employee can view all payslips for all months
                     monthoptions.add(months.get(i));
                 }
                 
