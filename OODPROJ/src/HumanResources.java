@@ -1,6 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -47,9 +45,10 @@ public class HumanResources extends User {
         // myWriter.write(name + "," + id + "," + field + "," + role + "," + scale
         // +"\n");
         // JOE,1731007147,PRESIDENTIAL,PRESIDENT,1
+        System.out.println(hashMap);
     }
 
-    public void setpromotion() throws Exception {
+    public void setPromotion() throws Exception {
         Scanner sc = new Scanner(System.in);
         ArrayList<Integer> IDS = new ArrayList<>();
         System.out.println(
@@ -60,42 +59,45 @@ public class HumanResources extends User {
         // to promote An employee can only be promoted if they are at the max scale
         // We need to check if they are at the max scale
         Scanner sc2 = new Scanner(new File("OODPROJ/src/employee_database.csv"));
-        sc2.useDelimiter(",");
         sc2.useDelimiter("\n");
+        int rowCounter = 0;
         while (sc2.hasNext()) {
             String line = sc2.next();
             line = line.trim();
             String[] lines = line.split(",");
             // Iterate through every entry in our employees database
 
-            String name = lines[0];
             String id = (lines[2]);
-
-            String field = lines[3];
-            String position = lines[4];
             int scale = Integer.parseInt(lines[5]);
+            String position = lines[4];
+            // String name = lines[0];
+            // String field = lines[3];
             // If the id entry for a specific row belongs to the person we want to
             // promote
             if (id.equals(DesiredId)) {
                 if (hashMap.containsKey(
                         position)) { // If our hashmap has their position
+                    // todo: NEED CONDITION TO CHECK IF POSITION IS PRESIDENT OR VICE PRESIDENT
                     if (hashMap.get(position) == scale) { // If they are at the max scale
-                        String newposition = changePosition(position);
+                        System.out.println(rowCounter);
+                        promptPromotion(rowCounter);
+                        break;
+                        // String newposition = changePosition(position);
 
-                        FileWriter myWriter = new FileWriter("OODPROJ/src/PendingPromotions.csv",
-                                true); // Promote them by
-                                       // putting them onto our
-                                       // promotable employees
-                                       // csv
-                        myWriter.write(name + "," + id + "," + field + "," + newposition +
-                                "," + scale + ",1\n");
-                        myWriter.close();
+                        // FileWriter myWriter = new FileWriter("OODPROJ/src/PendingPromotions.csv",
+                        // true); // Promote them by
+                        // // putting them onto our
+                        // // promotable employees
+                        // // csv
+                        // myWriter.write(name + "," + id + "," + field + "," + newposition +
+                        // "," + scale + ",1\n");
+                        // myWriter.close();
                     }
                 }
             } else {
-                System.out.println("Employee is not eligible for a promotion ");
-
+                // System.out.println("Employee is not eligible for a promotion ");
             }
+            rowCounter++;
         }
     }
 
@@ -114,7 +116,7 @@ public class HumanResources extends User {
                 break;
             case 2:
                 try {
-                    setpromotion();
+                    setPromotion();
                 } catch (Exception e) {
                     System.out.println("Selected Employee cannot be promoted");
                 }
@@ -172,6 +174,37 @@ public class HumanResources extends User {
 
         return keys.get(keys.indexOf(position));// If the employee isnt promotable or we dont want to promote them then
                                                 // we just keep their position the same
+    }
+
+    public void promptPromotion(int targetRow) throws IOException {
+        String filePath = "OODPROJ/src/employee_database.csv";
+        String newValue = "1";
+        int targetCol = 6;
+        // Step 1: Read all rows from the CSV
+        ArrayList<String[]> csvData = new ArrayList<>();
+        try (Scanner scanner = new Scanner(new File(filePath))) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] row = line.split(",");
+                csvData.add(row);
+            }
+        }
+
+        // Step 2: Edit the specific cell
+        if (targetRow < csvData.size() && targetCol < csvData.get(targetRow).length) {
+            csvData.get(targetRow)[targetCol] = newValue;
+        } else {
+            System.out.println("Invalid row/column index.");
+            return;
+        }
+
+        // Step 3: Write the updated data back to the CSV
+        try (FileWriter writer = new FileWriter(filePath)) {
+            for (String[] row : csvData) {
+                writer.write(String.join(",", row));
+                writer.write("\n"); // Add a newline after each row
+            }
+        }
     }
 
 }

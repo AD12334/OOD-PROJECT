@@ -89,7 +89,7 @@ public class Admin extends User {
 
         FileWriter myWriter = new FileWriter("OODPROJ/src/employee_database.csv", true);
         // name, username, id (which is also the password), field, role, scale
-        myWriter.write(name + ",t" + id + "," + id + "," + field + "," + role + "," + scale + "," +
+        myWriter.write(name + ",t" + id + "," + id + "," + field + "," + role + "," + scale + ",0" +
                 "\n");
 
         myWriter.close();
@@ -107,7 +107,6 @@ public class Admin extends User {
         Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
 
         // SETTING THE DELIMITER
-        sc.useDelimiter(",");
         sc.useDelimiter("\n");
         while (sc.hasNext()) {
             String line = sc.next();
@@ -126,7 +125,7 @@ public class Admin extends User {
     }
 
     public ArrayList<String> Positions(String Field)
-    //This makes it easier for the admin to enter the field in the right format
+            // This makes it easier for the admin to enter the field in the right format
             throws FileNotFoundException {
         ArrayList<String> positions = new ArrayList<>();
         Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
