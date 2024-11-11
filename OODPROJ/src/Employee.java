@@ -1,5 +1,10 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class Employee extends User {
@@ -8,8 +13,11 @@ public class Employee extends User {
     private int salary;
     private String field;
     private String role;
+    private LinkedHashMap<String, Integer> hashMap;
     private int scale;
     private int promotion;
+    private ArrayList<Integer> scales;
+    private ArrayList<String> positions;
 
     public Employee(String name, String username, String employeeID, String field, String role, int scale) {
         super(username, employeeID); // Username: t(added in admin) + employee id, password: employeeid
@@ -86,12 +94,12 @@ public class Employee extends User {
             int csvScale = Integer.parseInt(values[3]);
 
             if (csvField.equals(field) && csvRole.equals(role) && csvScale == scale) {
-                scanner.close();
+                
                 return csvSalary;
             }
         }
 
-        scanner.close();
+        
 
         // If no matching salary found, throw an exception or handle as needed
         throw new IllegalArgumentException(
@@ -124,16 +132,69 @@ public class Employee extends User {
                 displayOptions();
                 break;
         }
-        sc.close();
+      
     }
 
     public void viewPayslip() {
         // TODO: Implementation for viewing payslip
     }
 
-    public void acceptPromotion() throws FileNotFoundException {
-        Scanner sc = new Scanner(new File("OODPROJ/src/PendingPromotions.csv"));
+    public void HandlePromotion() throws FileNotFoundException, IOException {
+        int counter = 0;
+        Scanner sc = new Scanner(new File("OODPROJ/src/employee_database.csv"));
 
+        // SETTING THE DELIMITER
+     
+        sc.useDelimiter("\n");
+        while (sc.hasNext()) {
+            String line = sc.next();
+
+            line = line.trim();
+            String[] lines = line.split(",");
+            String field = lines[3];
+            int scale = Integer.parseInt(lines[5]);
+            
+            String position = lines[4];
+
+          
+            int promotion = Integer.parseInt(lines[6]);
+            if (promotion == 1) {
+             System.out.println("Congratulations you have been selected for promotion");   
+
+             System.out.println("Your current position is " +position + " and your current salary is " + getSalaryFromCSV(field, position, scale));
+
+             System.out.println("Your new position is " + changePosition(position) + " and your new salary would be " + getSalaryFromCSV(field, changePosition(position), 1));
+             System.out.println("Would you like to accept this promotion Y/N ?");
+             Scanner sc2 = new Scanner(System.in);
+             String response = sc2.nextLine().toUpperCase();
+             while(!response.equals("Y") && !response.equals("N")){
+                System.out.println("Please enter a valid response");
+                response = sc2.nextLine().toUpperCase();
+             }
+             if(response.equals("N")){
+                System.out.println("Promotion has been rejected you will remain as " + position);
+                RejectPromotion(counter);
+             }else if (response.equals("Y")){
+                System.out.println("Congratulations on accepting your new promotion !!!!");
+                AcceptPromotion(counter, changePosition(position));
+
+             }
+        
+           
+      
+             
+
+            }
+            counter++;
+        }
+        
+    }
+    public String changePosition(String position) throws FileNotFoundException {
+       
+        scales = new ArrayList<>();
+        positions = new ArrayList<>();
+        hashMap = new LinkedHashMap<>();
+        Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
         // SETTING THE DELIMITER
         sc.useDelimiter(",");
         sc.useDelimiter("\n");
@@ -142,27 +203,110 @@ public class Employee extends User {
 
             line = line.trim();
             String[] lines = line.split(",");
-            String name = lines[0];
-            int id = Integer.parseInt(lines[1]);
-            String field = lines[2];
-            String position = lines[3];
-            int scale = Integer.parseInt(lines[4]);
-            int promotion = Integer.parseInt(lines[5]);
-            if (promotion == 1) {
-                System.out.println("Congratulations you have been selected for a promotion");
-                System.out.println("Would you like to accept this promotion Y/N ?");
-                String response = sc.nextLine().toUpperCase();
-                if (response.equals("Y")) {
-                    System.out.println("You have been promoted congratulations");
-                } else if (response.equals("N")) {
-                    System.out.println("Promotion has been rejected you will remain as ");
-                } else {
-                    System.out.println("Invalid response");
-                }
+            String field = lines[0];
+            String Employee = lines[1];
+            int salary = Integer.parseInt(lines[2]);
+            int scale = Integer.parseInt(lines[3]);
+            int promotion = Integer.parseInt(lines[4]);
+            int employeeID = Integer.parseInt(lines[5]);
+            scales.add(scale);
+            positions.add(Employee);
+        }
+        for (int i = 0; i < scales.size(); i++) {
 
+            hashMap.put(positions.get(i), scales.get(i));
+        }
+        //System.out.println(hashMap);
+        ArrayList<String> keys = new ArrayList<>(hashMap.keySet());
+        ArrayList<String> nonpromotable = new ArrayList<>(
+                Arrays.asList("PRESIDENT", "FULL PROFESSOR", "SENIOR ADMINISTRATIVE OFFICER 3", "EPS PORFOLIO MANAGER",
+                        "SUB LIBRARIAN", "ANALYST PROGRAMMER 3", "CHIEF TECHNICAL OFFICER", "SEN PORTER/ATTENDANT",
+                        "TEACHING FELLOW", "THERAPIES REGIONAL SUPERVISORS REGIONAL PLACEMENT FACILITATOR"));
+        // We now have our list of positions and our list of non promotable positions
+        // If our employee position is contained by non promotable then they have
+        // reached the top of their field
+        // If an employee is not nonpromotable then they can be promoted
+
+       
+        if (!nonpromotable.contains(position) && keys.contains(position)) {
+            return( keys.get(keys.indexOf(position) - 1));
+           
+        }
+
+        return keys.get(keys.indexOf(position));// If the employee isnt promotable or we dont want to promote them then
+                                                // we just keep their position the same
+    }
+
+    public void RejectPromotion(int targetRow) throws IOException {
+        String filePath = "OODPROJ/src/employee_database.csv";
+        String newValue = "0";
+        int targetCol = 6; //Change the promotion id back to 0
+        
+        // Step 1: Read all rows from the CSV
+        ArrayList<String[]> csvData = new ArrayList<>();
+        try (Scanner scanner = new Scanner(new File(filePath))) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] row = line.split(",");
+                csvData.add(row);
             }
         }
-        sc.close();
+
+        // Step 2: Edit the specific cell
+        if (targetRow < csvData.size() && targetCol < csvData.get(targetRow).length) {
+            csvData.get(targetRow)[targetCol] = newValue;
+        } else {
+            System.out.println("Invalid row/column index.");
+            return;
+        }
+
+        // Step 3: Write the updated data back to the CSV
+        try (FileWriter writer = new FileWriter(filePath)) {
+            for (String[] row : csvData) {
+                writer.write(String.join(",", row));
+                writer.write("\n"); // Add a newline after each row
+            }
+        }
+    }
+
+
+
+    public void AcceptPromotion(int targetRow,String newposition) throws IOException {
+        String filePath = "OODPROJ/src/employee_database.csv";
+        String newValue = "0";
+        int targetCol = 6; //Change the promotion id back to 0
+        int targetCol2 = 5; // Update the scale to 1
+        int targetCol3 = 4; // Update their position
+
+        
+        // Step 1: Read all rows from the CSV
+        ArrayList<String[]> csvData = new ArrayList<>();
+        try (Scanner scanner = new Scanner(new File(filePath))) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] row = line.split(",");
+                csvData.add(row);
+            }
+        }
+
+        // Step 2: Edit the specific cell
+        if (targetRow < csvData.size() && targetCol < csvData.get(targetRow).length) {
+            csvData.get(targetRow)[targetCol] = newValue;
+            csvData.get(targetRow)[targetCol2] = "1";
+            csvData.get(targetRow)[targetCol3] = newposition;
+
+        } else {
+            System.out.println("Invalid row/column index.");
+            return;
+        }
+
+        // Step 3: Write the updated data back to the CSV
+        try (FileWriter writer = new FileWriter(filePath)) {
+            for (String[] row : csvData) {
+                writer.write(String.join(",", row));
+                writer.write("\n"); // Add a newline after each row
+            }
+        }
     }
     // myWriter.write(name + "," + id + "," + field + "," + position + "," +
     // scale

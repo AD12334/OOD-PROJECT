@@ -79,10 +79,12 @@ public class Main {
 
         // admin1.addEmployee();
         HumanResources humanResources = new HumanResources();
-        humanResources.setPromotion();
+        //humanResources.setPromotion();
+
         // Userbase userbase = new Userbase();
         // userbase.Login();
-        // Employee employee = new Employee("ADAM", "t181881818", "181881818",
+         Employee employee = new Employee("adam","t123","124","ACADEMIC","PROFESSOR",1);
+            employee.HandlePromotion();
         // "ACADEMIC", "PROFESSOR", 5);
         // BasicPayslip payslip = new BasicPayslip(employee);
 
