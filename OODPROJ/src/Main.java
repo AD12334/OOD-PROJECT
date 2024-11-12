@@ -40,29 +40,7 @@ public class Main {
          * BasicPayslip payslip = new BasicPayslip(p);
          * }
          */
-        Scanner sc2 = new Scanner(new File("OODPROJ/src/HourlyPaidEmployees.csv"));
-        ArrayList<HourlyEmployee> Employees2 = new ArrayList<>();
-        // Hourly paid employees have salaries based on 40 hour work weeks
-        // We can get the hourly rate by dividing by 52 and then dividing by 40
-        // SETTING THE DELIMITER
-        sc2.useDelimiter(",");
-        sc2.useDelimiter("\n");
-        while (sc2.hasNext()) {
-            String line = sc2.next();
-            line = line.trim();
-            String[] lines = line.split(",");
-
-            // System.out.println((lines[3].getClass().getName()));
-            String field = lines[0];
-            String Employee = lines[1];
-            int salary = Integer.parseInt(lines[2]);
-            int scale = Integer.parseInt(lines[3]);
-            // HourlyEmployee p = new HourlyEmployee(field, Employee, salary, scale);
-            // Employees2.add(p);
-
-            // System.out.println(Employees2);
-
-        }
+   
         // for (HourlyEmployee p : Employees2) {
         // BasicPayslip basicPayslip = new BasicPayslip(p);
         /*
@@ -75,18 +53,19 @@ public class Main {
         // userbase.addUser(user2);
         // userbase.addUser(user3);
         // userbase.Login();
-        // Admin admin1 = new Admin("k", "m");
+         Admin admin1 = new Admin("k", "m");
 
-        // admin1.addEmployee();
+         //admin1.addEmployee();
         HumanResources humanResources = new HumanResources();
         //humanResources.setPromotion();
 
         // Userbase userbase = new Userbase();
         // userbase.Login();
-         Employee employee = new Employee("adam","t123","124","ACADEMIC","PROFESSOR",1);
-            employee.HandlePromotion();
+         //Employee employee = new Employee("adam","t123","124","ACADEMIC","PROFESSOR",1);
+            //employee.HandlePromotion();
         // "ACADEMIC", "PROFESSOR", 5);
-        // BasicPayslip payslip = new BasicPayslip(employee);
+         BasicPayslip payslip = new BasicPayslip("t17314092","17314092");
+         
 
     }
 

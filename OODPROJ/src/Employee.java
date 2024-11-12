@@ -221,7 +221,7 @@ public class Employee extends User {
         ArrayList<String> nonpromotable = new ArrayList<>(
                 Arrays.asList("PRESIDENT", "FULL PROFESSOR", "SENIOR ADMINISTRATIVE OFFICER 3", "EPS PORFOLIO MANAGER",
                         "SUB LIBRARIAN", "ANALYST PROGRAMMER 3", "CHIEF TECHNICAL OFFICER", "SEN PORTER/ATTENDANT",
-                        "TEACHING FELLOW", "THERAPIES REGIONAL SUPERVISORS REGIONAL PLACEMENT FACILITATOR"));
+                        "TEACHING FELLOW", "THERAPIES REGIONAL SUPERVISORS REGIONAL PLACEMENT FACILITATOR","ASSISTANT SENIOR INSTRUCTOR","SENIOR RESEARCH FELLOW","CO-OP STUDENT"));
         // We now have our list of positions and our list of non promotable positions
         // If our employee position is contained by non promotable then they have
         // reached the top of their field

@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
@@ -7,11 +9,51 @@ import java.util.Scanner;
 public class BasicPayslip {
     private int monthIndex;
      private int dayofpayment;
+     private ArrayList<String> ids = new ArrayList<>();
+     private ArrayList<String> passwordArrayList = new ArrayList<>();
+     private ArrayList<String> roles = new ArrayList<>();
+     private ArrayList<Integer> scales = new ArrayList<>();
+     private ArrayList<String> fields = new ArrayList<>();
 
-    public BasicPayslip(Employee Employee) {
-        
+
+    public BasicPayslip(String Employeeid,String Password) throws FileNotFoundException {
+         Scanner sc2 = new Scanner(new File("OODPROJ/src/employee_database.csv")); //One scanner for reading off of our database
+         sc2.useDelimiter("\n");
+         while (sc2.hasNext()) {
+             String line = sc2.next();
+ 
+             line = line.trim();
+             String[] lines = line.split(",");
+             String id = lines[1];
+             String field = lines[3];
+             fields.add(field);
+             ids.add(id);
+             String role = lines[4];
+             roles.add(role);
+             int scale = Integer.parseInt(lines[5]);
+             scales.add(scale);
+             
+             String password = lines[2];
+             passwordArrayList.add(password);
+
+         }
+         if(!ids.contains(Employeeid) || !passwordArrayList.contains(Password)){
+            System.out.println("Login not recognised");
+         }
+         else{
+            int index = ids.indexOf(Employeeid); //This corresponds to the row index of our employee id
+          int  scale = scales.get(index);
+          String field = fields.get(index);
+           String role = roles.get(index);
+           System.out.println("Payslip for role: " + role + " scale: " + scale + " Field: " + field);
+           if (field.equals("ULAC")||field.equals("ULAC2")){
+            System.out.println("You are an hourly paid employee");
+           }
+
+         
+
         Scanner sc = new Scanner(System.in);
-        System.out.println("Select the year which you wish to view a payslip for");
+        System.out.println("Select the year which you wish to view a payslip for");//Another scanner for accepting user input
         int year = sc.nextInt();
         while(year > LocalDate.now().getYear()){    //If the employee wants to view a payslip that they cant have possibly earned that year or in previous years then it doesnt exist
             System.out.println("No payslip available for specified year please enter a valid year");
@@ -48,7 +90,7 @@ public class BasicPayslip {
         System.out.println("Net pay: " + Employee.calculateNetPay());
         System.out.println("Pay method: PayPath");
         System.out.println("----------------------------------------------------------------------------------------");
-*/
+    */}
     }
 
     public BasicPayslip(HourlyEmployee Employee) {
