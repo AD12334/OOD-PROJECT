@@ -44,14 +44,13 @@ public class HumanResources extends User {
         // myWriter.write(name + "," + id + "," + field + "," + role + "," + scale
         // +"\n");
         // JOE,1731007147,PRESIDENTIAL,PRESIDENT,1
-        //System.out.println(hashMap);
+        // System.out.println(hashMap);
     }
 
     public void setPromotion() throws Exception {
         Scanner sc = new Scanner(System.in);
         ArrayList<Integer> IDS = new ArrayList<>();
-        System.out.println(
-                "Enter the ID of the employee which you wish to promote");
+        System.out.println("Enter the ID of the employee which you wish to promote");
         String DesiredId = sc.nextLine();
 
         // We are asking the human resources person the id of the person they want
@@ -64,9 +63,7 @@ public class HumanResources extends User {
             String line = sc2.next();
             line = line.trim();
             String[] lines = line.split(",");
-            // Iterate through every entry in our employees database
-
-            String id = (lines[2]);
+            String id = lines[2];
             int scale = Integer.parseInt(lines[5]);
             String position = lines[4];
             // String name = lines[0];
@@ -74,30 +71,22 @@ public class HumanResources extends User {
             // If the id entry for a specific row belongs to the person we want to
             // promote
             if (id.equals(DesiredId)) {
-                if (hashMap.containsKey(
-                        position)) { // If our hashmap has their position
-                    // todo: NEED CONDITION TO CHECK IF POSITION IS PRESIDENT OR VICE PRESIDENT
+                if (position.equals("PRESIDENT") || position.equals("VICE PRESIDENT")) {
+                    System.out.println("Promotion not allowed for PRESIDENT or VICE PRESIDENT.");
+                    break;
+                }
+                if (hashMap.containsKey(position)) { // If our hashmap has their position
                     if (hashMap.get(position) == scale) { // If they are at the max scale
                         System.out.println(rowCounter);
                         promptPromotion(rowCounter);
                         break;
-                        // String newposition = changePosition(position);
-
-                        // FileWriter myWriter = new FileWriter("OODPROJ/src/PendingPromotions.csv",
-                        // true); // Promote them by
-                        // // putting them onto our
-                        // // promotable employees
-                        // // csv
-                        // myWriter.write(name + "," + id + "," + field + "," + newposition +
-                        // "," + scale + ",1\n");
-                        // myWriter.close();
                     }
                 }
-            } else {
-                // System.out.println("Employee is not eligible for a promotion ");
             }
             rowCounter++;
         }
+        sc.close();
+        sc2.close();
     }
 
     @Override
@@ -130,6 +119,7 @@ public class HumanResources extends User {
                 displayOptions();
                 break;
         }
+        input.close();
     }
 
     // WE currently have logic in place to detect when an employee is promotable i.e
@@ -138,7 +128,6 @@ public class HumanResources extends User {
     // We could do this by saving all employee info deleting all the instances of
     // the promoted employee from our database
     // Then we could just place our new promoted employee to our database
-    
 
     public void promptPromotion(int targetRow) throws IOException {
         String filePath = "OODPROJ/src/employee_database.csv";
