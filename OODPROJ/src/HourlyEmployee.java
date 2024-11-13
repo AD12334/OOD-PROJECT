@@ -2,9 +2,10 @@ import java.util.Scanner;
 
 public class HourlyEmployee extends Employee {
 
-  public HourlyEmployee(String name, String employeeID, int salary,
-                        String field, String role, int scale, int promotion) {
-    super(name, employeeID, field, role, scale);
+  public HourlyEmployee(String name, String username, String employeeID,
+                        int salary, String field, String role, int scale,
+                        int promotion) {
+    super(name, username, employeeID, field, role, scale);
   }
 
   @Override
@@ -168,9 +169,10 @@ public class HourlyEmployee extends Employee {
     return hourlypay;
   }
 
+  // TODO: getEmployee() function
   @Override
   public String toString() {
-    return "Field : " + getField() + "\n employee : " + getEmployee() +
-        "\n Salary : " + getSalary() + "\n Scale : " + getScale();
+    return "Field : " + getField() + "\nEmployee : " + /* getEmployee() */
+        "\nSalary : " + getSalary() + "\nScale : " + getScale();
   }
 }
