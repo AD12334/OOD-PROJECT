@@ -40,7 +40,7 @@ public class Main {
          * BasicPayslip payslip = new BasicPayslip(p);
          * }
          */
-   
+
         // for (HourlyEmployee p : Employees2) {
         // BasicPayslip basicPayslip = new BasicPayslip(p);
         /*
@@ -53,19 +53,19 @@ public class Main {
         // userbase.addUser(user2);
         // userbase.addUser(user3);
         // userbase.Login();
-         Admin admin1 = new Admin("k", "m");
+        Admin admin1 = new Admin("k", "m");
 
-         //admin1.addEmployee();
+        // admin1.addEmployee();
         HumanResources humanResources = new HumanResources();
-        //humanResources.setPromotion();
+        // humanResources.setPromotion();
 
         // Userbase userbase = new Userbase();
         // userbase.Login();
-         //Employee employee = new Employee("adam","t123","124","ACADEMIC","PROFESSOR",1);
-            //employee.HandlePromotion();
+        // Employee employee = new
+        // Employee("adam","t123","124","ACADEMIC","PROFESSOR",1);
+        // employee.HandlePromotion();
         // "ACADEMIC", "PROFESSOR", 5);
-         BasicPayslip payslip = new BasicPayslip("t17314092","17314092");
-         
+        BasicPayslip payslip = new BasicPayslip("t17314092", "17314092");
 
     }
 
