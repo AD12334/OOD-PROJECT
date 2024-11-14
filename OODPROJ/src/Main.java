@@ -98,5 +98,6 @@ public class Main {
   // Employee("adam","t123","124","ACADEMIC","PROFESSOR",1);
   // employee.HandlePromotion();
   // "ACADEMIC", "PROFESSOR", 5);
-  // BasicPayslip payslip = new BasicPayslip("t17314092", "17314092");
+   BasicPayslip payslip = new BasicPayslip("t17314092", "17314092");
+
 }
