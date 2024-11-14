@@ -22,7 +22,7 @@ public class Employee extends User {
   private LocalDate date = LocalDate.now();
 
   public Employee(String name, String username, String employeeID, String field,
-                  String role, int scale) {
+      String role, int scale) {
     // Username: t(added in admin) + employee id,
     // password: employeeid UNIX time
     super(username, employeeID);
@@ -30,8 +30,7 @@ public class Employee extends User {
     this.employeeID = employeeID;
 
     try {
-      this.salary =
-          getSalaryFromCSV(field.toUpperCase(), role.toUpperCase(), scale);
+      this.salary = getSalaryFromCSV(field.toUpperCase(), role.toUpperCase(), scale);
     } catch (FileNotFoundException e) {
       e.printStackTrace();
       this.salary = 0; // or handle it appropriately
@@ -42,32 +41,50 @@ public class Employee extends User {
     this.promotion = 0;
   }
 
-  public String getName() { return name; }
+  public String getName() {
+    return name;
+  }
 
-  public String getEmployeeID() { return employeeID; }
+  public String getEmployeeID() {
+    return employeeID;
+  }
 
-  public String getField() { return field; }
+  public String getField() {
+    return field;
+  }
 
-  public void setField(String field) { this.field = field; }
+  public void setField(String field) {
+    this.field = field;
+  }
 
-  public String getRole() { return role; }
+  public String getRole() {
+    return role;
+  }
 
-  public void setRole(String role) { this.role = role; }
+  public void setRole(String role) {
+    this.role = role;
+  }
 
-  public int getScale() { return scale; }
+  public int getScale() {
+    return scale;
+  }
 
-  public void setScale(int scale) { this.scale = scale; }
+  public void setScale(int scale) {
+    this.scale = scale;
+  }
 
-  public int getSalary() { return salary; }
+  public int getSalary() {
+    return salary;
+  }
 
-  public void promote() { this.promotion = 1; }
+  public void promote() {
+    this.promotion = 1;
+  }
 
   public void checkDate() {
     if (date.getMonthValue() == 10 && date.getDayOfMonth() == 1) {
       // TODO: if scale is at max, don't increase the scale
       setScale(getScale() + 1);
-    } else if (date.getDayOfMonth() == 25) {
-      System.out.println("**New Payslip available**");
     }
   }
 
@@ -110,20 +127,20 @@ public class Employee extends User {
     Scanner sc = new Scanner(System.in);
     int command = sc.nextInt();
     switch (command) {
-    case 1:
-      // TODO: personal details
-      displayOptions();
-    case 2:
-      viewPayslip();
-      displayOptions();
-      break;
-    case 3:
-      System.out.println("Logging out");
-      System.exit(0);
-    default:
-      System.out.println("Please enter a valid Command");
-      displayOptions();
-      break;
+      case 1:
+        // TODO: personal details
+        displayOptions();
+      case 2:
+        viewPayslip();
+        displayOptions();
+        break;
+      case 3:
+        System.out.println("Logging out");
+        System.exit(0);
+      default:
+        System.out.println("Please enter a valid Command");
+        displayOptions();
+        break;
     }
   }
 
@@ -154,13 +171,13 @@ public class Employee extends User {
             "Congratulations you have been selected for promotion");
 
         System.out.println("Your current position is " + position +
-                           " and your current salary is " +
-                           getSalaryFromCSV(field, position, scale));
+            " and your current salary is " +
+            getSalaryFromCSV(field, position, scale));
 
         System.out.println(
             "Your new position is " + changePosition(position) +
-            " and your new salary would be " +
-            getSalaryFromCSV(field, changePosition(position), 1));
+                " and your new salary would be " +
+                getSalaryFromCSV(field, changePosition(position), 1));
         System.out.println("Would you like to accept this promotion Y/N ?");
         Scanner sc2 = new Scanner(System.in);
         String response = sc2.nextLine().toUpperCase();
@@ -170,7 +187,7 @@ public class Employee extends User {
         }
         if (response.equals("N")) {
           System.out.println("Promotion has been rejected you will remain as " +
-                             position);
+              position);
           RejectPromotion(counter);
         } else if (response.equals("Y")) {
           System.out.println(
@@ -269,7 +286,7 @@ public class Employee extends User {
       throws IOException {
     String filePath = "OODPROJ/src/employee_database.csv";
     String newValue = "0";
-    int targetCol = 6;  // Change the promotion id back to 0
+    int targetCol = 6; // Change the promotion id back to 0
     int targetCol2 = 5; // Update the scale to 1
     int targetCol3 = 4; // Update their position
 
