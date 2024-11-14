@@ -141,7 +141,9 @@ public class Admin extends User {
       // name, username, id (which is also the password), field, role, scale
       myWriter.write(name + ",t" + id + "," + id + "," + field + "," + role +
           "," + scale + ",0"
-          + "\n");
+          + "\n"); 
+          File file = new File("OODPROJ/src/employeepayslips/t" + id +".csv");
+          file.createNewFile();
     }
 
     System.out.println(

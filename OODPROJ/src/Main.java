@@ -11,14 +11,19 @@ public class Main {
     Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
     ArrayList<Employee> Employees = new ArrayList<>();
 
-    String line = sc.next();
-    // If there is still content to read then read it
-    line = line.trim();
-    // remove the end and start whitespaces if they exist
-    String[] lines = line.split(",");
+    sc.useDelimiter(",");
+    sc.useDelimiter("\n");
+    while (sc.hasNext()) {
+      String line = sc.next();
+      line = line.trim();
+      String[] lines = line.split(",");
+
+
+   
     // Split the line in accordance to commas and put the split string onto
     // an array
-    while (sc.hasNext()) {
+   
+      
 
       // System.out.println((lines[3].getClass().getName()));
       String field = lines[0];
@@ -50,7 +55,7 @@ public class Main {
     // userbase.Login();
     Admin admin1 = new Admin("k", "m");
 
-    // admin1.addEmployee();
+   //  admin1.addEmployee();
     HumanResources humanResources = new HumanResources();
     // humanResources.setPromotion();
 
@@ -60,15 +65,10 @@ public class Main {
     // Employee("adam","t123","124","ACADEMIC","PROFESSOR",1);
     // employee.HandlePromotion();
     // "ACADEMIC", "PROFESSOR", 5);
-    BasicPayslip payslip = new BasicPayslip("t17314092", "17314092");
+    BasicPayslip payslip = new BasicPayslip("t17316122","17316122");
 
     // System.out.println((lines[3].getClass().getName()));
-    String field = lines[0];
-    String role = lines[1];
-    int salary = Integer.parseInt(lines[2]);
-    int scale = Integer.parseInt(lines[3]);
-    int promotion = Integer.parseInt(lines[4]);
-    int employeeID = Integer.parseInt(lines[5]);
+   
     // Employee p = new Employee(field,role,scale);
     // String name, String employeeID, String field, String role, int scale
   }
@@ -86,9 +86,7 @@ public class Main {
   // userbase.addUser(user2);
   // userbase.addUser(user3);
   // userbase.Login();
-  Admin admin1 = new Admin("k", "m");
 
-  // admin1.addEmployee();
   // HumanResources humanResources = new HumanResources();
   // humanResources.setPromotion();
 
@@ -98,6 +96,7 @@ public class Main {
   // Employee("adam","t123","124","ACADEMIC","PROFESSOR",1);
   // employee.HandlePromotion();
   // "ACADEMIC", "PROFESSOR", 5);
-   BasicPayslip payslip = new BasicPayslip("t17314092", "17314092");
+   //BasicPayslip payslip = new BasicPayslip("t17314092", "17314092");
+
 
 }

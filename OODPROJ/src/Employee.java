@@ -386,10 +386,10 @@ public class Employee extends User {
   // return Field;
   // }
 
-  // public double calculatePRSI() {
-  // double prsi = 0;
-  // double grosspay = getSalary();
-  // double credit = 0;
+   public double calculatePRSI() {
+   double prsi = 0;
+   double grosspay = getSalary();
+   double credit = 0;
   // //
   // https://www.gov.ie/en/publication/14ecbe-the-different-classes-of-pay-related-social-insurance-prsi/#class-a
   // // We are assumming that all our employees are subject to the rates of
@@ -416,34 +416,34 @@ public class Employee extends User {
   // * earnings over €352.01. There is no PRSI credit once earnings exceed
   // €424.
   // */
-  // double weeklyPay = (double) grosspay / 52;
-  // weeklyPay = Math.round(weeklyPay * 100.0) / 100.0;
-  // if (weeklyPay < 352.0) {
-  // prsi = 0;
-  // } else if (weeklyPay == 352.01) {
-  // credit = 12;
-  // prsi = ((weeklyPay) * 0.041) - credit;
-  // prsi = prsi * 52;
-  // } else if (weeklyPay > 352.01 && weeklyPay <= 424.0) {
-  // credit = 12 - (weeklyPay - 352) / 6;
+   double weeklyPay = (double) grosspay / 52;
+   weeklyPay = Math.round(weeklyPay * 100.0) / 100.0;
+   if (weeklyPay < 352.0) {
+   prsi = 0;
+   } else if (weeklyPay == 352.01) {
+   credit = 12;
+   prsi = ((weeklyPay) * 0.041) - credit;
+   prsi = prsi * 52;
+   } else if (weeklyPay > 352.01 && weeklyPay <= 424.0) {
+   credit = 12 - (weeklyPay - 352) / 6;
 
-  // prsi = ((weeklyPay) * 0.041) - credit;
-  // prsi = prsi * 52;
-  // } else {
-  // credit = 0;
-  // prsi = ((weeklyPay) * 0.041) - credit;
-  // prsi = prsi * 52;
-  // }
-  // prsi = Math.round(prsi * 100.0) / 100.0;
+   prsi = ((weeklyPay) * 0.041) - credit;
+   prsi = prsi * 52;
+   } else {
+   credit = 0;
+   prsi = ((weeklyPay) * 0.041) - credit;
+   prsi = prsi * 52;
+   }
+   prsi = Math.round(prsi * 100.0) / 100.0;
 
-  // return prsi;
-  // }
+   return prsi;
+   }
 
-  // public double calculatePAYE() {
-  // double HigherRate;
-  // double grosspay = getSalary();
-  // double part1;// Tax on first 42000
-  // double part2;// Tax on over 42000
+   public double calculatePAYE() {
+   double HigherRate;
+   double grosspay = getSalary();
+ double part1;// Tax on first 42000
+   double part2;// Tax on over 42000
   // /*
   // * https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-
   // * relief-charts/index.aspx
@@ -467,26 +467,26 @@ public class Employee extends User {
   // * Personal Tax Credit
   // *
   // */
-  // if (grosspay <= 42000) {
-  // HigherRate = 0;
-  // part1 = grosspay * 0.2;
-  // part2 = HigherRate * 0.4;
-  // } else {
-  // HigherRate = grosspay - 42000;
-  // part1 = 42000 * 0.2;
-  // part2 = HigherRate * 0.4;
-  // }
-  // double part3 = part1 + part2;
-  // double Paye = part3 - 1875 * 2; // sum of tax - employee tax credit and
+  if (grosspay <= 42000) {
+   HigherRate = 0;
+   part1 = grosspay * 0.2;
+   part2 = HigherRate * 0.4;
+   } else {
+   HigherRate = grosspay - 42000;
+   part1 = 42000 * 0.2;
+   part2 = HigherRate * 0.4;
+   }
+   double part3 = part1 + part2;
+   double Paye = part3 - 1875 * 2; // sum of tax - employee tax credit and
   // personal tax credit
-  // return Math.max(Paye, 0);
-  // }
+   return Math.max(Paye, 0);
+   }
 
-  // public double calculateUSC() {
-  // double USC = 0;
-  // double grosspay = getSalary();
-  // double[] rates = { 0.005, 0.02, 0.04, 0.08 };
-  // double[] thresholds = { 12012, 25760, 70044 };
+   public double calculateUSC() {
+   double USC = 0;
+   double grosspay = getSalary();
+   double[] rates = { 0.005, 0.02, 0.04, 0.08 };
+   double[] thresholds = { 12012, 25760, 70044 };
   // /*
   // *
   // https://www.citizensinformation.ie/en/money-and-tax/tax/income-tax/universal-
@@ -500,35 +500,35 @@ public class Employee extends User {
   // // For ease, we will be assuming that our employees are not eligible to
   // receive
   // // reduced rates of USC
-  // double rate;
-  // if (grosspay <= 13000) {
-  // return USC;
-  // } else {
-  // USC += thresholds[0] * rates[0];
-  // }
-  // if (grosspay <= thresholds[1]) {
-  // USC += (grosspay - thresholds[0]) * rates[1];
-  // return USC;
-  // } else {
-  // USC += (thresholds[1] - thresholds[0]) * rates[1];
-  // }
-  // if (grosspay <= thresholds[2]) {
-  // USC += (grosspay - thresholds[1]) * rates[2];
-  // return USC;
-  // } else {
-  // USC += (thresholds[2] - thresholds[1]) * rates[2];
-  // USC += (grosspay - thresholds[2]) * rates[3];
-  // }
-  // return USC;
-  // }
+   double rate;
+   if (grosspay <= 13000) {
+   return USC;
+   } else {
+   USC += thresholds[0] * rates[0];
+   }
+   if (grosspay <= thresholds[1]) {
+   USC += (grosspay - thresholds[0]) * rates[1];
+   return USC;
+   } else {
+   USC += (thresholds[1] - thresholds[0]) * rates[1];
+   }
+   if (grosspay <= thresholds[2]) {
+   USC += (grosspay - thresholds[1]) * rates[2];
+   return USC;
+   } else {
+   USC += (thresholds[2] - thresholds[1]) * rates[2];
+   USC += (grosspay - thresholds[2]) * rates[3];
+   }
+   return USC;
+   }
 
-  // public double calculateNetPay() {
-  // double NetPay = getSalary() - calculateUSC() - calculatePAYE() -
-  // calculatePRSI();
-  // NetPay = Math.round(NetPay * 100.0) / 100.0;
+   public double calculateNetPay() {
+   double NetPay = getSalary() - calculateUSC() - calculatePAYE() -
+   calculatePRSI();
+   NetPay = Math.round(NetPay * 100.0) / 100.0;
 
-  // return NetPay;
-  // }
+   return NetPay;
+  }
   // public String promotiondue(){
   // if (this.promotion == 0){
   // return "Promotion not due";

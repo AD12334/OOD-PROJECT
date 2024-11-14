@@ -1,12 +1,92 @@
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 public class HourlyEmployee extends Employee {
-
+  LinkedHashMap<String,float[]> hours = new LinkedHashMap<>();
   public HourlyEmployee(String name, String username, String employeeID,
                         int salary, String field, String role, int scale,
                         int promotion) {
     super(name, username, employeeID, field, role, scale);
+    
+        hours.put("JANUARY",new float[]{32,40,12,23});
+        hours.put("FEBRUARY",new float[]{32,40,12,23});
+        hours.put("MARCH",new float[]{32,40,12,23});
+        hours.put("APRIL",new float[]{32,40,12,23});
+        hours.put("MAY",new float[]{32,40,12,23});
+        hours.put("JUNE",new float[]{32,40,12,23});
+        hours.put("JULY",new float[]{32,40,12,23});
+        hours.put("AUGUST",new float[]{32,40,12,23});
+        hours.put("SEPTEMBER",new float[]{32,40,12,23});
+        hours.put("OCTOBER",new float[]{32,40,12,23});
+        hours.put("NOVEMBER",new float[]{32,40,12,23});
+        hours.put("DECEMBER",null);
   }
+  public void submithours(String month,int year){
+    int monthno = Month.valueOf(month.toUpperCase()).getValue(); // Convert month name to an integer
+    if (LocalDate.now().isBefore(LocalDate.of(year,monthno,10)) && hours.get(month) == null){
+      Scanner sc = new Scanner(System.in);
+      System.out.println("Enter the number of hours worked during week 1 of the working period");
+      float hours1 = sc.nextFloat();
+      System.out.println("Enter the number of hours worked during week 2 of the working period");
+      float hours2 = sc.nextFloat();
+      System.out.println("Enter the number of hours worked during week 3 of the working period");
+      float hours3 = sc.nextFloat();
+      System.out.println("Enter the number of hours worked during week 4 of the working period");
+      float hours4 = sc.nextFloat();
+      float[] worked = new float[]{hours1,hours2,hours3,hours4};
+      hours.put(month ,worked);
+
+    }else if  (LocalDate.now().isAfter(LocalDate.of(year,monthno,10)) && hours.get(month) == null){
+      System.out.println("Unfortunately you have missed the deadline to submit your hours for the given month");
+      
+    }else if  (LocalDate.now().isBefore(LocalDate.of(year,monthno,10)) && hours.get(month) != null){
+      System.out.println("You have already submitted your hours report for this month would you like to edit these hours Y/N?");
+      Scanner sc = new Scanner(System.in);
+      String response = sc.nextLine().toUpperCase();
+      while (!response.equals("Y") && !response.equals("N")){
+        System.out.println("Please enter Y or N");
+        response = sc.nextLine();
+      }
+      if(response.equals("Y")){
+      System.out.println("Enter the number of hours worked during week 1 of the working period");
+      float hours1 = sc.nextFloat();
+      System.out.println("Enter the number of hours worked during week 2 of the working period");
+      float hours2 = sc.nextFloat();
+      System.out.println("Enter the number of hours worked during week 3 of the working period");
+      float hours3 = sc.nextFloat();
+      System.out.println("Enter the number of hours worked during week 4 of the working period");
+      float hours4 = sc.nextFloat();
+      float[] worked = new float[]{hours1,hours2,hours3,hours4};
+      hours.put(month ,worked);
+      
+    }
+    else {
+      System.exit(0);
+    }
+  } else if (LocalDate.now().isAfter(LocalDate.of(year,monthno,10)) && hours.get(month) != null){
+    System.out.println("Hours cannot be edited for the given month");
+  }
+      
+  }
+  public float gethour1(String month){
+    float[] arr = hours.get(month);
+    return arr[0];
+  }
+  public float gethour2(String month){
+    float[] arr = hours.get(month);
+    return arr[1];
+  }
+  public float gethour3(String month){
+    float[] arr = hours.get(month);
+    return arr[2];
+  }
+  public float gethour4(String month){
+    float[] arr = hours.get(month);
+    return arr[3];
+  }
+  
 
   @Override
   public void displayOptions() {
