@@ -69,6 +69,7 @@ public class BasicPayslip {
                 
             }
             String day = dayOfPayment(year, month);
+            System.out.println(Employeeid);
             System.out.println("Fetching payslip for " + month);
             try {
                 HourlyPayslip(Employeeid,month,day,year);
@@ -155,7 +156,7 @@ public class BasicPayslip {
             int scale = Integer.parseInt(lines[5]);
             int promotionid = Integer.parseInt(lines[6]);
             
-        HourlyEmployee Employee = new HourlyEmployee(name, name,"t"+ id, year, field, role, scale, promotionid);
+        HourlyEmployee Employee = new HourlyEmployee(name, name,id, year, field, role, scale, promotionid);
             
         float hoursworked1;
         float hoursworked2;
@@ -165,7 +166,7 @@ public class BasicPayslip {
         
 
         try {
-            hoursworked1 = Employee.gethour1(month);
+            hoursworked1 = Employee.gethour1(month,"" + year);
             checkHour(hoursworked1);
         } catch (HoursException e) {
             System.out.println("Invalid hours worked during the first week of the current working period" + e);
@@ -177,7 +178,7 @@ public class BasicPayslip {
         
 
         try {
-            hoursworked2 = Employee.gethour2(month);
+            hoursworked2 = Employee.gethour2(month,"" + year);
             checkHour(hoursworked2);
         } catch (HoursException e) {
             System.out.println("Invalid hours worked during the second week of the current working period" + e);
@@ -189,7 +190,7 @@ public class BasicPayslip {
         double usc2 = Employee.calculateUSC(hoursworked2);
       
         try {
-            hoursworked3 = Employee.gethour3(month);
+            hoursworked3 = Employee.gethour3(month,"" + year);
             checkHour(hoursworked3);
         } catch (HoursException e) {
             System.out.println("Invalid hours worked during the third week of the current working period" + e);
@@ -201,7 +202,7 @@ public class BasicPayslip {
        
 
         try {
-            hoursworked4 = Employee.gethour4(month);
+            hoursworked4 = Employee.gethour4(month,"" + year);
             checkHour(hoursworked4);
         } catch (HoursException e) {
             System.out.println("Invalid hours worked during the final week of the current working period" + e);

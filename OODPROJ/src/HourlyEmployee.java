@@ -1,5 +1,10 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
@@ -7,10 +12,36 @@ public class HourlyEmployee extends Employee {
   LinkedHashMap<String,float[]> hours = new LinkedHashMap<>();
   public HourlyEmployee(String name, String username, String employeeID,
                         int salary, String field, String role, int scale,
-                        int promotion) {
+                        int promotion) throws FileNotFoundException {
     super(name, username, employeeID, field, role, scale);
+    System.out.println(username);
+    System.out.println(employeeID);
+    Scanner sc = new Scanner(new File("OODPROJ/src/Hourlyemployeehours/" + employeeID + "Hours.csv"));
+    sc.useDelimiter(",");
+    sc.useDelimiter("\n");
+    while (sc.hasNext()) {
+      String line = sc.next();
+      line = line.trim();
+      String[] lines = line.split(",");
+      String key = lines[0];
+      float hours1 = Float.parseFloat(lines[1]);
+      float hours2 = Float.parseFloat(lines[2]);
+      float hours3 = Float.parseFloat(lines[3]);
+      float hours4 = Float.parseFloat(lines[4]);
+      float[] worked = new float[]{hours1,hours2,hours3,hours4};
+      hours.put(key,worked);
+      System.out.println(hours);
+      for (int i = 0 ; i < 4;i++){
+        float[] arr = hours.get(key);
+        System.out.println(arr[i]);
+      }
+
+
+    }
+      // Get each field and the corresponding positions
     
-        hours.put("JANUARY",new float[]{32,40,12,23});
+   
+       /* hours.put("JANUARY",new float[]{32,40,12,23});
         hours.put("FEBRUARY",new float[]{32,40,12,23});
         hours.put("MARCH",new float[]{32,40,12,23});
         hours.put("APRIL",new float[]{32,40,12,23});
@@ -22,10 +53,16 @@ public class HourlyEmployee extends Employee {
         hours.put("OCTOBER",new float[]{32,40,12,23});
         hours.put("NOVEMBER",new float[]{32,40,12,23});
         hours.put("DECEMBER",null);
+        //This only works for the current year 2024*///, if an employee want to view all payslips from 2023 or behind then we need to account for december, if an employee wants to view all payslips from 2025 they must all be null
+        //Make another CSV file for hourly employees that stores all the hours that they worked???
+
+
+        //Make this so that the hourly employee constructor reads the hourlyemployee csv and then stores the number of hours they worked in a hashmap
   }
-  public void submithours(String month,int year){
+  public void submithours(String month,int year,int employeeid) throws IOException{
     int monthno = Month.valueOf(month.toUpperCase()).getValue(); // Convert month name to an integer
-    if (LocalDate.now().isBefore(LocalDate.of(year,monthno,10)) && hours.get(month) == null){
+    int targetRow;
+    if (LocalDate.now().isBefore(LocalDate.of(year,monthno,23)) && hours.get(month) == null){
       Scanner sc = new Scanner(System.in);
       System.out.println("Enter the number of hours worked during week 1 of the working period");
       float hours1 = sc.nextFloat();
@@ -36,7 +73,47 @@ public class HourlyEmployee extends Employee {
       System.out.println("Enter the number of hours worked during week 4 of the working period");
       float hours4 = sc.nextFloat();
       float[] worked = new float[]{hours1,hours2,hours3,hours4};
-      hours.put(month ,worked);
+      hours.put(month + "" + year ,worked);
+     
+       String filePath = "OODPROJ/src/Hourlyemployeehours/t" + employeeid + "Hours.csv";
+        String newValue = hours1 + "";
+        
+        String Targetkey = month + year;
+        
+        for (int i=0; i< hours.keySet().toArray().length; i++){
+          if(hours.keySet().toArray()[i].equals(Targetkey)){
+            targetRow = i;
+          }
+
+        }
+        int targetCol = 1;
+        // Step 1: Read all rows from the CSV
+        ArrayList<String[]> csvData = new ArrayList<>();
+        try (Scanner scanner = new Scanner(new File(filePath))) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] row = line.split(",");
+                csvData.add(row);
+            }
+        }
+for (int j =0; j <5;j++){
+        // Step 2: Edit the specific cell
+        if (targetRow < csvData.size() && targetCol < csvData.get(targetRow).length) {
+            csvData.get(targetRow)[targetCol + j] = newValue;
+        } else {
+            System.out.println("Invalid row/column index.");
+            return;
+        }
+
+        // Step 3: Write the updated data back to the CSV
+        try (FileWriter writer = new FileWriter(filePath)) {
+            for (String[] row : csvData) {
+                writer.write(String.join(",", row));
+                writer.write("\n"); // Add a newline after each row
+            }
+        }
+      }
+
 
     }else if  (LocalDate.now().isAfter(LocalDate.of(year,monthno,10)) && hours.get(month) == null){
       System.out.println("Unfortunately you have missed the deadline to submit your hours for the given month");
@@ -70,20 +147,20 @@ public class HourlyEmployee extends Employee {
   }
       
   }
-  public float gethour1(String month){
-    float[] arr = hours.get(month);
+  public float gethour1(String month,String year){
+    float[] arr = hours.get(month + year);
     return arr[0];
   }
-  public float gethour2(String month){
-    float[] arr = hours.get(month);
+  public float gethour2(String month,String year){
+    float[] arr = hours.get(month + year);
     return arr[1];
   }
-  public float gethour3(String month){
-    float[] arr = hours.get(month);
+  public float gethour3(String month,String year){
+    float[] arr = hours.get(month + year);
     return arr[2];
   }
-  public float gethour4(String month){
-    float[] arr = hours.get(month);
+  public float gethour4(String month,String year){
+    float[] arr = hours.get(month + year);
     return arr[3];
   }
   

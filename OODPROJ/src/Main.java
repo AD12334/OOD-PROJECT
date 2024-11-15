@@ -55,7 +55,7 @@ public class Main {
     // userbase.Login();
     Admin admin1 = new Admin("k", "m");
 
-   //  admin1.addEmployee();
+    admin1.addEmployee();
     HumanResources humanResources = new HumanResources();
     // humanResources.setPromotion();
 
@@ -65,7 +65,8 @@ public class Main {
     // Employee("adam","t123","124","ACADEMIC","PROFESSOR",1);
     // employee.HandlePromotion();
     // "ACADEMIC", "PROFESSOR", 5);
-    BasicPayslip payslip = new BasicPayslip("t17316122","17316122");
+    //BasicPayslip payslip = new BasicPayslip("t17316806","17316806");
+    //BasicPayslip payslip = new BasicPayslip("t17316802","17316802");
 
     // System.out.println((lines[3].getClass().getName()));
    
@@ -96,7 +97,7 @@ public class Main {
   // Employee("adam","t123","124","ACADEMIC","PROFESSOR",1);
   // employee.HandlePromotion();
   // "ACADEMIC", "PROFESSOR", 5);
-   //BasicPayslip payslip = new BasicPayslip("t17314092", "17314092");
+ 
 
 
 }
