@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
@@ -30,11 +31,11 @@ public class HourlyEmployee extends Employee {
       float hours4 = Float.parseFloat(lines[4]);
       float[] worked = new float[]{hours1,hours2,hours3,hours4};
       hours.put(key,worked);
-      System.out.println(hours);
-      for (int i = 0 ; i < 4;i++){
-        float[] arr = hours.get(key);
-        System.out.println(arr[i]);
-      }
+     // System.out.println(hours);
+      //for (int i = 0 ; i < 4;i++){
+        //float[] arr = hours.get(key);
+       // System.out.println(arr[i]);
+      //}
 
 
     }
@@ -59,34 +60,34 @@ public class HourlyEmployee extends Employee {
 
         //Make this so that the hourly employee constructor reads the hourlyemployee csv and then stores the number of hours they worked in a hashmap
   }
-  public void submithours(String month,int year,int employeeid) throws IOException{
-    int monthno = Month.valueOf(month.toUpperCase()).getValue(); // Convert month name to an integer
-    int targetRow;
-    if (LocalDate.now().isBefore(LocalDate.of(year,monthno,23)) && hours.get(month) == null){
-      Scanner sc = new Scanner(System.in);
-      System.out.println("Enter the number of hours worked during week 1 of the working period");
-      float hours1 = sc.nextFloat();
-      System.out.println("Enter the number of hours worked during week 2 of the working period");
-      float hours2 = sc.nextFloat();
-      System.out.println("Enter the number of hours worked during week 3 of the working period");
-      float hours3 = sc.nextFloat();
-      System.out.println("Enter the number of hours worked during week 4 of the working period");
-      float hours4 = sc.nextFloat();
-      float[] worked = new float[]{hours1,hours2,hours3,hours4};
-      hours.put(month + "" + year ,worked);
-     
-       String filePath = "OODPROJ/src/Hourlyemployeehours/t" + employeeid + "Hours.csv";
-        String newValue = hours1 + "";
-        
-        String Targetkey = month + year;
-        
-        for (int i=0; i< hours.keySet().toArray().length; i++){
-          if(hours.keySet().toArray()[i].equals(Targetkey)){
-            targetRow = i;
-          }
 
-        }
-        int targetCol = 1;
+
+public void submithours(String month, int year, String employeeid) throws IOException {
+    int monthno = Month.valueOf(month.toUpperCase()).getValue(); // Convert month name to an integer
+    int targetRow = -1;
+    String key = month +  year;
+
+    // Check if current date is before the 23rd of the month and if no data for the month exists
+    if (LocalDate.now().isBefore(LocalDate.of(year, monthno, 10)) && Arrays.equals(hours.get(key), new float[]{0.0f, 0.0f, 0.0f, 0.0f})) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the number of hours worked during week 1 of the working period");
+        float hours1 = Float.parseFloat(sc.nextLine());
+        System.out.println("Enter the number of hours worked during week 2 of the working period");
+        float hours2 = Float.parseFloat(sc.nextLine());
+        System.out.println("Enter the number of hours worked during week 3 of the working period");
+        float hours3 = Float.parseFloat(sc.nextLine());
+        System.out.println("Enter the number of hours worked during week 4 of the working period");
+        float hours4 = Float.parseFloat(sc.nextLine());
+
+        
+        float[] worked = new float[]{hours1, hours2, hours3, hours4};
+        hours.put(month + "" + year, worked);
+
+      
+        String filePath = "OODPROJ/src/Hourlyemployeehours/" + employeeid + "Hours.csv";
+        String[] workedValues = new String[]{String.valueOf(hours1), String.valueOf(hours2), String.valueOf(hours3), String.valueOf(hours4)};
+        String targetKey = month + year;
+
         // Step 1: Read all rows from the CSV
         ArrayList<String[]> csvData = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(filePath))) {
@@ -96,29 +97,44 @@ public class HourlyEmployee extends Employee {
                 csvData.add(row);
             }
         }
-for (int j =0; j <5;j++){
-        // Step 2: Edit the specific cell
-        if (targetRow < csvData.size() && targetCol < csvData.get(targetRow).length) {
-            csvData.get(targetRow)[targetCol + j] = newValue;
-        } else {
-            System.out.println("Invalid row/column index.");
-            return;
+
+        // Find the target row where the month-year matches
+        for (int i = 0; i < csvData.size(); i++) {
+            if (csvData.get(i)[0].equals(targetKey)) {
+                targetRow = i;  // Assign targetRow if match found
+                break;
+            }
         }
 
-        // Step 3: Write the updated data back to the CSV
+      
+
+        // Update the appropriate columns in the row assumes data starts from column 1
+        for (int j = 0; j < workedValues.length; j++) {
+            if (targetRow < csvData.size() && 1 + j < csvData.get(targetRow).length) {
+                csvData.get(targetRow)[1 + j] = workedValues[j]; // Update values starting from column 1
+            } else {
+                System.out.println("Invalid row/column index.");
+                return;
+            }
+        }
+
+        // Write the updated data back to the CSV
         try (FileWriter writer = new FileWriter(filePath)) {
             for (String[] row : csvData) {
                 writer.write(String.join(",", row));
                 writer.write("\n"); // Add a newline after each row
             }
         }
-      }
+
+        System.out.println("Hours submitted successfully.");
 
 
-    }else if  (LocalDate.now().isAfter(LocalDate.of(year,monthno,10)) && hours.get(month) == null){
+  
+
+    }else if  (LocalDate.now().isAfter(LocalDate.of(year,monthno,10)) && Arrays.equals(hours.get(key), new float[]{0.0f, 0.0f, 0.0f, 0.0f})){
       System.out.println("Unfortunately you have missed the deadline to submit your hours for the given month");
       
-    }else if  (LocalDate.now().isBefore(LocalDate.of(year,monthno,10)) && hours.get(month) != null){
+    }else if  (LocalDate.now().isBefore(LocalDate.of(year,monthno,10)) && !Arrays.equals(hours.get(key), new float[]{0.0f, 0.0f, 0.0f, 0.0f})){
       System.out.println("You have already submitted your hours report for this month would you like to edit these hours Y/N?");
       Scanner sc = new Scanner(System.in);
       String response = sc.nextLine().toUpperCase();
@@ -142,7 +158,7 @@ for (int j =0; j <5;j++){
     else {
       System.exit(0);
     }
-  } else if (LocalDate.now().isAfter(LocalDate.of(year,monthno,10)) && hours.get(month) != null){
+  } else if (LocalDate.now().isAfter(LocalDate.of(year,monthno,10)) && !Arrays.equals(hours.get(key), new float[]{0.0f, 0.0f, 0.0f, 0.0f})){
     System.out.println("Hours cannot be edited for the given month");
   }
       

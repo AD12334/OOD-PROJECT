@@ -157,6 +157,11 @@ public class BasicPayslip {
             int promotionid = Integer.parseInt(lines[6]);
             
         HourlyEmployee Employee = new HourlyEmployee(name, name,id, year, field, role, scale, promotionid);
+        System.out.println("WHAT MONTH");
+        Scanner sc3 = new Scanner(System.in);
+        String month2 = sc3.nextLine();
+        
+       Employee.submithours(month2, year, id);
             
         float hoursworked1;
         float hoursworked2;
