@@ -2,6 +2,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
+
 /**
  * This class implements Human resources functionality to our system
  */
@@ -15,11 +16,13 @@ public class HumanResources extends User {
     // The array of ints can be all the scales associated with that specific job
     // title
     /**
-     * This constructor makes a human resources employee and initialises a hashmap corresponding to the max scale for every position
+     * This constructor makes a human resources employee and initialises a hashmap
+     * corresponding to the max scale for every position
+     * 
      * @throws FileNotFoundException
      */
-    public HumanResources() throws FileNotFoundException {
-        super("HR", "HR");
+    public HumanResources(String username, String password) throws FileNotFoundException {
+        super(username, password);
         hashMap = new LinkedHashMap<>();
         scales = new ArrayList<>();
         positions = new ArrayList<>();
@@ -52,8 +55,11 @@ public class HumanResources extends User {
         // JOE,1731007147,PRESIDENTIAL,PRESIDENT,1
         // System.out.println(hashMap);
     }
+
     /**
-     * This method changes the promotion id of an employee to 1 iff they are at the max scale of their position and they exist in our employees database
+     * This method changes the promotion id of an employee to 1 iff they are at the
+     * max scale of their position and they exist in our employees database
+     * 
      * @throws Exception
      */
 
@@ -98,20 +104,22 @@ public class HumanResources extends User {
         sc.close();
         sc2.close();
     }
-/**
- * UI implementation for a  HR employee
- */
+
+    /**
+     * UI implementation for a HR employee
+     */
     @Override
     public void displayOptions() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Human Resources Options:");
+        System.out.println("\nHuman Resources Options:");
         System.out.println("1. View Employee Details");
         System.out.println("2. Promote Employee");
         System.out.println("3. Logout");
         int command = input.nextInt();
         switch (command) {
             case 1:
-                System.out.println("List of Employees");
+                System.out.println("Employees:");
+                viewEmployeeList();
                 displayOptions();
                 break;
             case 2:
@@ -124,8 +132,8 @@ public class HumanResources extends User {
                 break;
             case 3:
                 System.out.println("Logging out");
-                System.exit(0);
-                break;
+                Userbase.Login();
+                // System.exit(0);
             default:
                 System.out.println("Incorrect Input");
                 displayOptions();
@@ -142,6 +150,7 @@ public class HumanResources extends User {
     // Then we could just place our new promoted employee to our database
     /**
      * This method rewrites an employees promotion id
+     * 
      * @param targetRow
      * @throws IOException
      */
@@ -174,6 +183,34 @@ public class HumanResources extends User {
                 writer.write(String.join(",", row));
                 writer.write("\n"); // Add a newline after each row
             }
+        }
+    }
+
+    /**
+     * This method displays all the employees in our database
+     * 
+     * @throws FileNotFoundException
+     */
+    public void viewEmployeeList() {
+        try {
+            Scanner sc = new Scanner(new File("OODPROJ/src/employee_database.csv"));
+            sc.useDelimiter("\n");
+            while (sc.hasNext()) {
+                String line = sc.next();
+                line = line.trim();
+                String[] lines = line.split(",");
+                String name = lines[0];
+                String username = lines[1];
+                String employeeID = lines[2];
+                String field = lines[3];
+                String role = lines[4];
+                int scale = Integer.parseInt(lines[5]);
+                System.out.println("Name: " + name + ", Username: " + username + ", Employee ID: " + employeeID +
+                        ", Field: " + field + ", Role: " + role + ", Scale: " + scale);
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
         }
     }
 
