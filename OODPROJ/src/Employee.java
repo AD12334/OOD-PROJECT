@@ -7,7 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
-
+/**
+ * This class is used to determine employees; an employee is a user of our system
+ */
 public class Employee extends User {
   private String name;
   private String employeeID;
@@ -20,7 +22,15 @@ public class Employee extends User {
   private ArrayList<Integer> scales;
   private ArrayList<String> positions;
   private LocalDate date = LocalDate.now();
-
+/**
+ * Constructor to make an employee
+ * @param name
+ * @param username
+ * @param employeeID
+ * @param field
+ * @param role
+ * @param scale
+ */
   public Employee(String name, String username, String employeeID, String field,
       String role, int scale) {
     // Username: t(added in admin) + employee id,
@@ -40,54 +50,94 @@ public class Employee extends User {
     this.scale = scale;
     this.promotion = 0;
   }
-
+/**
+ * Gets employee name
+ * @return
+ */
   public String getName() {
     return name;
   }
-
+/**
+ * Gets employeeID
+ * @return
+ */
   public String getEmployeeID() {
     return employeeID;
   }
-
+/**
+ * Gets employee Field
+ * @return
+ */
   public String getField() {
     return field;
   }
-
+/**
+ * Sets employee field
+ * 
+ */
   public void setField(String field) {
     this.field = field;
   }
-
+/**
+ * Gets employee role
+ * @return
+ */
   public String getRole() {
     return role;
   }
-
+/**
+ * Sets employee role
+ * 
+ */
   public void setRole(String role) {
     this.role = role;
   }
-
+/**
+ * Gets employee scale
+ * @return
+ */
   public int getScale() {
     return scale;
   }
-
+/**
+ * Sets employee scale
+ * 
+ */
   public void setScale(int scale) {
     this.scale = scale;
   }
-
+/**
+ * Gets employee salary
+ * @return
+ */
   public int getSalary() {
     return salary;
   }
-
+/**
+ * Changes an employees promotion ID
+ * 
+ */
   public void promote() {
     this.promotion = 1;
   }
-
+/**
+ * Bumps up the employees scale if applicable
+ * 
+ */
   public void checkDate() {
     if (date.getMonthValue() == 10 && date.getDayOfMonth() == 1) {
       // TODO: if scale is at max, don't increase the scale
       setScale(getScale() + 1);
     }
   }
-
+/**
+ * Gets the salary from the csv based on a specific scale, field and position
+ * @param field
+ * @param role
+ * @param scale
+ * @return
+ * @throws FileNotFoundException
+ */
   private int getSalaryFromCSV(String field, String role, int scale)
       throws FileNotFoundException {
     File csvFile = new File("OODPROJ/src/salary_scales.csv");
@@ -114,7 +164,9 @@ public class Employee extends User {
     throw new IllegalArgumentException(
         "Salary not found for given field, role, and scale.");
   }
-
+/** 
+ * UI options for an employee
+ */
   @Override
   public void displayOptions() {
     System.out.println("Employee Options:");
@@ -147,7 +199,12 @@ public class Employee extends User {
   public void viewPayslip() {
     // TODO: Implementation for viewing payslip
   }
-
+/**
+ * If an employee has a promotion pending then this method bumps up their position and changes their scale back to 1 if they accept the promotion
+ * If the employee rejects the promotion it changes their promotion id back to 0;
+ * @throws FileNotFoundException
+ * @throws IOException
+ */
   public void HandlePromotion() throws FileNotFoundException, IOException {
     int counter = 0;
     Scanner sc = new Scanner(new File("OODPROJ/src/employee_database.csv"));
@@ -198,7 +255,12 @@ public class Employee extends User {
       counter++;
     }
   }
-
+/**
+ * This method determies the new position of a promotable employee
+ * @param position
+ * @return
+ * @throws FileNotFoundException
+ */
   public String changePosition(String position) throws FileNotFoundException {
 
     scales = new ArrayList<>();
@@ -281,7 +343,12 @@ public class Employee extends User {
       }
     }
   }
-
+/**
+ * If an employee accepts their promotion we change their info in the employee_database.csv
+ * @param targetRow
+ * @param newposition
+ * @throws IOException
+ */
   public void AcceptPromotion(int targetRow, String newposition)
       throws IOException {
     String filePath = "OODPROJ/src/employee_database.csv";
@@ -385,6 +452,9 @@ public class Employee extends User {
   // public String getField() {
   // return Field;
   // }
+  /**
+   * Calculates PRSI contributions per month for an annual employee
+   */
 
    public double calculatePRSI() {
    double prsi = 0;
@@ -438,7 +508,9 @@ public class Employee extends User {
 
    return prsi;
    }
-
+  /**
+   * Calculates PAYE contributions per month for an annual employee
+   */
    public double calculatePAYE() {
    double HigherRate;
    double grosspay = getSalary();
@@ -481,7 +553,9 @@ public class Employee extends User {
   // personal tax credit
    return Math.max(Paye, 0);
    }
-
+  /**
+   * Calculates USC contributions per month for an annual employee
+   */
    public double calculateUSC() {
    double USC = 0;
    double grosspay = getSalary();
@@ -521,7 +595,9 @@ public class Employee extends User {
    }
    return USC;
    }
-
+  /**
+   * Calculates Net pay for an annual employee
+   */
    public double calculateNetPay() {
    double NetPay = getSalary() - calculateUSC() - calculatePAYE() -
    calculatePRSI();

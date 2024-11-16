@@ -7,7 +7,9 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
-
+/**
+ * This class is used to make payslips
+ */
 public class BasicPayslip {
     private int monthIndex;
      private int dayofpayment;
@@ -17,7 +19,16 @@ public class BasicPayslip {
      private ArrayList<Integer> scales = new ArrayList<>();
      private ArrayList<String> fields = new ArrayList<>();
 
-
+/**
+ * This Constructor makes a payslip for an employee
+ * <p> This Constructor scans our employee database for the given id and password; if the employee exists we get their field, position,scale etc.;
+ * Using this info we determine if they are hourly paid or not;
+ * We then prompt the employee to enter the time period for which they wish to view a payslip for
+ * If the input is valid we generate a payslip
+ * @param Employeeid Employeeid for the employee that wishes to view a payslip
+ * @param Password Password of the employee that corresponds to this employeeid
+ * @throws FileNotFoundException
+ */
     public BasicPayslip(String Employeeid,String Password) throws FileNotFoundException {
          Scanner sc2 = new Scanner(new File("OODPROJ/src/employee_database.csv")); //One scanner for reading off of our database
          sc2.useDelimiter("\n");
@@ -136,7 +147,17 @@ public class BasicPayslip {
         System.out.println("----------------------------------------------------------------------------------------");
     */}
     }
-
+/**
+ * Generates a payslip for an hourly paid employee
+ * <p> reads their hours worked from their hours.csv and calculates generates a payslip for the employee with all relevant tax workings complete
+ * prints off the payslip to console aswell as to the employees payslip file
+ * @param id The id of the employee
+ * @param month The month for which we are requesting a payslip
+ * @param day The day for which we are requesting a payslip
+ * @param year The year for which we are requesting a payslip
+ * @throws FileNotFoundException
+ * @throws IOException
+ */
     public void  HourlyPayslip(String id,String month,String day,int year) throws FileNotFoundException, IOException {
         Scanner sc2 = new Scanner(new File("OODPROJ/src/employee_database.csv")); //One scanner for reading off of our database
         sc2.useDelimiter("\n");
@@ -267,6 +288,17 @@ public class BasicPayslip {
     }
     }
     }
+    /**
+ * Generates a payslip for an annually paid employee
+ * <p> Generates a payslip for the employee with all relevant tax workings complete
+ * prints off the payslip to console aswell as to the employees payslip file
+ * @param id The id of the employee
+ * @param month The month for which we are requesting a payslip
+ * @param day The day for which we are requesting a payslip
+ * @param year The year for which we are requesting a payslip
+ * @throws FileNotFoundException
+ * @throws IOException
+ */
     public void FullTimePayslip(String id,String month,String day,int year) throws IOException{
         Scanner sc2 = new Scanner(new File("OODPROJ/src/employee_database.csv")); //One scanner for reading off of our database
          sc2.useDelimiter("\n");
@@ -335,7 +367,12 @@ public class BasicPayslip {
     }
 }
     
-
+/**
+ * An employee shouldnt work more than 48 hours a week 
+ * @param hour
+ * @return
+ * @throws HoursException
+ */
     public float checkHour(float hour) throws HoursException {
         if ((hour) < 0 || hour > 48) {
 
@@ -347,6 +384,10 @@ public class BasicPayslip {
         }
         return hour;
     }
+    /**This method makes it easier for the employee to enter in the month in the required format
+     * @param year
+     * @return 
+     */
     public ArrayList<String> monthoptions(int year){
         
         ArrayList<String> monthoptions = new ArrayList<>();
@@ -405,7 +446,12 @@ public class BasicPayslip {
         return monthoptions;
     }
    
-
+/**
+ * Returns the day on which an employee is paid for a given month in a year
+ * @param year
+ * @param month
+ * @return
+ */
 public String dayOfPayment(int year, String month) {
     
     int monthno = Month.valueOf(month.toUpperCase()).getValue(); // Convert month name to an integer

@@ -7,11 +7,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
-
+/**
+ * This class represents all functions to be usuable by an admin on our system; an admin is a system user
+ */
 public class Admin extends User {
   public Admin(String username, String password) {
     super(username, password);
   }
+  /**
+   * This method is used to implement UI features for an admin user
+   */
 
   @Override
   public void displayOptions() {
@@ -45,6 +50,14 @@ public class Admin extends User {
         break;
     }
   }
+  /**
+   * This method enables us to add new employees to our database
+   * <p> When creating an employee we need files to store payslips so we also create a payslip.csv to store their payslips,
+   * Hourly employees are also created with an hours.csv to store their hours worked since 2020
+   * We cant have more than one president or one vice president at a given time
+   * 
+   * @throws IOException if the file path is invalid throw an error
+   */
 
   public void addEmployee() throws IOException {
     FileWriter myWriter = new FileWriter("OODPROJ/src/employee_database.csv", true);
@@ -168,14 +181,23 @@ public class Admin extends User {
     sc.close();
     myWriter.close();
   }
-
+/**
+ * Creates a unique employee ID for each created employee
+ * <p> Uses the first eight digits of unixTime to create a unique employee id for each new created employee
+ * @return Returns a unique employee id
+ */
   // Helper method to generate a unique employeeID
   private String generateEmployeeID() {
     Date now = new Date();
     Long unixTime = now.getTime() / 1000;
     return unixTime.toString().substring(0, 8); // Get the first 8 digits
   }
-
+/**
+ * This method makes it easier for an admin to add an employee to our database
+ * <p> This method reads all the distinct fields in our csv and returns all the possible options for which an employee can belong to
+ * @return Returns a list of possible employee fields
+ * @throws FileNotFoundException
+ */
   public ArrayList<String> Fields() throws FileNotFoundException {
     ArrayList<String> fields = new ArrayList<>();
     Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
@@ -197,6 +219,12 @@ public class Admin extends User {
     sc.close();
     return fields;
   }
+  /**
+   * This method makes it easier for an admin to enter a valid position
+   * @param Field Used to determine the positions for a certain field
+   * @return Returns a list of all possible positions for a given field
+   * @throws FileNotFoundException if the file is not found we return an eroor
+   */
 
   public ArrayList<String> Positions(String Field)
       // This makes it easier for the admin to enter the field in the right
@@ -220,6 +248,13 @@ public class Admin extends User {
     sc.close();
     return positions;
   }
+  /**
+   * Displays all the possible scales for a position
+   * @param Field String representing an employees employment field
+   * @param Position String representing an employees position
+   * @return Returns all the possible scales for a given position within a field
+   * @throws FileNotFoundException if the file is not found throw an error
+   */
 
   public ArrayList<Integer> Scales(String Field, String Position)
       throws FileNotFoundException {
@@ -243,6 +278,11 @@ public class Admin extends User {
     sc.close();
     return Scales;
   }
+  /**
+   * Used to check if our employee database has a president
+   * @return Returns true or false if employee_database.csv has a president
+   * @throws FileNotFoundException
+   */
 
   public Boolean checkIfPresidentExists() throws FileNotFoundException {
     Scanner sc = new Scanner(new File("OODPROJ/src/employee_database.csv"));
@@ -262,7 +302,11 @@ public class Admin extends User {
     sc.close();
     return false;
   }
-
+/**
+   * Used to check if our employee database has a vice president
+   * @return Returns true or false if employee_database.csv has a vice president
+   * @throws FileNotFoundException
+   */
   public Boolean checkIfVicePresidentExists() throws FileNotFoundException {
     Scanner sc = new Scanner(new File("OODPROJ/src/employee_database.csv"));
     sc.useDelimiter(",");
@@ -281,6 +325,11 @@ public class Admin extends User {
     sc.close();
     return false;
   }
+  /**
+   * This method is used to generate random hours worked in the past(since 2020) for hourly paid employees
+   * <p>Generates random hours between 0 and 40 for an hourly paid employee up to the current month and year (dependent on current day)
+   * @return returns the arraylist of randomly generated hours.
+   */
   public String occupyCSV(){
     int year = 2020;
     String output = "";

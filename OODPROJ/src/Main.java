@@ -3,6 +3,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This class simulates our system
+ */
 public class Main {
   private static ArrayList<Employee> Employees;
 

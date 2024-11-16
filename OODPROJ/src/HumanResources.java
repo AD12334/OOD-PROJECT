@@ -2,7 +2,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
-
+/**
+ * This class implements Human resources functionality to our system
+ */
 public class HumanResources extends User {
     // We want a particular employment to correspond to a scale
     private LinkedHashMap<String, Integer> hashMap;
@@ -12,6 +14,10 @@ public class HumanResources extends User {
     // The string can be our job titles
     // The array of ints can be all the scales associated with that specific job
     // title
+    /**
+     * This constructor makes a human resources employee and initialises a hashmap corresponding to the max scale for every position
+     * @throws FileNotFoundException
+     */
     public HumanResources() throws FileNotFoundException {
         super("HR", "HR");
         hashMap = new LinkedHashMap<>();
@@ -46,6 +52,10 @@ public class HumanResources extends User {
         // JOE,1731007147,PRESIDENTIAL,PRESIDENT,1
         // System.out.println(hashMap);
     }
+    /**
+     * This method changes the promotion id of an employee to 1 iff they are at the max scale of their position and they exist in our employees database
+     * @throws Exception
+     */
 
     public void setPromotion() throws Exception {
         Scanner sc = new Scanner(System.in);
@@ -88,7 +98,9 @@ public class HumanResources extends User {
         sc.close();
         sc2.close();
     }
-
+/**
+ * UI implementation for a  HR employee
+ */
     @Override
     public void displayOptions() {
         Scanner input = new Scanner(System.in);
@@ -128,6 +140,11 @@ public class HumanResources extends User {
     // We could do this by saving all employee info deleting all the instances of
     // the promoted employee from our database
     // Then we could just place our new promoted employee to our database
+    /**
+     * This method rewrites an employees promotion id
+     * @param targetRow
+     * @throws IOException
+     */
 
     public void promptPromotion(int targetRow) throws IOException {
         String filePath = "OODPROJ/src/employee_database.csv";

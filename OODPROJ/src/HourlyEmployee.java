@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
+/**
+ * This class provides methods to handle hourly payed employee conditions
+ */
 
 public class HourlyEmployee extends Employee {
   LinkedHashMap<String,float[]> hours = new LinkedHashMap<>();
@@ -60,6 +63,14 @@ public class HourlyEmployee extends Employee {
 
         //Make this so that the hourly employee constructor reads the hourlyemployee csv and then stores the number of hours they worked in a hashmap
   }
+  /**
+   * This method recognises the employees attempt to submit hours.
+   * If its possible to submit hours for the given time then we update the value of the employees's hours in their csv file
+   * @param month, This is the month for which our employee is submitting their hours for
+   * @param year, The combination of our month and year gives us the key for our hashmap
+   * @param employeeid, This is the employee id of the person submitting their hours
+   * 
+   */
 
 
 public void submithours(String month, int year, String employeeid) throws IOException {
@@ -163,24 +174,50 @@ public void submithours(String month, int year, String employeeid) throws IOExce
   }
       
   }
+  /**
+   * Used to get hours of a certain week
+   * @param month, month of the hour
+   * @param year, year of the month
+   * @return this returns the number of hours worked during the first week of the specified month and year
+   */
   public float gethour1(String month,String year){
     float[] arr = hours.get(month + year);
     return arr[0];
   }
+  /**
+   * Used to get hours of a certain week
+   * @param month, month of the hour
+   * @param year, year of the month
+   * @return this returns the number of hours worked during the second week of the specified month and year
+   */
   public float gethour2(String month,String year){
     float[] arr = hours.get(month + year);
     return arr[1];
   }
+  /**
+   * Used to get hours of a certain week
+   * @param month, month of the hour
+   * @param year, year of the month
+   * @return this returns the number of hours worked during the third week of the specified month and year
+   */
   public float gethour3(String month,String year){
     float[] arr = hours.get(month + year);
     return arr[2];
   }
+  /**
+   * Used to get hours of a certain week
+   * @param month, month of the hour
+   * @param year, year of the month
+   * @return this returns the number of hours worked during the final week of the specified month and year
+   */
   public float gethour4(String month,String year){
     float[] arr = hours.get(month + year);
     return arr[3];
   }
   
-
+/**
+ * This method is used to display UI options for hourly paid employees
+ */
   @Override
   public void displayOptions() {
     System.out.println("Employee Options:");
@@ -213,6 +250,11 @@ public void submithours(String month, int year, String employeeid) throws IOExce
       break;
     }
   }
+  /**
+   * This method calculates the amount of PRSI paid per week
+   * @param hours The number of hours worked during a given week 
+   * @return The amount of PRSI to be paid that week is returned
+   */
 
   public double calculatePRSI(float hours) {
     double prsi = 0;
@@ -257,6 +299,11 @@ public void submithours(String month, int year, String employeeid) throws IOExce
 
     return prsi;
   }
+  /**
+   * Calculates PAYE for a week
+   * @param hours Number of hours worked in a week
+   * @return returns the amount of PAYE to be paid in a week
+   */
 
   public double calculatePAYE(float hours) {
     double HigherRate;
@@ -299,7 +346,11 @@ public void submithours(String month, int year, String employeeid) throws IOExce
             52; // sum of tax - employee tax credit and personal tax credit
     return Math.max(Paye, 0);
   }
-
+/**
+ * This method calculates the amount of USC to be paid that week
+ * @param hours Hours worked in a week
+ * @return The USC to be paid that week
+ */
   public double calculateUSC(float hours) {
     double USC = 0;
     double grosspay = (getHourlyPay())*hours;
@@ -335,14 +386,21 @@ public void submithours(String month, int year, String employeeid) throws IOExce
     }
     return USC;
   }
-
+/**
+ * Calculates hourly pay;
+ * <p> Hourly paid employees have a salary based on a 40 hour work week, we can therefore estimate their hourly pay by dividing their hourly pay by 52(weeks in a year) and then by 40(work week hours)
+ * @return Returns hourly pay as a double
+ */
   public double getHourlyPay() {
     double hourlypay = (double)((getSalary() / 52.0) / 40.0);
     hourlypay = Math.round(hourlypay * 100.0) / 100.0;
     return hourlypay;
   }
+/**
+ *To String method
+ * @return Returns employee details
+ */
 
-  // TODO: getEmployee() function
   @Override
   public String toString() {
     return "Field : " + getField() + "\nEmployee : " + /* getEmployee() */
