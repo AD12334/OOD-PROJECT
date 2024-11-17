@@ -31,6 +31,10 @@ public class Time {
     for (int i = 0; i < length; i++) {
       currentTime.plusDays(1);
       timeCheck();
+      // I think we should be able to check if the date was changed
+      // aautomatically instead of manually calling a timeCheck()
+      // If the system was running, there would be no way of it changing time
+      // other than this method being called explicitly
     }
   }
 }
