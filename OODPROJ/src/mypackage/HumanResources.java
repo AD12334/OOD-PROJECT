@@ -1,3 +1,4 @@
+package mypackage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -26,7 +27,7 @@ public class HumanResources extends User {
         hashMap = new LinkedHashMap<>();
         scales = new ArrayList<>();
         positions = new ArrayList<>();
-        Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
+        Scanner sc = new Scanner(new File("OODPROJ/src/mypackage/salary_scales.csv"));
 
         // SETTING THE DELIMITER
         sc.useDelimiter(",");
@@ -72,7 +73,7 @@ public class HumanResources extends User {
         // We are asking the human resources person the id of the person they want
         // to promote An employee can only be promoted if they are at the max scale
         // We need to check if they are at the max scale
-        Scanner sc2 = new Scanner(new File("OODPROJ/src/employee_database.csv"));
+        Scanner sc2 = new Scanner(new File("OODPROJ/src/mypackage/employee_database.csv"));
         sc2.useDelimiter("\n");
         int rowCounter = 0;
         while (sc2.hasNext()) {
@@ -156,7 +157,7 @@ public class HumanResources extends User {
      */
 
     public void promptPromotion(int targetRow) throws IOException {
-        String filePath = "OODPROJ/src/employee_database.csv";
+        String filePath = "OODPROJ/src/mypackage/employee_database.csv";
         String newValue = "1";
         int targetCol = 6;
         // Step 1: Read all rows from the CSV
@@ -193,7 +194,7 @@ public class HumanResources extends User {
      */
     public void viewEmployeeList() {
         try {
-            Scanner sc = new Scanner(new File("OODPROJ/src/employee_database.csv"));
+            Scanner sc = new Scanner(new File("OODPROJ/src/mypackage/employee_database.csv"));
             sc.useDelimiter("\n");
             while (sc.hasNext()) {
                 String line = sc.next();

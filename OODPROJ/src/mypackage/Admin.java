@@ -1,3 +1,4 @@
+package mypackage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -69,7 +70,7 @@ public class Admin extends User {
      */
 
     public void addEmployee() throws IOException {
-        FileWriter myWriter = new FileWriter("OODPROJ/src/employee_database.csv", true);
+        FileWriter myWriter = new FileWriter("OODPROJ/src/mypackage/employee_database.csv", true);
 
         System.out.println("Input employee details");
         System.out.println("-----------------------------------------------------"
@@ -121,11 +122,11 @@ public class Admin extends User {
                     "," + scale + ",0"
                     + ",HOURLY"
                     + "\n");
-            File file = new File("OODPROJ/src/employeepayslips/t" + id + ".csv");
+            File file = new File("OODPROJ/src/mypackage/employeepayslips/t" + id + ".csv");
             file.createNewFile();
-            File file2 = new File("OODPROJ/src/Hourlyemployeehours/t" + id + "Hours.csv");
+            File file2 = new File("OODPROJ/src/mypackage/Hourlyemployeehours/t" + id + "Hours.csv");
             file2.createNewFile();
-            FileWriter myWriter2 = new FileWriter("OODPROJ/src/Hourlyemployeehours/t" + id + "Hours.csv", true);
+            FileWriter myWriter2 = new FileWriter("OODPROJ/src/mypackage/Hourlyemployeehours/t" + id + "Hours.csv", true);
             // Must populate the csv with some sample data
             myWriter2.write(occupyCSV());
             myWriter2.close();
@@ -177,7 +178,7 @@ public class Admin extends User {
             myWriter.write(name + ",t" + id + "," + id + "," + field + "," + role +
                     "," + scale + ",0"
                     + "\n");
-            File file = new File("OODPROJ/src/employeepayslips/t" + id + ".csv");
+            File file = new File("OODPROJ/src/mypackage/employeepayslips/t" + id + ".csv");
             file.createNewFile();
         }
 
@@ -214,7 +215,7 @@ public class Admin extends User {
      */
     public ArrayList<String> Fields() throws FileNotFoundException {
         ArrayList<String> fields = new ArrayList<>();
-        Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
+        Scanner sc = new Scanner(new File("OODPROJ/src/mypackage/salary_scales.csv"));
 
         // SETTING THE DELIMITER
         sc.useDelimiter("\n");
@@ -247,7 +248,7 @@ public class Admin extends User {
             // format
             throws FileNotFoundException {
         ArrayList<String> positions = new ArrayList<>();
-        Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
+        Scanner sc = new Scanner(new File("OODPROJ/src/mypackage/salary_scales.csv"));
         sc.useDelimiter(",");
         sc.useDelimiter("\n");
         while (sc.hasNext()) {
@@ -277,7 +278,7 @@ public class Admin extends User {
     public ArrayList<Integer> Scales(String Field, String Position)
             throws FileNotFoundException {
         ArrayList<Integer> Scales = new ArrayList<>();
-        Scanner sc = new Scanner(new File("OODPROJ/src/salary_scales.csv"));
+        Scanner sc = new Scanner(new File("OODPROJ/src/mypackage/salary_scales.csv"));
         sc.useDelimiter(",");
         sc.useDelimiter("\n");
         while (sc.hasNext()) {
@@ -305,7 +306,7 @@ public class Admin extends User {
      */
 
     public Boolean checkIfPresidentExists() throws FileNotFoundException {
-        Scanner sc = new Scanner(new File("OODPROJ/src/employee_database.csv"));
+        Scanner sc = new Scanner(new File("OODPROJ/src/mypackage/employee_database.csv"));
         sc.useDelimiter(",");
         sc.useDelimiter("\n");
         while (sc.hasNext()) {
@@ -330,7 +331,7 @@ public class Admin extends User {
      * @throws FileNotFoundException
      */
     public Boolean checkIfVicePresidentExists() throws FileNotFoundException {
-        Scanner sc = new Scanner(new File("OODPROJ/src/employee_database.csv"));
+        Scanner sc = new Scanner(new File("OODPROJ/src/mypackage/employee_database.csv"));
         sc.useDelimiter(",");
         sc.useDelimiter("\n");
         while (sc.hasNext()) {
@@ -404,7 +405,7 @@ public class Admin extends User {
      */
     public void viewEmployeeList() {
         try {
-            Scanner sc = new Scanner(new File("OODPROJ/src/employee_database.csv"));
+            Scanner sc = new Scanner(new File("OODPROJ/src/mypackage/employee_database.csv"));
             sc.useDelimiter("\n");
             while (sc.hasNext()) {
                 String line = sc.next();
