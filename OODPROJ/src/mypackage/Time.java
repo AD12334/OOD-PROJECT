@@ -3,8 +3,8 @@ package mypackage;
 import java.time.LocalDate;
 
 public class Time {
-  LocalDate currentTime;
-  boolean hasScaled;
+  private static LocalDate currentTime;
+  private boolean hasScaled;
 
   public Time() {
     currentTime = LocalDate.now();
