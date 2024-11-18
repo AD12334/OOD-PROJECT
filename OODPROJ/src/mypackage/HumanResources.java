@@ -1,4 +1,5 @@
 package mypackage;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -102,8 +103,8 @@ public class HumanResources extends User {
             }
             rowCounter++;
         }
-        sc.close();
-        sc2.close();
+        // sc.close();
+        // sc2.close();
     }
 
     /**
