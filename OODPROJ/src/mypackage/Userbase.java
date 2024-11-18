@@ -1,4 +1,5 @@
 package mypackage;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -18,13 +19,17 @@ public class Userbase {
         loadEmployees();
     }
 
+    /**
+     * Login method for the system
+     * 
+     * @throws FileNotFoundException
+     */
     public static void Login() {
         loadEmployees(); // Reload employees in case of new additions or modifications
         Scanner sc = new Scanner(System.in);
         System.out.println("\nPlease enter your username (or \"q\" to quit): ");
         String username = sc.nextLine();
         if (username.equals("q")) {
-            sc.close();
             System.exit(0);
         }
         System.out.println("Please enter your password: ");
@@ -42,12 +47,19 @@ public class Userbase {
             System.out.println(e.getMessage());
             Login();
         } catch (Exception e) {
-            System.out.println("Invalid password. Try again.");
+            // System.out.println("Invalid password. Try again.");
+            System.out.println(e);
             Login();
         }
         sc.close();
     }
 
+    /**
+     * Check if the username is valid
+     * 
+     * @param username
+     * @throws LoginException
+     */
     public static void checkLogin(String username) throws LoginException {
         if (usersbase.containsKey(username)) {
             System.out.println("\nUsername is valid.");
@@ -56,6 +68,13 @@ public class Userbase {
         }
     }
 
+    /**
+     * Check if the password is valid
+     * 
+     * @param username
+     * @param password
+     * @throws Exception
+     */
     public static void checkPassword(String username, String password) throws Exception {
         User user = usersbase.get(username);
         if (user.getPassword().equals(password)) {
@@ -67,6 +86,11 @@ public class Userbase {
         }
     }
 
+    /**
+     * Load all employee records from the employee_database.csv file
+     * 
+     * @throws FileNotFoundException
+     */
     public static void loadEmployees() {
         // Load all employee records from the employee_database.csv file
         try {

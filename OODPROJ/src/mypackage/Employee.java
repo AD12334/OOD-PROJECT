@@ -1,4 +1,5 @@
 package mypackage;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -193,37 +194,86 @@ public class Employee extends User {
      * UI options for an employee
      */
     @Override
-    public void displayOptions() {
+    public void displayOptions() throws Exception {
         System.out.println("\nEmployee Options:");
         checkDate();
         System.out.println("1. View Personal Details");
         System.out.println("2. View Payslip");
-        System.out.println("3. Logout");
+        System.out.println("3. Check for Promotion");
 
-        // Add any other options specific to employees
-        Scanner sc = new Scanner(System.in);
-        int command = sc.nextInt();
-        switch (command) {
-            case 1: // View Personal Details
-                System.out.println(this.toString());
-                displayOptions();
-            case 2:
-                viewPayslip();
-                displayOptions();
-                break;
-            case 3:
-                System.out.println("Logging out");
-                Userbase.Login();
-                // System.exit(0);
-            default:
-                System.out.println("Please enter a valid Command");
-                displayOptions();
-                break;
+        // Check if employee is hourly paid
+        if (field.equals("ULAC") || field.equals("ULAC2")) {
+            System.out.println("4. Submit Hours Worked");
+            System.out.println("5. Logout");
+            Scanner sc = new Scanner(System.in);
+            int command = sc.nextInt();
+            switch (command) {
+                case 1: // View Personal Details
+                    System.out.println(this.toString());
+                    displayOptions();
+                case 2:
+                    viewPayslip();
+                    displayOptions();
+                    break;
+                case 3:
+                    HandlePromotion();
+                    displayOptions();
+                case 4:
+                    HourlyEmployee hourlyEmployee = new HourlyEmployee(name, getUsername(), "t" + employeeID, salary,
+                            field,
+                            role,
+                            scale);
+                    Scanner sc2 = new Scanner(System.in);
+                    System.out.println("Select the year which you wish to submit hours for");
+                    int year = sc2.nextInt();
+                    sc2.nextLine();
+                    System.out.println("Select the month which you wish to submit hours for");
+                    String month = sc2.nextLine();
+                    hourlyEmployee.submithours(month.toUpperCase(), year, employeeID);
+                    displayOptions();
+                case 5:
+                    System.out.println("Logging out");
+                    Userbase.Login();
+                default:
+                    System.out.println("Please enter a valid Command");
+                    displayOptions();
+                    break;
+            }
+        } else {
+            System.out.println("4. Logout");
+            // Add any other options specific to employees
+            Scanner sc = new Scanner(System.in);
+            int command = sc.nextInt();
+            switch (command) {
+                case 1: // View Personal Details
+                    System.out.println(this.toString());
+                    displayOptions();
+                case 2:
+                    viewPayslip();
+                    displayOptions();
+                    break;
+                case 3:
+                    HandlePromotion();
+                    displayOptions();
+                case 4:
+                    System.out.println("Logging out");
+                    Userbase.Login();
+                default:
+                    System.out.println("Please enter a valid Command");
+                    displayOptions();
+                    break;
+            }
         }
+
     }
 
-    public void viewPayslip() {
-        // TODO: Implementation for viewing payslip
+    /**
+     * View the payslip of an employee
+     * 
+     * @throws FileNotFoundException
+     */
+    public void viewPayslip() throws FileNotFoundException {
+        BasicPayslip payslip = new BasicPayslip(getUsername(), getPassword());
     }
 
     /**
@@ -281,6 +331,8 @@ public class Employee extends User {
                             "Congratulations on accepting your new promotion !!!!");
                     AcceptPromotion(counter, changePosition(position));
                 }
+            } else {
+                System.out.println("No promotions available");
             }
             counter++;
         }
