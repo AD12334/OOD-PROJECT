@@ -80,7 +80,7 @@ public void submithours(String month, int year, String employeeid) throws IOExce
     String key = month +  year;
 
     // Check if current date is before the 23rd of the month and if no data for the month exists
-    if (LocalDate.now().isBefore(LocalDate.of(year, monthno, 10)) && Arrays.equals(hours.get(key), new float[]{0.0f, 0.0f, 0.0f, 0.0f})) {
+    if (LocalDate.now().isBefore(LocalDate.of(year, monthno, 19)) && Arrays.equals(hours.get(key), new float[]{0.0f, 0.0f, 0.0f, 0.0f})) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the number of hours worked during week 1 of the working period");
         float hours1 = Float.parseFloat(sc.nextLine());

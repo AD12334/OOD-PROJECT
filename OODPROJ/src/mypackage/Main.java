@@ -57,9 +57,9 @@ public class Main {
         // userbase.addUser(user2);
         // userbase.addUser(user3);
         // userbase.Login();
-        // Admin admin1 = new Admin("k", "m");
+        //Admin admin1 = new Admin("k", "m");
         // admin1.displayOptions();
-        // admin1.addEmployee();
+         //admin1.addEmployee();
         // HumanResources humanResources = new HumanResources();
         // humanResources.setPromotion();
 
@@ -69,8 +69,8 @@ public class Main {
         //userbase.Login();
 
         // "ACADEMIC", "PROFESSOR", 5);
-        BasicPayslip payslip = new BasicPayslip("t17316811", "17316811");
-        // BasicPayslip payslip = new BasicPayslip("t17316802","17316802");
+        //BasicPayslip payslip = new BasicPayslip("t17316811", "17316811");
+        BasicPayslip payslip = new BasicPayslip("t17319264","17319264");
 
         // System.out.println((lines[3].getClass().getName()));
 
