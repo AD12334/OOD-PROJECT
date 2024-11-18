@@ -303,7 +303,10 @@ public class Employee extends User {
             String position = lines[4];
 
             int promotion = Integer.parseInt(lines[6]);
-            if (promotion == 1) {
+            if (promotion != 1){
+                System.out.println("No promotions available");
+            }
+            else if (promotion == 1) {
                 System.out.println(
                         "Congratulations you have been selected for promotion");
 
@@ -331,9 +334,7 @@ public class Employee extends User {
                             "Congratulations on accepting your new promotion !!!!");
                     AcceptPromotion(counter, changePosition(position));
                 }
-            } else {
-                System.out.println("No promotions available");
-            }
+            } 
             counter++;
         }
     }

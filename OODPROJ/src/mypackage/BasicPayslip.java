@@ -260,6 +260,7 @@ public class BasicPayslip {
                 double totalworked = hoursworked1 + hoursworked2 + hoursworked3 + hoursworked4;
                 totalworked = Math.round(totalworked * 100) / 100;
                 double totalpaye = paye1 + paye2 + paye3 + paye4;
+                totalpaye = Math.round(totalpaye*100) /100;
                 double totalprsi = prsi1 + prsi2 + prsi3 + prsi4;
                 double totalusc = usc1 + usc2 + usc3 + usc4;
                 totalusc = Math.round(totalusc * 100.0) / 100.0;
@@ -345,7 +346,13 @@ public class BasicPayslip {
                 int scale = Integer.parseInt(lines[5]);
 
                 Employee employee = new Employee(name, "t" + id, id, field, role, scale);
-
+                int GrossAnnual =  employee.getSalary();
+                int GrossMonthly = Math.round((GrossAnnual/12) *100)/100;
+                GrossAnnual = Math.round(GrossAnnual *100)/100;
+                int Paye = (int) Math.round(employee.calculatePAYE() / 12.0);
+                int Prsi = (int) Math.round(employee.calculatePRSI() / 12.0);
+                int USC = (int) Math.round(employee.calculateUSC() / 12.0);
+                int netpay = (int) Math.round(employee.calculateNetPay() / 12.0);
                 System.out.println(
                         "---------------------------------------------------------------------------------------");
                 System.out.println(
@@ -355,15 +362,14 @@ public class BasicPayslip {
                 System.out.println("Field: " + field);
                 System.out.println("Position: " + role);
                 System.out.println("Scale: " + scale);
-                System.out.println("Gross annual pay: " + employee.getSalary());
-                System.out.println("Gross monthly pay: " + employee.getSalary() / 12);
-                System.out.println("PAYE: " + employee.calculatePAYE() / 12);
-                System.out.println("PRSI: " + employee.calculatePRSI() / 12);
-                System.out.println("USC: " + employee.calculateUSC() / 12);
+                System.out.println("Gross annual pay: " + GrossAnnual);
+                System.out.println("Gross monthly pay: " + GrossMonthly);
+                System.out.println("PAYE: " + Paye );
+                System.out.println("PRSI: " + Prsi );
+                System.out.println("USC: " + USC);
                 System.out.println(
-                        "Total Deductions: " + (employee.calculatePAYE() / 12 + employee.calculatePRSI() / 12
-                                + employee.calculateUSC() / 12));
-                System.out.println("Net pay: " + employee.calculateNetPay() / 12);
+                        "Total Deductions: " + (Paye + USC + Prsi));
+                System.out.println("Net pay: " + netpay);
                 System.out.println("Pay method: PayPath");
                 System.out.println(
                         "----------------------------------------------------------------------------------------");
@@ -380,17 +386,16 @@ public class BasicPayslip {
                                 "Field: " + field + "\n" +
                                 "Position: " + role + "\n" +
                                 "Scale: " + scale + "\n" +
-                                "Gross annual pay: " + employee.getSalary() + "\n" +
-                                "Gross monthly pay: " + employee.getSalary() / 12 + "\n" +
-                                "PAYE: " + employee.calculatePAYE() / 12 + "\n" +
-                                "PRSI: " + employee.calculatePRSI() / 12 + "\n" +
-                                "USC: " + employee.calculateUSC() / 12 + "\n" +
+                                "Gross annual pay: " + GrossAnnual + "\n" +
+                                "Gross monthly pay: " + GrossMonthly / 12 + "\n" +
+                                "PAYE: " + Paye + "\n" +
+                                "PRSI: " + Prsi + "\n" +
+                                "USC: " + USC + "\n" +
 
                                 "Total Deductions: "
-                                + (employee.calculatePAYE() / 12 + employee.calculatePRSI() / 12
-                                        + employee.calculateUSC() / 12)
+                                + (Paye + Prsi + USC)
                                 + "\n" +
-                                "Net pay: " + employee.calculateNetPay() / 12 + "\n" +
+                                "Net pay: " + netpay+ "\n" +
                                 "Pay method: PayPath" + "\n" +
                                 "----------------------------------------------------------------------------------------");
 
