@@ -2,8 +2,12 @@ package mypackage;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.Map;
+import javax.swing.text.Position;
 import mypackage.BasicPayslip;
 import mypackage.HourlyEmployee;
+import mypackage.HumanResources;
+import mypackage.User;
 
 public class Time {
   private static LocalDate currentTime;
@@ -17,8 +21,31 @@ public class Time {
   public void timeCheck() {
     if (currentTime.getMonthValue() == 10) {
       if (!hasScaled) {
-        // TODO: scale up every employee
-
+        for (User user : Userbase.getUsersbase().values()) {
+          if (user instanceof HourlyEmployee) {
+            HourlyEmployee hourly = (HourlyEmployee)user;
+            for (Map.Entry<String, Integer> entry :
+                 HumanResources.getHashMap().entrySet()) {
+              // matching the employee's field to postion of the hashmap
+              // then checking if their scale is lower than max
+              if (entry.getKey().equals(hourly.getField()) &&
+                  entry.getValue() > hourly.getScale()) {
+                hourly.setScale(hourly.getScale() + 1);
+              }
+            }
+          } else if (user instanceof Employee) {
+            Employee fullTime = (Employee)user;
+            for (Map.Entry<String, Integer> entry :
+                 HumanResources.getHashMap().entrySet()) {
+              // matching the employee's field to postion of the hashmap
+              // then checking if their scale is lower than max
+              if (entry.getKey().equals(fullTime.getField()) &&
+                  entry.getValue() > fullTime.getScale()) {
+                fullTime.setScale(fullTime.getScale() + 1);
+              }
+            }
+          }
+        }
         hasScaled = true;
       }
     } else {
@@ -26,24 +53,20 @@ public class Time {
     }
 
     if (currentTime.getDayOfMonth() == 25) {
-      // TODO: send payslips to every employee
-      HashMap users = Userbase.getUsersbase();
-      // FullTimePayslips
-      // HourlyPayslips
+      // iterates through hashmap & checks if they are hourly/full time
       for (User user : Userbase.getUsersbase().values()) {
         if (user instanceof HourlyEmployee) {
           // no hours will be submitted so idk
         } else if (user instanceof Employee) {
-          Employee fullTime = (Employee) user;
+          Employee fullTime = (Employee)user;
           String month = currentTime.getMonth().toString();
           String day = currentTime.getDayOfWeek().toString();
           try {
             BasicPayslip payslip = new BasicPayslip(fullTime.getEmployeeID(),
-                fullTime.getPassword());
+                                                    fullTime.getPassword());
             payslip.FullTimePayslip(fullTime.getEmployeeID(), month, day,
-                currentTime.getYear());
+                                    currentTime.getYear());
           } catch (Exception e) {
-            // TODO: handle exception
             System.err.println("could not create payslip");
           }
         }
@@ -56,10 +79,6 @@ public class Time {
     for (int i = 0; i < length; i++) {
       currentTime.plusDays(1);
       timeCheck();
-      // I think we should be able to check if the date was changed
-      // automatically instead of manually calling a timeCheck()
-      // If the system was running, there would be no way of it changing time
-      // other than this method being called explicitly
     }
   }
 }
