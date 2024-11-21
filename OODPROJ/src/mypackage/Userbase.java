@@ -41,24 +41,35 @@ public class Userbase {
       checkPassword(username, password);
       if (loggedin) {
         // Polymorphic call to displayOptions based on user type
+        
         User user = usersbase.get(username);
+        
         if(user instanceof  Employee){
+        
           Employee emp = (Employee)user;
           if(emp.getField().equals("ULAC")||emp.getField().equals("ULAC2")){
           //public HourlyEmployee(String name, String username, String employeeID,
           //int salary, String field, String role, int scale)
           //throws FileNotFoundException {
          //super(name, username, employeeID, field, role, scale);
+        
          
           emp = new HourlyEmployee(emp.getName(),   emp.getUsername(), "t" + emp.getEmployeeID(), emp.getSalary(), emp.getField(), emp.getRole(), emp.getScale());
           emp.displayOptions();
-          }
-        } 
-        user.displayOptions();
+          
+        }
+        
+          
+        
+        
+        
       }
-    } catch (LoginException e) {
+      user.displayOptions();
+    }
+   
+   }catch (LoginException e) {
       System.out.println(e.getMessage());
-      Login();
+      
     } catch (Exception e) {
       // System.out.println("Invalid password. Try again.");
       System.out.println(e);

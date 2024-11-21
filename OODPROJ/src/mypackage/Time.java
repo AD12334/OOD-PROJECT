@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Time {
-  private static LocalDate currentTime;
+  protected  static LocalDate currentTime;
   private boolean hasScaled;
   private String lastentry;
 

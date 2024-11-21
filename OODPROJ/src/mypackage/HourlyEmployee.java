@@ -285,10 +285,13 @@ public class HourlyEmployee extends Employee {
     int command = input.nextInt();
     switch (command) {
     case 1:
-      toString();
+      System.out.println(toString());
       displayOptions();
+      
     case 2:
-      viewPayslip();
+    String password = getPassword().substring(1,getPassword().length());
+    System.out.println(password);
+      BasicPayslip payslip = new BasicPayslip(getUsername(), password);
       displayOptions();
       break;
     case 3:
@@ -490,9 +493,10 @@ public class HourlyEmployee extends Employee {
    * @return Returns employee details
    */
 
-  @Override
+@Override
   public String toString() {
-    return "Field : " + getField() + "\nEmployee : " + /* getEmployee() */
-        "\nSalary : " + getSalary() + "\nScale : " + getScale();
+    return "Name: " + getName() + "\nField : " + getField() + "\nEmployee : " + getRole() +
+  
+        "\nSalary : " + getSalary() + "\nScale : " + getScale() +"\n";
   }
 }
