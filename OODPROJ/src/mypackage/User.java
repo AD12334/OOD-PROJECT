@@ -24,6 +24,7 @@ public abstract class User {
     public void setPassword(String password) {
         this.password = password;
     }
+    
 
     // Abstract method to be implemented by subclasses
     public abstract void displayOptions() throws Exception;

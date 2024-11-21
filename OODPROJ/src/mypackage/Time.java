@@ -3,6 +3,7 @@ package mypackage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
@@ -11,18 +12,18 @@ import java.util.Scanner;
 public class Time {
   private static LocalDate currentTime;
   private boolean hasScaled;
+  private String lastentry;
 
   public Time() {
-    currentTime = LocalDate.now();
-    hasScaled = false;
+    this.currentTime = LocalDate.now();
+    this.hasScaled = false;
   }
 //TODO Make it change stuff in employees_database
-  public void timeCheck() throws IOException {
-    if (currentTime.getMonthValue() == 10) {
+  public void timeCheck(LocalDate ct) throws IOException {
+    if (ct.getMonthValue() == 10) {
       if (!hasScaled) {
         for (User user : Userbase.getUsersbase().values()) {
-          if (user instanceof HourlyEmployee) {
-            HourlyEmployee hourly = (HourlyEmployee)user;
+          if (user instanceof HourlyEmployee hourly) {
             for (Map.Entry<String, Integer> entry :
                  HumanResources.getHashMap().entrySet()) {
               // matching the employee's field to postion of the hashmap
@@ -36,8 +37,7 @@ public class Time {
                 UpdateScale(scale, id);
               }
             }
-          } else if (user instanceof Employee) {
-            Employee fullTime = (Employee)user;
+          } else if (user instanceof Employee fullTime) {
             for (Map.Entry<String, Integer> entry :
                  HumanResources.getHashMap().entrySet()) {
               // matching the employee's field to postion of the hashmap
@@ -60,23 +60,30 @@ public class Time {
     } else {
       hasScaled = false;
     }
-
-    if (currentTime.getDayOfMonth() == 25) {
+    if (ct.getDayOfMonth() == 25) {
       // iterates through hashmap & checks if they are hourly/full time
-      for (User user : Userbase.getUsersbase().values()) {
-        if (user instanceof HourlyEmployee) {
-          // no hours will be submitted so idk
-          HourlyEmployee hourly = (HourlyEmployee)user;
-          hourly.addSubmittable(currentTime);
-        } else if (user instanceof Employee) {
-          Employee fullTime = (Employee)user;
-          String month = currentTime.getMonth().toString();
-          String day = currentTime.getDayOfWeek().toString();
+      for (User user : new ArrayList<>(Userbase.getUsersbase().values())) {
+        System.out.println("user: " + user);
+        if (user instanceof Employee emp) {
+          if(emp.getField().equals("ULAC") || emp.getField().equals("ULAC2")){
+            HourlyEmployee hourly = new HourlyEmployee(emp.getName(),   emp.getUsername(), "t" + emp.getEmployeeID(), emp.getSalary(), emp.getField(), emp.getRole(), emp.getScale());
+            System.out.println("New month is " + currentTime.getMonth());
+            String Month = ct.getMonth().toString();
+            String year = ct.getYear() + "";
+            System.out.println((Month + year));
+           
+            
+
+           
+          }
+        } else if (user instanceof Employee fullTime) {
+          String month = ct.getMonth().toString();
+          String day = ct.getDayOfWeek().toString();
           try {
             BasicPayslip payslip = new BasicPayslip(fullTime.getEmployeeID(),
                                                     fullTime.getPassword());
             payslip.FullTimePayslip(fullTime.getEmployeeID(), month, day,
-                                    currentTime.getYear());
+                                    ct.getYear());
           } catch (Exception e) {
             System.err.println("could not create payslip");
           }
@@ -87,13 +94,32 @@ public class Time {
 
   // call this in main to simulate days passing
   public void moveDays(int length) throws IOException {
+    System.out.println("We are moving forward by " + length + " days");
+    ArrayList<LocalDate> months = new ArrayList<LocalDate>();
     if(length > 0){
-      for (int i = 0; i < length; i++) {
-       currentTime = currentTime.plusDays(1);
-        timeCheck();
+      LocalDate previousTime = currentTime;
+      currentTime = currentTime.plusDays(length);
+      timeCheck(currentTime);
+      if (previousTime.getDayOfMonth() >= 25){
+        previousTime = previousTime.plusMonths(1);
+      }
+      while(currentTime.getMonthValue() > previousTime.getMonthValue() || currentTime.getYear() > previousTime.getYear()){
+        months.add(previousTime);
+        System.out.println(previousTime.getMonth().toString());
+        previousTime = previousTime.plusMonths(1);
+      }
+      
+    }
+    for (User user : new ArrayList<>(Userbase.getUsersbase().values())) {
+      if (user instanceof Employee emp) {
+        if(emp.getField().equals("ULAC") || emp.getField().equals("ULAC2")){
+          HourlyEmployee hourly = new HourlyEmployee(emp.getName(),   emp.getUsername(), "t" + emp.getEmployeeID(), emp.getSalary(), emp.getField(), emp.getRole(), emp.getScale());
+          System.out.println(hourly.getEmployeeID());
+          TimeWriter(months, emp.getEmployeeID());
+
+        }
       }
     }
-    
   }
   public void UpdateScale(int scale,String employeeid) throws IOException {
      Scanner sc2 = new Scanner(new File("OODPROJ/src/mypackage/employee_database.csv"));
@@ -138,9 +164,23 @@ public class Time {
                 writer.write(String.join(",", row));
                 writer.write("\n"); // Add a newline after each row
             }
+            writer.close();
         }
+       
+      
     }
     public LocalDate getCurrentDate(){
       return currentTime;
     }
+    public void TimeWriter(ArrayList<LocalDate> arr, String id) throws IOException{
+
+      FileWriter myWriter2 = new FileWriter("OODPROJ/src/mypackage/Hourlyemployeehours/t" + id + "Hours.csv", true);
+      for(int i =0; i < arr.size();i++){
+      
+       myWriter2.write( arr.get(i).getMonth().toString() + "" + arr.get(i).getYear() + ",0,0,0,0 " +  "\n");
+
+      }
+      myWriter2.close();
+    }
 }
+

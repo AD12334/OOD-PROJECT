@@ -1,9 +1,7 @@
 package mypackage;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  * This class simulates our system
@@ -13,7 +11,7 @@ public class Main {
 
     // Reading in the file with our full time employees
     public static void main(String[] args) throws IOException, Exception {
-        // Scanner sc = new Scanner(new
+        // Scanner sc = new Scanner(newadminadm
         // File("OODPROJ/src/mypackage/salary_scales.csv"));
         // ArrayList<Employee> Employees = new ArrayList<>();
         Userbase userbase = new Userbase();

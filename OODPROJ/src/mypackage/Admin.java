@@ -54,8 +54,10 @@ public class Admin extends User {
             Scanner sc3 = new Scanner(System.in);
             System.out.println("Enter the number of days which you want to move forward!");
             try{
-              int daymovement =   sc3.nextInt();
+              int daymovement =  sc3.nextInt();
+              ArrayList<LocalDate> arr;
               time.moveDays(daymovement);
+
               
               
             }catch (Exception e){
@@ -379,8 +381,12 @@ public class Admin extends User {
      * @return returns the arraylist of randomly generated hours.
      */
     public String occupyCSV() {
-        int year = 2020;
+        int startYear = 2020;
+        int currentYear = LocalDate.now().getYear();
+        int currentMonth = LocalDate.now().getMonthValue();
+        LocalDate now = LocalDate.now();
         String output = "";
+    
         LinkedHashMap<Integer, String> months = new LinkedHashMap<>();
         months.put(1, "JANUARY");
         months.put(2, "FEBRUARY");
@@ -394,26 +400,29 @@ public class Admin extends User {
         months.put(10, "OCTOBER");
         months.put(11, "NOVEMBER");
         months.put(12, "DECEMBER");
-        for (int j = 0; j < LocalDate.now().getYear() - year + 1; j++) {
-            for (int i = 1; i < 13; i++) {
-                if (LocalDate.now().isAfter(LocalDate.of(year + j, i, 25))) {
+    
+        for (int year = startYear; year <= currentYear; year++) {
+            int endMonth = (year == currentYear) ? currentMonth : 12;
+    
+            for (int month = 1; month <= endMonth; month++) {
+                LocalDate checkDate = LocalDate.of(year, month, 25);
+    
+                // Only add the month if the current date is after the 25th of that month
+                if (now.isAfter(checkDate)) {
                     float val1 = (int) (Math.random() * 40);
                     float val2 = (int) (Math.random() * 40);
                     float val3 = (int) (Math.random() * 40);
                     float val4 = (int) (Math.random() * 40);
-                    int currentyear = year + j;
-                    output += months.get(i) + currentyear + "," + val1 + "," + val2 + "," + val3 + "," + val4 + "\n";
-
-                }
-                if (LocalDate.now().isBefore(LocalDate.of(year + j, i, 25))) {
-                    int currentyear = year + j;
-                    output += months.get(i) + currentyear + "," + 0 + "," + 0 + "," + 0 + "," + 0 + "\n";
+                    output += months.get(month) + year + "," + val1 + "," + val2 + "," + val3 + "," + val4 + "\n";
                 }
             }
-
         }
+    
         return output;
     }
+    
+    
+    
 
     /**
      * This method is used to view all employees in our database

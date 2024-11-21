@@ -292,12 +292,13 @@ public class HourlyEmployee extends Employee {
       displayOptions();
       break;
     case 3:
-      System.out.println("Log hours for months:");
+      System.out.println("Log hours for months: " + getSubmittable());
       // iterate through arraylist of months with missing hours
       for (int i = 1; i < submittable.size() + 1; i++) {
         System.out.printf("%d. %s %d", i,
                           submittable.get(i).getMonth().toString(),
                           submittable.get(i).getYear());
+                          
       }
       Scanner monthInput = new Scanner(System.in);
       int month = monthInput.nextInt();
@@ -463,6 +464,9 @@ public class HourlyEmployee extends Employee {
       USC += (grosspay - thresholds[2]) * rates[3];
     }
     return USC;
+  }
+  public ArrayList<LocalDate> getSubmittable(){
+    return submittable;
   }
 
   /**
