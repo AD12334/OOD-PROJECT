@@ -66,6 +66,8 @@ public class Time {
       for (User user : Userbase.getUsersbase().values()) {
         if (user instanceof HourlyEmployee) {
           // no hours will be submitted so idk
+          HourlyEmployee hourly = (HourlyEmployee)user;
+          hourly.addSubmittable(currentTime);
         } else if (user instanceof Employee) {
           Employee fullTime = (Employee)user;
           String month = currentTime.getMonth().toString();
@@ -85,10 +87,13 @@ public class Time {
 
   // call this in main to simulate days passing
   public void moveDays(int length) throws IOException {
-    for (int i = 0; i < length; i++) {
-      currentTime.plusDays(1);
-      timeCheck();
+    if(length > 0){
+      for (int i = 0; i < length; i++) {
+       currentTime = currentTime.plusDays(1);
+        timeCheck();
+      }
     }
+    
   }
   public void UpdateScale(int scale,String employeeid) throws IOException {
      Scanner sc2 = new Scanner(new File("OODPROJ/src/mypackage/employee_database.csv"));
@@ -134,5 +139,8 @@ public class Time {
                 writer.write("\n"); // Add a newline after each row
             }
         }
+    }
+    public LocalDate getCurrentDate(){
+      return currentTime;
     }
 }

@@ -309,6 +309,8 @@ public class HourlyEmployee extends Employee {
       // log hours for selected month
       submithours(submittable.get(month).getMonth().toString(),
                   submittable.get(month).getYear(), getEmployeeID());
+          
+                 
       break;
     case 4:
       System.out.println("Logging out");

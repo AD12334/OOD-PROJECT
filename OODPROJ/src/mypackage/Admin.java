@@ -27,7 +27,8 @@ public class Admin extends User {
         System.out.println("\nAdmin Options:");
         System.out.println("1. Add New Employee");
         System.out.println("2. View Employee List");
-        System.out.println("3. Logout");
+        System.out.println("3. Simulate time forward");
+        System.out.println("4. Logout");
         // Other admin-specific options
 
         Scanner input = new Scanner(System.in);
@@ -41,15 +42,34 @@ public class Admin extends User {
                     System.out.println("Please enter valid fields");
                     displayOptions();
                 }
+                break;
             case 2: // View Employee List
                 System.out.println("Employees: ");
                 viewEmployeeList();
                 displayOptions();
                 break;
-            case 3: // Logout
+            
+            case 3:
+            Time time = new Time();
+            Scanner sc3 = new Scanner(System.in);
+            System.out.println("Enter the number of days which you want to move forward!");
+            try{
+              int daymovement =   sc3.nextInt();
+              time.moveDays(daymovement);
+              
+              
+            }catch (Exception e){
+                System.out.println("Please enter a valid integer number of days");
+            }finally {
+                System.out.println("The current day is " + time.getCurrentDate());
+                displayOptions();
+            }
+            break;
+            case 4: // Logout
                 System.out.println("Logging out");
                 Userbase.Login();
                 // System.exit(0);
+                break;
             default:
                 System.out.println("Please enter a valid Command");
                 displayOptions();
