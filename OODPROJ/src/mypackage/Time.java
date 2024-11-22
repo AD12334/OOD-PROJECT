@@ -160,11 +160,9 @@ public class Time {
 
   public void TimeWriter(ArrayList<LocalDate> arr, String id)
       throws IOException {
-
     FileWriter myWriter2 = new FileWriter(
         "OODPROJ/src/mypackage/Hourlyemployeehours/t" + id + "Hours.csv", true);
     for (int i = 0; i < arr.size(); i++) {
-
       myWriter2.write(arr.get(i).getMonth().toString() + "" +
                       arr.get(i).getYear() + ",0,0,0,0 "
                       + "\n");
