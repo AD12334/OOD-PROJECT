@@ -225,10 +225,17 @@ public class Employee extends User {
                             scale);
                     Scanner sc2 = new Scanner(System.in);
                     System.out.println("Select the year which you wish to submit hours for");
-                    int year = sc2.nextInt();
+                    String year_s = sc2.nextLine();
+                    if (year_s.equalsIgnoreCase("q")) {
+                        displayOptions();
+                    }
+                    int year = Integer.parseInt(year_s);
                     sc2.nextLine();
                     System.out.println("Select the month which you wish to submit hours for");
                     String month = sc2.nextLine();
+                    if (month.equalsIgnoreCase("q")) {
+                        displayOptions();
+                    }
                     hourlyEmployee.submithours(month.toUpperCase(), year, employeeID);
                     displayOptions();
                 case 5:
@@ -303,10 +310,9 @@ public class Employee extends User {
             String position = lines[4];
 
             int promotion = Integer.parseInt(lines[6]);
-            if (promotion != 1){
+            if (promotion != 1) {
                 System.out.println("No promotions available");
-            }
-            else if (promotion == 1) {
+            } else if (promotion == 1) {
                 System.out.println(
                         "Congratulations you have been selected for promotion");
 
@@ -334,7 +340,7 @@ public class Employee extends User {
                             "Congratulations on accepting your new promotion !!!!");
                     AcceptPromotion(counter, changePosition(position));
                 }
-            } 
+            }
             counter++;
         }
     }

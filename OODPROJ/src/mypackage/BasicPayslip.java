@@ -75,24 +75,40 @@ public class BasicPayslip {
                 Scanner sc = new Scanner(System.in);
                 System.out.println("Select the year which you wish to view a payslip for");// Another scanner for
                                                                                            // accepting user input
-                int year = sc.nextInt();
-                
+                String year_s = sc.nextLine();
+                if (year_s.equals("q") || year_s.equals("Q")) {
+                    System.out.println("Cancelled payslip generation");
+                    return;
+                }
+                int year = Integer.parseInt(year_s);
+
                 while (year > LocalDate.now().getYear()) { // If the employee wants to view a payslip that they cant
                                                            // have possibly earned that year or in previous years then
                                                            // it doesnt exist
                     System.out.println("No payslip available for specified year please enter a valid year");
-                    year = sc.nextInt();
+                    String year_s2 = sc.nextLine();
+                    if (year_s2.equals("q") || year_s2.equals("Q")) {
+                        System.out.println("Cancelled payslip generation");
+                        return;
+                    }
+                    year = Integer.parseInt(year_s2);
 
                 }
                 sc.nextLine(); // Int does not leave a newline character so we gotta go to the next line
                 System.out
                         .println("Select which month you would like to view a payslip for..... " + monthoptions(year));
                 String month = sc.nextLine().toUpperCase();
+                if (month.equals("q") || month.equals("Q")) {
+                    System.out.println("Cancelled payslip generation");
+                    return;
+                }
                 while (!monthoptions(year).contains(month)) { // If the employee enters an invalid month then we should
                                                               // keep pestering them until we get a valid one
                     System.out.println("Please select a valid month for which you wish to view a payslip for");
                     month = sc.nextLine().toUpperCase();
-                    // Maybe add system.exit if the enter the letter q or something
+                    if (month.equals("q") || month.equals("Q")) {
+                        return;
+                    }
 
                 }
                 String day = dayOfPayment(year, month);
@@ -110,30 +126,48 @@ public class BasicPayslip {
                 Scanner sc = new Scanner(System.in);
                 System.out.println("Select the year which you wish to view a payslip for");// Another scanner for
                                                                                            // accepting user input
-                
-                int year = sc.nextInt();
+
+                String year_s = sc.nextLine();
+                if (year_s.equals("q") || year_s.equals("Q")) {
+                    System.out.println("Cancelled payslip generation");
+                    return;
+                }
+                int year = Integer.parseInt(year_s);
                 int targetyear;
-                if (mypackage.Time.currentTime == null ){
+                if (mypackage.Time.currentTime == null) {
                     targetyear = LocalDate.now().getYear();
-                }else{
-                targetyear = mypackage.Time.currentTime.getYear();
+                } else {
+                    targetyear = mypackage.Time.currentTime.getYear();
                 }
                 while (year > targetyear) { // If the employee wants to view a payslip that they cant
-                                                           // have possibly earned that year or in previous years then
-                                                           // it doesnt exist
+                                            // have possibly earned that year or in previous years then
+                                            // it doesnt exist
                     System.out.println("No payslip available for specified year please enter a valid year");
-                    year = sc.nextInt();
+                    String year_s2 = sc.nextLine();
+                    if (year_s2.equals("q") || year_s2.equals("Q")) {
+                        System.out.println("Cancelled payslip generation");
+                        return;
+                    }
+                    year = Integer.parseInt(year_s2);
 
                 }
                 sc.nextLine(); // Int does not leave a newline character so we gotta go to the next line
-               
-                System.out.println("Select which month you would like to view a payslip for..... " + monthoptions(year));
+
+                System.out
+                        .println("Select which month you would like to view a payslip for..... " + monthoptions(year));
                 String month = sc.nextLine().toUpperCase();
+                if (month.equals("q") || month.equals("Q")) {
+                    System.out.println("Cancelled payslip generation");
+                    return;
+                }
                 while (!monthoptions(year).contains(month)) { // If the employee enters an invalid month then we should
                                                               // keep pestering them until we get a valid one
                     System.out.println("Please select a valid month for which you wish to view a payslip for");
                     month = sc.nextLine().toUpperCase();
-                    // Maybe add system.exit if the enter the letter q or something
+                    if (month.equals("q") || month.equals("Q")) {
+                        System.out.println("Cancelled payslip generation");
+                        return;
+                    }
 
                 }
                 String day = dayOfPayment(year, month);
@@ -268,7 +302,7 @@ public class BasicPayslip {
                 double totalworked = hoursworked1 + hoursworked2 + hoursworked3 + hoursworked4;
                 totalworked = Math.round(totalworked * 100) / 100;
                 double totalpaye = paye1 + paye2 + paye3 + paye4;
-                totalpaye = Math.round(totalpaye*100) /100;
+                totalpaye = Math.round(totalpaye * 100) / 100;
                 double totalprsi = prsi1 + prsi2 + prsi3 + prsi4;
                 double totalusc = usc1 + usc2 + usc3 + usc4;
                 totalusc = Math.round(totalusc * 100.0) / 100.0;
@@ -354,9 +388,9 @@ public class BasicPayslip {
                 int scale = Integer.parseInt(lines[5]);
 
                 Employee employee = new Employee(name, "t" + id, id, field, role, scale);
-                int GrossAnnual =  employee.getSalary();
-                int GrossMonthly = Math.round((GrossAnnual/12) *100)/100;
-                GrossAnnual = Math.round(GrossAnnual *100)/100;
+                int GrossAnnual = employee.getSalary();
+                int GrossMonthly = Math.round((GrossAnnual / 12) * 100) / 100;
+                GrossAnnual = Math.round(GrossAnnual * 100) / 100;
                 int Paye = (int) Math.round(employee.calculatePAYE() / 12.0);
                 int Prsi = (int) Math.round(employee.calculatePRSI() / 12.0);
                 int USC = (int) Math.round(employee.calculateUSC() / 12.0);
@@ -372,8 +406,8 @@ public class BasicPayslip {
                 System.out.println("Scale: " + scale);
                 System.out.println("Gross annual pay: " + GrossAnnual);
                 System.out.println("Gross monthly pay: " + GrossMonthly);
-                System.out.println("PAYE: " + Paye );
-                System.out.println("PRSI: " + Prsi );
+                System.out.println("PAYE: " + Paye);
+                System.out.println("PRSI: " + Prsi);
                 System.out.println("USC: " + USC);
                 System.out.println(
                         "Total Deductions: " + (Paye + USC + Prsi));
@@ -403,7 +437,7 @@ public class BasicPayslip {
                                 "Total Deductions: "
                                 + (Paye + Prsi + USC)
                                 + "\n" +
-                                "Net pay: " + netpay+ "\n" +
+                                "Net pay: " + netpay + "\n" +
                                 "Pay method: PayPath" + "\n" +
                                 "----------------------------------------------------------------------------------------");
 
@@ -446,13 +480,13 @@ public class BasicPayslip {
         // This method is used to make it easier for the employee to enter in the month
         // in the required format
         int targetyear;
-        if (mypackage.Time.currentTime == null){
-                targetyear = LocalDate.now().getYear();
-        }else{
+        if (mypackage.Time.currentTime == null) {
+            targetyear = LocalDate.now().getYear();
+        } else {
             targetyear = mypackage.Time.currentTime.getYear();
-            //System.out.println("I WORK");
+            // System.out.println("I WORK");
         }
-        //System.out.println("TARGET YEAR IS " + targetyear);
+        // System.out.println("TARGET YEAR IS " + targetyear);
         LinkedHashMap<Integer, String> months = new LinkedHashMap<>();
         months.put(1, "JANUARY");
         months.put(2, "FEBRUARY");
@@ -476,7 +510,8 @@ public class BasicPayslip {
             }
             return monthoptions; // If we want to view all payslips for a previous year then all months are
                                  // available to view
-        } else if (year == targetyear && mypackage.Time.currentTime == null) {// If the year we want to view payslips for is the current year
+        } else if (year == targetyear && mypackage.Time.currentTime == null) {// If the year we want to view payslips
+                                                                              // for is the current year
             String Month = LocalDate.now().getMonth().toString(); // Find the current month
 
             for (int i = 1; i < 13; i++) {
@@ -510,17 +545,17 @@ public class BasicPayslip {
 
             }
             return monthoptions;
-        }else if (year == targetyear && mypackage.Time.currentTime != null){
+        } else if (year == targetyear && mypackage.Time.currentTime != null) {
             String Month = mypackage.Time.currentTime.getMonth().toString().toUpperCase(); // Find the current month
             System.out.println(Month);
-            //System.out.println("HELLLLLLLLLLLLLLO");
+            // System.out.println("HELLLLLLLLLLLLLLO");
             for (int i = 1; i < 13; i++) {
                 if (months.get(i).equals(Month)) { // Iterate through our hashmap keys and check if their value is equal
                                                    // to the current month
                     monthIndex = i; // If the value of the month is the current month then we have our month index
                     // The month index just corresponds to the number of months that have passed so
                     // far in the year
-                   // System.out.println("Month index is " + monthIndex);
+                    // System.out.println("Month index is " + monthIndex);
                 }
             }
             for (int i = 1; i < monthIndex + 1; i++) {
@@ -537,14 +572,14 @@ public class BasicPayslip {
                 } else {
                     dayofpayment = 25;
                 }
-                if (mypackage.Time.currentTime.isAfter(LocalDate.of(year, i, dayofpayment))) { // If the current day is past the
-                                                                                    // 25th of a certain month then we
-                                                                                    // can print a payslip (the day has
-                                                                                    // past)
+                if (mypackage.Time.currentTime.isAfter(LocalDate.of(year, i, dayofpayment))) { // If the current day is
+                                                                                               // past the
+                    // 25th of a certain month then we
+                    // can print a payslip (the day has
+                    // past)
                     monthoptions.add(months.get(i));
-                    
+
                 }
-                
 
             }
         }

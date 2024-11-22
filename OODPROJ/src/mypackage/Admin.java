@@ -1,4 +1,5 @@
 package mypackage;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -32,9 +33,13 @@ public class Admin extends User {
         // Other admin-specific options
 
         Scanner input = new Scanner(System.in);
-        int command = input.nextInt();
+        String command = input.nextLine();
+        if (command.equalsIgnoreCase("q")) {
+            displayOptions();
+            return;
+        }
         switch (command) {
-            case 1: // Add New Employee
+            case "1": // Add New Employee
                 try {
                     addEmployee();
                     displayOptions();
@@ -43,31 +48,34 @@ public class Admin extends User {
                     displayOptions();
                 }
                 break;
-            case 2: // View Employee List
+            case "2": // View Employee List
                 System.out.println("Employees: ");
                 viewEmployeeList();
                 displayOptions();
                 break;
-            
-            case 3:
-            Time time = new Time();
-            Scanner sc3 = new Scanner(System.in);
-            System.out.println("Enter the number of days which you want to move forward!");
-            try{
-              int daymovement =  sc3.nextInt();
-              ArrayList<LocalDate> arr;
-              time.moveDays(daymovement);
 
-              
-              
-            }catch (Exception e){
-                System.out.println("Please enter a valid integer number of days");
-            }finally {
-                System.out.println("The current day is " + time.getCurrentDate());
-                displayOptions();
-            }
-            break;
-            case 4: // Logout
+            case "3":
+                Time time = new Time();
+                Scanner sc3 = new Scanner(System.in);
+                System.out.println("Enter the number of days which you want to move forward!");
+                try {
+                    String daymovement_s = sc3.nextLine();
+                    if (daymovement_s.equalsIgnoreCase("q")) {
+                        displayOptions();
+                        return;
+                    }
+                    int daymovement = Integer.parseInt(daymovement_s);
+                    ArrayList<LocalDate> arr;
+                    time.moveDays(daymovement);
+
+                } catch (Exception e) {
+                    System.out.println("Please enter a valid integer number of days");
+                } finally {
+                    System.out.println("The current day is " + time.getCurrentDate());
+                    displayOptions();
+                }
+                break;
+            case "4": // Logout
                 System.out.println("Logging out");
                 Userbase.Login();
                 // System.exit(0);
@@ -101,18 +109,31 @@ public class Admin extends User {
         // Get employee details from user input
         Scanner sc = new Scanner(System.in);
         String role;
-        int scale;
+        String scale_s;
         System.out.println("Enter employee name:");
         String name = sc.nextLine().toUpperCase();
+        if (name.equalsIgnoreCase("q")) {
+            displayOptions();
+            return;
+        }
 
         String id = generateEmployeeID();
 
         System.out.println("Enter employee field from options " + Fields());
         String field = sc.nextLine().toUpperCase();
+        if (field.equalsIgnoreCase("q")) {
+            displayOptions();
+            return;
+        }
+
         while (!Fields().contains(field)) {
             System.out.println("INVALID FIELD ENTERED");
             System.out.println("Enter employee field from options " + Fields());
             field = sc.nextLine().toUpperCase();
+            if (field.equalsIgnoreCase("q")) {
+                displayOptions();
+                return;
+            }
         }
         if (field.equals("ULAC") || field.equals("ULAC2")) {
             System.out.println("Please note that you are adding a part time " +
@@ -120,23 +141,41 @@ public class Admin extends User {
             System.out.println("Enter employee role from options " +
                     Positions(field));
             role = sc.nextLine().toUpperCase();
+            if (role.equalsIgnoreCase("q")) {
+                displayOptions();
+                return;
+            }
             while (!Positions(field).contains(role)) {
                 System.out.println(
                         role + " is not a valid occupation for the chosen field: " + field);
                 System.out.println("Please enter a valid occupation from the list " +
                         Positions(field));
                 role = sc.nextLine().toUpperCase();
+                if (role.equalsIgnoreCase("q")) {
+                    displayOptions();
+                    return;
+                }
             }
             System.out.println("Enter employee scale from options " +
                     Scales(field, role));
-            scale = sc.nextInt();
+            scale_s = sc.nextLine();
+            if (scale_s.equalsIgnoreCase("q")) {
+                displayOptions();
+                return;
+            }
+            int scale = Integer.parseInt(scale_s);
             while (!Scales(field, role).contains(scale)) {
                 System.out.println(
                         scale + " is not a valid scale entry for the occupation " + role);
                 System.out.println(
                         "Please enter a valid scale entry from the list shown " +
                                 Scales(field, role));
-                scale = sc.nextInt();
+                scale_s = sc.nextLine();
+                if (scale_s.equalsIgnoreCase("q")) {
+                    displayOptions();
+                    return;
+                }
+                scale = Integer.parseInt(scale_s);
             }
 
             // name, username, id (which is also the password), field, role, scale
@@ -148,7 +187,8 @@ public class Admin extends User {
             file.createNewFile();
             File file2 = new File("OODPROJ/src/mypackage/Hourlyemployeehours/t" + id + "Hours.csv");
             file2.createNewFile();
-            FileWriter myWriter2 = new FileWriter("OODPROJ/src/mypackage/Hourlyemployeehours/t" + id + "Hours.csv", true);
+            FileWriter myWriter2 = new FileWriter("OODPROJ/src/mypackage/Hourlyemployeehours/t" + id + "Hours.csv",
+                    true);
             // Must populate the csv with some sample data
             myWriter2.write(occupyCSV());
             myWriter2.close();
@@ -160,40 +200,56 @@ public class Admin extends User {
             System.out.println("Enter employee role from options " +
                     Positions(field));
             role = sc.nextLine().toUpperCase();
+            if (role.equalsIgnoreCase("q")) {
+                displayOptions();
+                return;
+            }
             while (!Positions(field).contains(role)) {
                 System.out.println(
                         role + " is not a valid occupation for the chosen field: " + field);
                 System.out.println("Please enter a valid occupation from the list " +
                         Positions(field));
                 role = sc.nextLine().toUpperCase();
+                if (role.equalsIgnoreCase("q")) {
+                    displayOptions();
+                    return;
+                }
             }
 
             // Check if the role is president or vice president
             if (role.equals("PRESIDENT") && checkIfPresidentExists()) {
                 System.out.println(
                         "A president already exists. Cannot add another president.");
-                sc.close();
                 myWriter.close();
                 return;
             } else if (role.equals("VICE PRESIDENT") &&
                     checkIfVicePresidentExists()) {
                 System.out.println("A vice president already exists. Cannot add " +
                         "another vice president.");
-                sc.close();
                 myWriter.close();
                 return;
             }
 
             System.out.println("Enter employee scale from options " +
                     Scales(field, role));
-            scale = sc.nextInt();
+            scale_s = sc.nextLine();
+            if (scale_s.equalsIgnoreCase("q")) {
+                displayOptions();
+                return;
+            }
+            int scale = Integer.parseInt(scale_s);
             while (!Scales(field, role).contains(scale)) {
                 System.out.println(
                         scale + " is not a valid scale entry for the occupation " + role);
                 System.out.println(
                         "Please enter a valid scale entry from the list shown " +
                                 Scales(field, role));
-                scale = sc.nextInt();
+                scale_s = sc.nextLine();
+                if (scale_s.equalsIgnoreCase("q")) {
+                    displayOptions();
+                    return;
+                }
+                scale = Integer.parseInt(scale_s);
             }
 
             // name, username, id (which is also the password), field, role, scale
@@ -207,7 +263,6 @@ public class Admin extends User {
         System.out.println(
                 "Employee has been successfully registered to the database ");
 
-        sc.close();
         myWriter.close();
     }
 
@@ -253,7 +308,6 @@ public class Admin extends User {
                 fields.add(field);
             }
         }
-        sc.close();
         return fields;
     }
 
@@ -284,7 +338,6 @@ public class Admin extends User {
                 positions.add(position);
             }
         }
-        sc.close();
         return positions;
     }
 
@@ -316,7 +369,6 @@ public class Admin extends User {
                 Scales.add(scale);
             }
         }
-        sc.close();
         return Scales;
     }
 
@@ -338,11 +390,9 @@ public class Admin extends User {
             // Get each field and the corresponding positions
             String position = lines[4];
             if (position.equals("PRESIDENT")) {
-                sc.close();
                 return true;
             }
         }
-        sc.close();
         return false;
     }
 
@@ -363,11 +413,9 @@ public class Admin extends User {
             // Get each field and the corresponding positions
             String position = lines[4];
             if (position.equals("VICE PRESIDENT")) {
-                sc.close();
                 return true;
             }
         }
-        sc.close();
         return false;
     }
 
@@ -386,7 +434,7 @@ public class Admin extends User {
         int currentMonth = LocalDate.now().getMonthValue();
         LocalDate now = LocalDate.now();
         String output = "";
-    
+
         LinkedHashMap<Integer, String> months = new LinkedHashMap<>();
         months.put(1, "JANUARY");
         months.put(2, "FEBRUARY");
@@ -400,13 +448,13 @@ public class Admin extends User {
         months.put(10, "OCTOBER");
         months.put(11, "NOVEMBER");
         months.put(12, "DECEMBER");
-    
+
         for (int year = startYear; year <= currentYear; year++) {
             int endMonth = (year == currentYear) ? currentMonth : 12;
-    
+
             for (int month = 1; month <= endMonth; month++) {
                 LocalDate checkDate = LocalDate.of(year, month, 25);
-    
+
                 // Only add the month if the current date is after the 25th of that month
                 if (now.isAfter(checkDate)) {
                     float val1 = (int) (Math.random() * 40);
@@ -417,12 +465,9 @@ public class Admin extends User {
                 }
             }
         }
-    
+
         return output;
     }
-    
-    
-    
 
     /**
      * This method is used to view all employees in our database
@@ -449,7 +494,6 @@ public class Admin extends User {
                 System.out.println("Name: " + name + ", Username: " + username + ", Employee ID: " + employeeID +
                         ", Field: " + field + ", Role: " + role + ", Scale: " + scale);
             }
-            sc.close();
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
