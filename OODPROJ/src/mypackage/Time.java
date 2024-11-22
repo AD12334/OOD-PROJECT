@@ -3,7 +3,6 @@ package mypackage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
@@ -20,41 +19,32 @@ public class Time {
   }
 //TODO Make it change stuff in employees_database
   public void timeCheck(LocalDate ct) throws IOException {
-    if (ct.getMonthValue() == 10) {
+
+    if (ct.getMonthValue() >= 10) {
       if (!hasScaled) {
+       
         for (User user : Userbase.getUsersbase().values()) {
-          if (user instanceof HourlyEmployee hourly) {
+          
+          if (user instanceof Employee hourly) {
+           // System.out.println(((Employee) user).getEmployeeID());
             for (Map.Entry<String, Integer> entry :
                  HumanResources.getHashMap().entrySet()) {
               // matching the employee's field to postion of the hashmap
               // then checking if their scale is lower than max
+              
               if (entry.getKey().equals(hourly.getRole()) &&
                   entry.getValue() > hourly.getScale()) {
                     int scale = hourly.getScale() + 1;
-                hourly.setScale(scale);
+                   
+                    hourly.setScale(scale);
                 //WRITE STUFF
                 String id = hourly.getEmployeeID();
+                //System.out.println(id + " " + scale);
+                
                 UpdateScale(scale, id);
-              }
-            }
-          } else if (user instanceof Employee fullTime) {
-            for (Map.Entry<String, Integer> entry :
-                 HumanResources.getHashMap().entrySet()) {
-              // matching the employee's field to postion of the hashmap
-              // then checking if their scale is lower than max
-              if (entry.getKey().equals(fullTime.getField()) &&
-                  entry.getValue() > fullTime.getScale()) {
-                    int scale = fullTime.getScale() + 1;
-                fullTime.setScale(scale);
-
-                //WRITE STUFF
-                String id = fullTime.getEmployeeID();
-                UpdateScale(scale, id);
-
               }
             }
           }
-        }
         hasScaled = true;
       }
     } else {
@@ -67,7 +57,7 @@ public class Time {
         if (user instanceof Employee emp) {
           if(emp.getField().equals("ULAC") || emp.getField().equals("ULAC2")){
             HourlyEmployee hourly = new HourlyEmployee(emp.getName(),   emp.getUsername(), "t" + emp.getEmployeeID(), emp.getSalary(), emp.getField(), emp.getRole(), emp.getScale());
-            System.out.println("New month is " + currentTime.getMonth());
+           // System.out.println("New month is " + currentTime.getMonth());
             String Month = ct.getMonth().toString();
             String year = ct.getYear() + "";
             System.out.println((Month + year));
@@ -91,10 +81,11 @@ public class Time {
       }
     }
   }
+}
 
   // call this in main to simulate days passing
   public void moveDays(int length) throws IOException {
-    System.out.println("We are moving forward by " + length + " days");
+   // System.out.println("We are moving forward by " + length + " days");
     ArrayList<LocalDate> months = new ArrayList<LocalDate>();
     if(length > 0){
       LocalDate previousTime = currentTime;
@@ -105,7 +96,7 @@ public class Time {
       }
       while(currentTime.getMonthValue() > previousTime.getMonthValue() || currentTime.getYear() > previousTime.getYear()){
         months.add(previousTime);
-        System.out.println(previousTime.getMonth().toString());
+        //System.out.println(previousTime.getMonth().toString());
         previousTime = previousTime.plusMonths(1);
       }
       
@@ -114,7 +105,7 @@ public class Time {
       if (user instanceof Employee emp) {
         if(emp.getField().equals("ULAC") || emp.getField().equals("ULAC2")){
           HourlyEmployee hourly = new HourlyEmployee(emp.getName(),   emp.getUsername(), "t" + emp.getEmployeeID(), emp.getSalary(), emp.getField(), emp.getRole(), emp.getScale());
-          System.out.println(hourly.getEmployeeID());
+         // System.out.println(hourly.getEmployeeID());
           TimeWriter(months, emp.getEmployeeID());
 
         }
@@ -123,7 +114,8 @@ public class Time {
   }
   public void UpdateScale(int scale,String employeeid) throws IOException {
      Scanner sc2 = new Scanner(new File("OODPROJ/src/mypackage/employee_database.csv"));
-     int targetRow = 0;
+     int targetRow = -1;
+     employeeid = "t" + employeeid;
      sc2.useDelimiter("\n");
      while (sc2.hasNext()){
       String line = sc2.next();
@@ -132,7 +124,9 @@ public class Time {
         String Employeeid = lines[1] ;
         targetRow++;
         if (Employeeid.equals(employeeid)){
+          //System.out.println("hit");
           break;
+          
         }
      }
         String filePath = "OODPROJ/src/mypackage/employee_database.csv";
@@ -150,6 +144,8 @@ public class Time {
         }
 
         // Step 2: Edit the specific cell
+        System.out.println("Target row is " + targetRow);
+        System.out.println("Target column is " + targetCol);
         if (targetRow < csvData.size() &&
                 targetCol < csvData.get(targetRow).length) {
             csvData.get(targetRow)[targetCol] = newValue;
