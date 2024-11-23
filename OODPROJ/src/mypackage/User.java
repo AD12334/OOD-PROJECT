@@ -1,5 +1,8 @@
 package mypackage;
 
+/**
+ * This class is the superclass for all users in the system
+ */
 public abstract class User {
     private String username;
     private String password;
@@ -24,7 +27,6 @@ public abstract class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    
 
     // Abstract method to be implemented by subclasses
     public abstract void displayOptions() throws Exception;

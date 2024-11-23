@@ -5,6 +5,9 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Scanner;
 
+/**
+ * This class implements the userbase functionality to our system
+ */
 public class Userbase {
     private static HashMap<String, User> usersbase; // Store User objects
     private static boolean loggedin = false;
