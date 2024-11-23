@@ -82,7 +82,7 @@ public class BasicPayslip {
                 }
                 int year = Integer.parseInt(year_s);
 
-                while (year > LocalDate.now().getYear()) { // If the employee wants to view a payslip that they cant
+                while (year > mypackage.Time.currentTime.getYear()) { // If the employee wants to view a payslip that they cant
                                                            // have possibly earned that year or in previous years then
                                                            // it doesnt exist
                     System.out.println("No payslip available for specified year please enter a valid year");
