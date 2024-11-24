@@ -402,6 +402,13 @@ public class Employee extends User {
                             // promote them then we just keep their position the same
     }
 
+    /**
+     * If an employee rejects their promotion we change their info in the
+     * employee_database.csv
+     * 
+     * @param targetRow
+     * @throws IOException
+     */
     public void RejectPromotion(int targetRow) throws IOException {
         String filePath = "OODPROJ/src/mypackage/employee_database.csv";
         String newValue = "0";
