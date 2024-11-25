@@ -53,7 +53,7 @@ public class Admin extends User {
       break;
 
     case "3":
-      Time time = new Time();
+      Time time =  Time.getInstance();
       Scanner sc3 = new Scanner(System.in);
       System.out.println(
           "Enter the number of days which you want to move forward!");

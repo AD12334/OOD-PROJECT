@@ -102,7 +102,7 @@ public class HourlyEmployee extends Employee {
 
         // Check if current date is before the 23rd of the month and if no data for
         // the month exists
-        if (LocalDate.now().isBefore(LocalDate.of(year, monthno, 10)) &&
+        if (Time.getCurrentDate().isBefore(LocalDate.of(year, monthno, 10)) &&
                 Arrays.equals(hours.get(key), new float[] { 0.0f, 0.0f, 0.0f, 0.0f })) {
             Scanner sc = new Scanner(System.in);
             System.out.println("Enter the number of hours worked during week 1 of "
@@ -167,13 +167,13 @@ public class HourlyEmployee extends Employee {
 
             System.out.println("Hours submitted successfully.");
 
-        } else if (LocalDate.now().isAfter(LocalDate.of(year, monthno, 10)) &&
+        } else if (Time.getCurrentDate().isAfter(LocalDate.of(year, monthno, 10)) &&
                 Arrays.equals(hours.get(key),
                         new float[] { 0.0f, 0.0f, 0.0f, 0.0f })) {
             System.out.println("Unfortunately you have missed the deadline to "
                     + "submit your hours for the given month");
 
-        } else if (LocalDate.now().isBefore(LocalDate.of(year, monthno, 10)) &&
+        } else if (Time.getCurrentDate().isBefore(LocalDate.of(year, monthno, 10)) &&
                 !Arrays.equals(hours.get(key),
                         new float[] { 0.0f, 0.0f, 0.0f, 0.0f })) {
             System.out.println("You have already submitted your hours report for "
@@ -204,7 +204,7 @@ public class HourlyEmployee extends Employee {
             } else {
                 System.exit(0);
             }
-        } else if (LocalDate.now().isAfter(LocalDate.of(year, monthno, 10)) &&
+        } else if (Time.getCurrentDate().isAfter(LocalDate.of(year, monthno, 10)) &&
                 !Arrays.equals(hours.get(key),
                         new float[] { 0.0f, 0.0f, 0.0f, 0.0f })) {
             System.out.println("Hours cannot be edited for the given month");
@@ -275,8 +275,10 @@ public class HourlyEmployee extends Employee {
         System.out.println("Employee Options:");
         System.out.println("1. View Personal Details");
         System.out.println("2. View Payslip");
-        System.out.println("3. Log Hours");
-        System.out.println("4. Logout");
+        System.out.println("3. Check for promotion");
+        System.out.println("4. Log Hours");
+    
+        System.out.println("5. Logout");
 
         // Add any other options specific to employees
         Scanner input = new Scanner(System.in);
@@ -293,30 +295,29 @@ public class HourlyEmployee extends Employee {
                 displayOptions();
                 break;
             case 3:
-                System.out.println("Log hours for months: " + getSubmittable());
-                // iterate through arraylist of months with missing hours
-                for (int i = 1; i < submittable.size() + 1; i++) {
-                    System.out.printf("%d. %s %d", i,
-                            submittable.get(i).getMonth().toString(),
-                            submittable.get(i).getYear());
+            HandlePromotion(getEmployeeID());
+            displayOptions();
 
-                }
-                Scanner monthInput = new Scanner(System.in);
-                int month = monthInput.nextInt();
-                // if invalid number given
-                if (month >= submittable.size() || month <= 0) {
-                    System.out.println("Invalid Command Given");
-                    displayOptions();
-                }
+                /*System.out.println("Log hour for current month: ");
+                
                 // log hours for selected month
-                submithours(submittable.get(month).getMonth().toString(),
-                        submittable.get(month).getYear(), getEmployeeID());
-
+                submithours(mypackage.Time.currentTime.getMonth().toString(),
+                            mypackage.Time.currentTime.getYear(), "t" + getEmployeeID());
+*/
                 break;
             case 4:
-                System.out.println("Logging out");
-                System.exit(0);
+            System.out.println("Log hour for current month: ");
+                
+                // log hours for selected month
+                submithours(mypackage.Time.currentTime.getMonth().toString(),
+                            mypackage.Time.currentTime.getYear(),  getEmployeeID());
+
                 break;
+                
+            case 5:
+            System.out.println("Logging out");
+                Userbase.Login();
+               
             default:
                 System.out.println("Please enter a valid Command");
                 displayOptions();

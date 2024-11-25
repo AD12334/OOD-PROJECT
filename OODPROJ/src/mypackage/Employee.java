@@ -25,7 +25,7 @@ public class Employee extends User {
     private int promotion;
     private ArrayList<Integer> scales;
     private ArrayList<String> positions;
-    private LocalDate date = LocalDate.now();
+    private LocalDate date = Time.getCurrentDate();
 
     /**
      * Constructor to make an employee
@@ -216,7 +216,7 @@ public class Employee extends User {
                     displayOptions();
                     break;
                 case 3:
-                    HandlePromotion();
+                    HandlePromotion(employeeID);
                     displayOptions();
                 case 4:
                     HourlyEmployee hourlyEmployee = new HourlyEmployee(name, getUsername(), "t" + employeeID, salary,
@@ -260,7 +260,7 @@ public class Employee extends User {
                     displayOptions();
                     break;
                 case 3:
-                    HandlePromotion();
+                    HandlePromotion(employeeID);
                     displayOptions();
                 case 4:
                     System.out.println("Logging out");
@@ -292,7 +292,7 @@ public class Employee extends User {
      * @throws FileNotFoundException
      * @throws IOException
      */
-    public void HandlePromotion() throws FileNotFoundException, IOException {
+    public void HandlePromotion(String targetid) throws FileNotFoundException, IOException {
         int counter = 0;
         Scanner sc = new Scanner(new File("OODPROJ/src/mypackage/employee_database.csv"));
 
@@ -303,13 +303,16 @@ public class Employee extends User {
             String line = sc.next();
 
             line = line.trim();
+           
             String[] lines = line.split(",");
             String field = lines[3];
+            String id = lines[1];
             int scale = Integer.parseInt(lines[5]);
 
             String position = lines[4];
 
             int promotion = Integer.parseInt(lines[6]);
+            if (id.equals(  targetid) ){
             if (promotion != 1) {
                 System.out.println("No promotions available");
             } else if (promotion == 1) {
@@ -343,6 +346,7 @@ public class Employee extends User {
             }
             counter++;
         }
+    }
     }
 
     /**

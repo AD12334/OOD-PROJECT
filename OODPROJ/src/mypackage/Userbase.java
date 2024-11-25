@@ -87,10 +87,9 @@ public class Userbase {
      * @throws LoginException
      */
     public static void checkLogin(String username) throws LoginException {
-        if (usersbase.containsKey(username)) {
-            System.out.println("\nUsername is valid.");
-        } else {
-            throw new LoginException("\nUsername is not valid.");
+        if (!usersbase.containsKey(username)) {
+            System.out.println("Invalid Credentals");
+            Login();
         }
     }
 
@@ -109,7 +108,8 @@ public class Userbase {
             System.out.println("Logged in successfully.");
             loggedin = true;
         } else {
-            throw new Exception("Incorrect password.");
+            System.out.println("Invalid Credentals");
+            Login();
         }
     }
 
