@@ -83,7 +83,7 @@ public class BasicPayslip {
                 int year = Integer.parseInt(year_s);
 
                 if (mypackage.Time.currentTime != null) {
-                    while (year > mypackage.Time.currentTime.getYear()) { // If the employee wants to view a payslip
+                    while (year > Time.getCurrentDate().getYear()) { // If the employee wants to view a payslip
                                                                           // that
                         // they cant
                         // have possibly earned that year or in previous years then
@@ -97,8 +97,8 @@ public class BasicPayslip {
                         year = Integer.parseInt(year_s2);
 
                     }
-                } else if (mypackage.Time.currentTime == null) {
-                    while (year > LocalDate.now().getYear()) { // If the employee wants to view a payslip
+                } else if (Time.getCurrentDate() == null) {
+                    while (year > Time.getCurrentDate().getYear()) { // If the employee wants to view a payslip
                                                                // that
                         // they cant
                         // have possibly earned that year or in previous years then
