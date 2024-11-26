@@ -16,7 +16,7 @@ import java.util.Scanner;
  */
 
 public class HourlyEmployee extends Employee {
-    // TODO: should this be private?
+    
     LinkedHashMap<String, float[]> hours = new LinkedHashMap<>();
     private ArrayList<LocalDate> submittable = new ArrayList<LocalDate>();
 
@@ -119,7 +119,7 @@ public class HourlyEmployee extends Employee {
             float hours4 = Float.parseFloat(sc.nextLine());
 
             float[] worked = new float[] { hours1, hours2, hours3, hours4 };
-            hours.put(month + "" + year, worked);
+            hours.put(month + "" + year, worked);//Key -> Value
 
             String filePath = "OODPROJ/src/mypackage/Hourlyemployeehours/" +
                     employeeid + "Hours.csv";

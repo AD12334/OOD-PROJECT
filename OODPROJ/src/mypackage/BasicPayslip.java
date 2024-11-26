@@ -155,10 +155,10 @@ public class BasicPayslip {
                 }
                 int year = Integer.parseInt(year_s);
                 int targetyear;
-                if (mypackage.Time.currentTime == null) {
+                if (mypackage.Time.getCurrentDate() == null) {
                     targetyear = LocalDate.now().getYear();
                 } else {
-                    targetyear = mypackage.Time.currentTime.getYear();
+                    targetyear = Time.getCurrentDate().getYear();
                 }
                 while (year > targetyear) { // If the employee wants to view a payslip that they cant
                                             // have possibly earned that year or in previous years then
@@ -508,7 +508,7 @@ public class BasicPayslip {
             // System.out.println("I WORK");
         }
         // System.out.println("TARGET YEAR IS " + targetyear);
-        LinkedHashMap<Integer, String> months = new LinkedHashMap<>();
+        LinkedHashMap<Integer, String> months = new LinkedHashMap<>();//Order of months matters
         months.put(1, "JANUARY");
         months.put(2, "FEBRUARY");
         months.put(3, "MARCH");

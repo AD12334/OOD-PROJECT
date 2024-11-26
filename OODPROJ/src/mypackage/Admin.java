@@ -23,6 +23,7 @@ public class Admin extends User {
 
   @Override
   public void displayOptions() {
+    //These are the possible things an admin can do
     System.out.println("\nAdmin Options:");
     System.out.println("1. Add New Employee");
     System.out.println("2. View Employee List");
@@ -32,6 +33,7 @@ public class Admin extends User {
 
     Scanner input = new Scanner(System.in);
     String command = input.nextLine();
+    //Exit clause:If q is pressed return to main menu
     if (command.equalsIgnoreCase("q")) {
       displayOptions();
       return;
@@ -39,8 +41,8 @@ public class Admin extends User {
     switch (command) {
     case "1": // Add New Employee
       try {
-        addEmployee();
-        displayOptions();
+        addEmployee(); //Invoke the add employee method
+        displayOptions();//Once we have exited the add employee method we can return to the main menu
       } catch (Exception e) {
         System.out.println("Please enter valid fields");
         displayOptions();
@@ -48,12 +50,12 @@ public class Admin extends User {
       break;
     case "2": // View Employee List
       System.out.println("Employees: ");
-      viewEmployeeList();
+      viewEmployeeList();//Invoke the viewEmployeeList to get the info of all current employees
       displayOptions();
       break;
 
     case "3":
-      Time time =  Time.getInstance();
+      Time time =  Time.getInstance();//Get the instance of time as defined by our time class
       Scanner sc3 = new Scanner(System.in);
       System.out.println(
           "Enter the number of days which you want to move forward!");
@@ -64,19 +66,18 @@ public class Admin extends User {
           return;
         }
         int daymovement = Integer.parseInt(daymovement_s);
-        ArrayList<LocalDate> arr;
-        time.moveDays(daymovement);
+        time.moveDays(daymovement);  //Pass the numberofdays we wish to move as parameter to our movedays function in time
 
       } catch (Exception e) {
         System.out.println("Please enter a valid integer number of days");
       } finally {
-        System.out.println("The current day is " + time.getCurrentDate());
+        System.out.println("The current date is " + time.getCurrentDate());//Get the current day as defined by time
         displayOptions();
       }
       break;
     case "4": // Logout
       System.out.println("Logging out");
-      Userbase.Login();
+      Userbase.Login();//Return to the login screen
       // System.exit(0);
       break;
     default:
@@ -91,7 +92,7 @@ public class Admin extends User {
    * <p>
    * When creating an employee we need files to store payslips so we also create
    * a payslip.csv to store their payslips, Hourly employees are also created
-   * with an hours.csv to store their hours worked since 2020 We cant have more
+   * with an hours.csv to store their hours worked since current year We cant have more
    * than one president or one vice president at a given time
    *
    * @throws IOException if the file path is invalid throw an error
@@ -99,7 +100,7 @@ public class Admin extends User {
 
   public void addEmployee() throws IOException {
     FileWriter myWriter =
-        new FileWriter("OODPROJ/src/mypackage/employee_database.csv", true);
+        new FileWriter("OODPROJ/src/mypackage/employee_database.csv", true);//Write new employee details to our userbase
 
     System.out.println("Input employee details");
     System.out.println("-----------------------------------------------------"
@@ -116,16 +117,16 @@ public class Admin extends User {
       return;
     }
 
-    String id = generateEmployeeID();
+    String id = generateEmployeeID();//Generate a unique employeeid for our newly made employee
 
-    System.out.println("Enter employee field from options " + Fields());
+    System.out.println("Enter employee field from options " + Fields());//Display the possible fields that an employee can be
     String field = sc.nextLine().toUpperCase();
     if (field.equalsIgnoreCase("q")) {
       displayOptions();
       return;
     }
 
-    while (!Fields().contains(field)) {
+    while (!Fields().contains(field)) {//Force the user to enter a valid field
       System.out.println("INVALID FIELD ENTERED");
       System.out.println("Enter employee field from options " + Fields());
       field = sc.nextLine().toUpperCase();
@@ -134,11 +135,11 @@ public class Admin extends User {
         return;
       }
     }
-    if (field.equals("ULAC") || field.equals("ULAC2")) {
+    if (field.equals("ULAC") || field.equals("ULAC2")) {//Warn the admin if thet are creating an hourly paid employee
       System.out.println("Please note that you are adding a part time "
                          + "employee to the database");
       System.out.println("Enter employee role from options " +
-                         Positions(field));
+                         Positions(field));//Prompt the admin to enter a valid position from the given field
       role = sc.nextLine().toUpperCase();
       if (role.equalsIgnoreCase("q")) {
         displayOptions();
@@ -156,7 +157,7 @@ public class Admin extends User {
         }
       }
       System.out.println("Enter employee scale from options " +
-                         Scales(field, role));
+                         Scales(field, role));//Prompt the user to enter a valid scale for the position
       scale_s = sc.nextLine();
       if (scale_s.equalsIgnoreCase("q")) {
         displayOptions();
@@ -181,24 +182,25 @@ public class Admin extends User {
       myWriter.write(name + ",t" + id + "," + id + "," + field + "," + role +
                      "," + scale + ",0"
                      + ",HOURLY"
-                     + "\n");
+                     + "\n");//Write the new hourly employee details to our employee database
       File file =
-          new File("OODPROJ/src/mypackage/employeepayslips/t" + id + ".csv");
+          new File("OODPROJ/src/mypackage/employeepayslips/t" + id + ".csv");//Create a new payslips.csv for our new employee
       file.createNewFile();
       File file2 = new File("OODPROJ/src/mypackage/Hourlyemployeehours/t" + id +
-                            "Hours.csv");
+                            "Hours.csv");//If the employee is hourly paid we must create an hours csv to store their hours worked info
       file2.createNewFile();
       FileWriter myWriter2 = new FileWriter(
           "OODPROJ/src/mypackage/Hourlyemployeehours/t" + id + "Hours.csv",
-          true);
+          true);//Write some hours to their file
       // Must populate the csv with some sample data
-      myWriter2.write(occupyCSV());
+      myWriter2.write(occupyCSV());//Simulate hours worked
       myWriter2.close();
       // JANUARY2023,10,20,20,20
       // FEBUARY2023,10,40,10,11
       // MARCH2024,23,12,23,30
 
     } else {
+      //If the employee is not hourly paid then we can add them as normal
       System.out.println("Enter employee role from options " +
                          Positions(field));
       role = sc.nextLine().toUpperCase();
@@ -313,7 +315,7 @@ public class Admin extends User {
   public ArrayList<String> Fields() throws FileNotFoundException {
     ArrayList<String> fields = new ArrayList<>();
     Scanner sc =
-        new Scanner(new File("OODPROJ/src/mypackage/salary_scales.csv"));
+        new Scanner(new File("OODPROJ/src/mypackage/salary_scales.csv"));//Read through all the unique fields in our salaryscales csv
 
     // SETTING THE DELIMITER
     sc.useDelimiter("\n");
@@ -356,7 +358,7 @@ public class Admin extends User {
       // Get each field and the corresponding positions
       String position = lines[1];
       String field = lines[0];
-      if (positions.contains(position) == false && field.equals(Field)) {
+      if (positions.contains(position) == false && field.equals(Field)) {//Get all the unique positions for a field in our csv
         positions.add(position);
       }
     }
@@ -388,7 +390,7 @@ public class Admin extends User {
       int scale = Integer.parseInt(lines[3]);
       String field = lines[0];
       if (Scales.contains(position) == false && field.equals(Field) &&
-          position.equals(Position)) {
+          position.equals(Position)) {//Get all the unique scales for a position and field in our salary_scales.csv
         Scales.add(scale);
       }
     }
@@ -445,7 +447,7 @@ public class Admin extends User {
   }
 
   /**
-   * This method is used to generate random hours worked in the past(since 2020)
+   * This method is used to generate random hours worked in the past(since current year)
    * for hourly paid employees
    * <p>
    * Generates random hours between 0 and 40 for an hourly paid employee up to
@@ -454,7 +456,7 @@ public class Admin extends User {
    * @return returns the arraylist of randomly generated hours.
    */
   public String occupyCSV() {
-    int startYear = 2020;
+    int startYear =Time.getCurrentDate().getYear();
     int currentYear = LocalDate.now().getYear();
     int currentMonth = LocalDate.now().getMonthValue();
     LocalDate now = LocalDate.now();
@@ -475,7 +477,12 @@ public class Admin extends User {
     months.put(12, "DECEMBER");
 
     for (int year = startYear; year <= currentYear; year++) {
-      int endMonth = (year == currentYear) ? currentMonth : 12;
+      int endMonth;
+      if (year == currentYear) {//If the year defined by time is the current year then the first entry in our csv is the currentmonth
+           endMonth = currentMonth;
+      } else {
+          endMonth = 12;//if not its twelve
+      }
 
       for (int month = 1; month <= endMonth; month++) {
         LocalDate checkDate = LocalDate.of(year, month, 25);

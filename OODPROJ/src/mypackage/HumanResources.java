@@ -50,7 +50,7 @@ public class HumanResources extends User {
         }
         for (int i = 0; i < scales.size(); i++) {
 
-            hashMap.put(positions.get(i), scales.get(i));
+            hashMap.put(positions.get(i), scales.get(i));//Get all the max scales for a certain position
         }
 
         // myWriter.write(name + "," + id + "," + field + "," + role + "," + scale
@@ -59,8 +59,8 @@ public class HumanResources extends User {
         // System.out.println(hashMap);
     }
 
-    // TODO: don't know if this is the right thing to check for max scale
-    // Fuck you Adam and your naming scheme :)
+    
+   
     public static LinkedHashMap<String, Integer> getHashMap() {
         return hashMap;
     }

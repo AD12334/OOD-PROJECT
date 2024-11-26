@@ -280,7 +280,7 @@ public class Employee extends User {
      * @throws FileNotFoundException
      */
     public void viewPayslip() throws FileNotFoundException {
-        BasicPayslip payslip = new BasicPayslip(getUsername(), getPassword());
+        BasicPayslip payslip = new BasicPayslip(getUsername(), getPassword());//Invokes the basicPayslip constructor
     }
 
     /**
@@ -295,7 +295,7 @@ public class Employee extends User {
     public void HandlePromotion(String targetid) throws FileNotFoundException, IOException {
         int counter = 0;
         Scanner sc = new Scanner(new File("OODPROJ/src/mypackage/employee_database.csv"));
-
+        //If the promotion flag corresponding to the entry of a user in our employees database is set to 1, then they are eligible for a promotion
         // SETTING THE DELIMITER
 
         sc.useDelimiter("\n");
@@ -324,7 +324,7 @@ public class Employee extends User {
                         getSalaryFromCSV(field, position, scale));
 
                 System.out.println(
-                        "Your new position is " + changePosition(position) +
+                        "Your new position would be " + changePosition(position) +
                                 " and your new salary would be " +
                                 getSalaryFromCSV(field, changePosition(position), 1));
                 System.out.println("Would you like to accept this promotion Y/N ?");
@@ -391,14 +391,14 @@ public class Employee extends User {
                 "CHIEF TECHNICAL OFFICER", "SEN PORTER/ATTENDANT", "TEACHING FELLOW",
                 "THERAPIES REGIONAL SUPERVISORS REGIONAL PLACEMENT FACILITATOR",
                 "ASSISTANT SENIOR INSTRUCTOR", "SENIOR RESEARCH FELLOW",
-                "CO-OP STUDENT"));
+                "CO-OP STUDENT"));//they have reached the top of their field
         // We now have our list of positions and our list of non promotable
         // positions If our employee position is contained by non promotable then
         // they have reached the top of their field If an employee is not
         // nonpromotable then they can be promoted
 
         if (!nonpromotable.contains(position) && keys.contains(position)) {
-            return (keys.get(keys.indexOf(position) - 1));
+            return (keys.get(keys.indexOf(position) - 1));//If the employee currently has a position that is promotable and they are at the max scale for that position then we return the position corresponding to the key entry above
         }
 
         return keys.get(keys.indexOf(
@@ -419,19 +419,19 @@ public class Employee extends User {
         int targetCol = 6; // Change the promotion id back to 0
 
         // Step 1: Read all rows from the CSV
-        ArrayList<String[]> csvData = new ArrayList<>();
+        ArrayList<String[]> csvData = new ArrayList<>();//Create an arraylist of String arrays
         try (Scanner scanner = new Scanner(new File(filePath))) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 String[] row = line.split(",");
-                csvData.add(row);
+                csvData.add(row);//Write each split row to our arraylist
             }
         }
 
         // Step 2: Edit the specific cell
         if (targetRow < csvData.size() &&
-                targetCol < csvData.get(targetRow).length) {
-            csvData.get(targetRow)[targetCol] = newValue;
+                targetCol < csvData.get(targetRow).length) { //If the target row and column is valid
+            csvData.get(targetRow)[targetCol] = newValue;//Set the value of the array entry within our arraylist to the new value
         } else {
             System.out.println("Invalid row/column index.");
             return;
@@ -442,6 +442,7 @@ public class Employee extends User {
             for (String[] row : csvData) {
                 writer.write(String.join(",", row));
                 writer.write("\n"); // Add a newline after each row
+                //Write our arraylist back to our csv
             }
         }
     }
