@@ -40,6 +40,7 @@ public class BasicPayslip {
      * @throws FileNotFoundException
      */
     public BasicPayslip(String Employeeid, String Password) throws FileNotFoundException {
+        String year_s = "";
         Scanner sc2 = new Scanner(new File("OODPROJ/src/mypackage/employee_database.csv")); // One scanner for reading
                                                                                             // off of our database
         sc2.useDelimiter("\n");
@@ -75,7 +76,14 @@ public class BasicPayslip {
                 Scanner sc = new Scanner(System.in);
                 System.out.println("Select the year which you wish to view a payslip for");// Another scanner for
                                                                                            // accepting user input
-                String year_s = sc.nextLine();
+                try{
+                     year_s = sc.nextLine();
+                }catch (Exception e){
+                    System.out.println("Invalid input");
+                    BasicPayslip payslip = new BasicPayslip(Employeeid, Password);
+
+                }
+                
                 if (year_s.equals("q") || year_s.equals("Q")) {
                     System.out.println("Cancelled payslip generation");
                     return;
@@ -94,7 +102,13 @@ public class BasicPayslip {
                             System.out.println("Cancelled payslip generation");
                             return;
                         }
-                        year = Integer.parseInt(year_s2);
+                        try {
+                            year = Integer.parseInt(year_s2);
+                        } catch (Exception e) {
+                            System.out.println("INVALID YEAR FORMAT");
+                        BasicPayslip payslip = new BasicPayslip(Employeeid, Password);
+                        }
+                        
 
                     }
                 } else if (Time.getCurrentDate() == null) {
@@ -148,7 +162,14 @@ public class BasicPayslip {
                 System.out.println("Select the year which you wish to view a payslip for");// Another scanner for
                                                                                            // accepting user input
 
-                String year_s = sc.nextLine();
+                                                                                         // accepting user input
+                try{
+                     year_s = sc.nextLine();
+                }catch (Exception e){
+                    System.out.println("Invalid input");
+                    BasicPayslip payslip = new BasicPayslip(Employeeid, Password);
+
+                }
                 if (year_s.equals("q") || year_s.equals("Q")) {
                     System.out.println("Cancelled payslip generation");
                     return;
@@ -169,7 +190,13 @@ public class BasicPayslip {
                         System.out.println("Cancelled payslip generation");
                         return;
                     }
-                    year = Integer.parseInt(year_s2);
+                    try {
+                        year = Integer.parseInt(year_s2);
+                    } catch (Exception e) {
+                        System.out.println("INVALID YEAR FORMAT");
+                        BasicPayslip payslip = new BasicPayslip(Employeeid, Password);
+                    }
+                   
 
                 }
                 sc.nextLine(); // Int does not leave a newline character so we gotta go to the next line
@@ -250,7 +277,7 @@ public class BasicPayslip {
 
         while (sc2.hasNext()) {
             String line = sc2.next();
-            FileWriter myWriter = new FileWriter("OODPROJ/src/mypackage/employeepayslips/" + id + ".csv", true);
+            FileWriter myWriter = new FileWriter("OODPROJ/src/mypackage/employeepayslips/" + id + ".txt", true);
 
             line = line.trim();
             String[] lines = line.split(",");
@@ -396,7 +423,7 @@ public class BasicPayslip {
 
         while (sc2.hasNext()) {
             String line = sc2.next();
-            FileWriter myWriter = new FileWriter("OODPROJ/src/mypackage/employeepayslips/" + id + ".csv", true);
+            FileWriter myWriter = new FileWriter("OODPROJ/src/mypackage/employeepayslips/" + id + ".txt", true);
 
             line = line.trim();
             String[] lines = line.split(",");

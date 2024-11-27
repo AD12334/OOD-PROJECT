@@ -18,7 +18,6 @@ import java.util.Scanner;
 public class HourlyEmployee extends Employee {
     
     LinkedHashMap<String, float[]> hours = new LinkedHashMap<>();
-    private ArrayList<LocalDate> submittable = new ArrayList<LocalDate>();
 
     public HourlyEmployee(String name, String username, String employeeID,
             int salary, String field, String role, int scale)
@@ -462,10 +461,6 @@ public class HourlyEmployee extends Employee {
             USC += (grosspay - thresholds[2]) * rates[3];
         }
         return USC;
-    }
-
-    public ArrayList<LocalDate> getSubmittable() {
-        return submittable;
     }
 
     /**

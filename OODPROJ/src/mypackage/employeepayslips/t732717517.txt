@@ -1,31 +1,31 @@
 ---------------------------------------------------------------------------------------
-Date: 25/11/2024
-Name: H
+Date: 25/4/2024
+Name: MICHAEL ENGLISH
 PRSI CLASS: A
-Field: ACADEMIC
-Position: PROFESSOR
-Scale: 3
-Gross annual pay: 115107
-Gross monthly pay: 799
-PAYE: 2824
-PRSI: 393
-USC: 476
-Total Deductions: 3693
-Net pay: 5899
+Field: PRESIDENTIAL
+Position: PRESIDENT
+Scale: 1
+Gross annual pay: 240716
+Gross monthly pay: 1671
+PAYE: 7011
+PRSI: 822
+USC: 1313
+Total Deductions: 9146
+Net pay: 10913
 Pay method: PayPath
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Date: 25/11/2025
-Name: H
+Date: 24/3/2023
+Name: MICHAEL ENGLISH
 PRSI CLASS: A
-Field: ACADEMIC
-Position: PROFESSOR
-Scale: 4
-Gross annual pay: 121935
-Gross monthly pay: 846
-PAYE: 3052
-PRSI: 417
-USC: 521
-Total Deductions: 3990
-Net pay: 6171
+Field: PRESIDENTIAL
+Position: PRESIDENT
+Scale: 1
+Gross annual pay: 240716
+Gross monthly pay: 1671
+PAYE: 7011
+PRSI: 822
+USC: 1313
+Total Deductions: 9146
+Net pay: 10913
 Pay method: PayPath
 ----------------------------------------------------------------------------------------

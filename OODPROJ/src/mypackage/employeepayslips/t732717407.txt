@@ -1,0 +1,61 @@
+---------------------------------------------------------------------------------------
+Date: 25/4/2024
+Name: ROBERT
+PRSI CLASS: A
+Field: PRESIDENTIAL
+Position: VICE PRESIDENT
+Scale: 1
+Gross annual pay: 184171
+Gross monthly pay: 1278
+PAYE: 5127
+PRSI: 629
+USC: 936
+Total Deductions: 6692
+Net pay: 8655
+Pay method: PayPath
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Date: 24/5/2024
+Name: ROBERT
+PRSI CLASS: A
+Field: PRESIDENTIAL
+Position: VICE PRESIDENT
+Scale: 1
+Gross annual pay: 184171
+Gross monthly pay: 1278
+PAYE: 5127
+PRSI: 629
+USC: 936
+Total Deductions: 6692
+Net pay: 8655
+Pay method: PayPath
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Date: 25/12/2023
+Name: ROBERT
+PRSI CLASS: A
+Field: PRESIDENTIAL
+Position: VICE PRESIDENT
+Scale: 1
+Gross annual pay: 184171
+Gross monthly pay: 1278
+PAYE: 5127
+PRSI: 629
+USC: 936
+Total Deductions: 6692
+Net pay: 8655
+Pay method: PayPath
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Date: 25/5/2022
+Name: ROBERT
+PRSI CLASS: A
+Field: PRESIDENTIAL
+Position: VICE PRESIDENT
+Scale: 1
+Gross annual pay: 184171
+Gross monthly pay: 1278
+PAYE: 5127
+PRSI: 629
+USC: 936
+Total Deductions: 6692
+Net pay: 8655
+Pay method: PayPath
+----------------------------------------------------------------------------------------

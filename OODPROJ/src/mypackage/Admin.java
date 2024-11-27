@@ -184,7 +184,7 @@ public class Admin extends User {
                      + ",HOURLY"
                      + "\n");//Write the new hourly employee details to our employee database
       File file =
-          new File("OODPROJ/src/mypackage/employeepayslips/t" + id + ".csv");//Create a new payslips.csv for our new employee
+          new File("OODPROJ/src/mypackage/employeepayslips/t" + id + ".txt");//Create a new payslips.csv for our new employee
       file.createNewFile();
       File file2 = new File("OODPROJ/src/mypackage/Hourlyemployeehours/t" + id +
                             "Hours.csv");//If the employee is hourly paid we must create an hours csv to store their hours worked info
@@ -261,7 +261,7 @@ public class Admin extends User {
                      "," + scale + ",0"
                      + "\n");
       File file =
-          new File("OODPROJ/src/mypackage/employeepayslips/t" + id + ".csv");
+          new File("OODPROJ/src/mypackage/employeepayslips/t" + id + ".txt");
       file.createNewFile();
     }
 
@@ -490,10 +490,10 @@ public class Admin extends User {
         // Only add the month if the current date is after the 25th of that
         // month
         if (now.isAfter(checkDate)) {
-          float val1 = (int)(Math.random() * 40);
-          float val2 = (int)(Math.random() * 40);
-          float val3 = (int)(Math.random() * 40);
-          float val4 = (int)(Math.random() * 40);
+          float val1 = 0;
+          float val2 = 0;
+          float val3 = 0;
+          float val4 = 0;
           output += months.get(month) + year + "," + val1 + "," + val2 + "," +
                     val3 + "," + val4 + "\n";
         }

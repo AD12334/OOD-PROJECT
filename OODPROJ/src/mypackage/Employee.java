@@ -202,51 +202,8 @@ public class Employee extends User {
         System.out.println("3. Check for Promotion");
 
         // Check if employee is hourly paid
-        if (field.equals("ULAC") || field.equals("ULAC2")) {
-            System.out.println("4. Submit Hours Worked");
-            System.out.println("5. Logout");
-            Scanner sc = new Scanner(System.in);
-            int command = sc.nextInt();
-            switch (command) {
-                case 1: // View Personal Details
-                    System.out.println(this.toString());
-                    displayOptions();
-                case 2:
-                    viewPayslip();
-                    displayOptions();
-                    break;
-                case 3:
-                    HandlePromotion(employeeID);
-                    displayOptions();
-                case 4:
-                    HourlyEmployee hourlyEmployee = new HourlyEmployee(name, getUsername(), "t" + employeeID, salary,
-                            field,
-                            role,
-                            scale);
-                    Scanner sc2 = new Scanner(System.in);
-                    System.out.println("Select the year which you wish to submit hours for");
-                    String year_s = sc2.nextLine();
-                    if (year_s.equalsIgnoreCase("q")) {
-                        displayOptions();
-                    }
-                    int year = Integer.parseInt(year_s);
-                    sc2.nextLine();
-                    System.out.println("Select the month which you wish to submit hours for");
-                    String month = sc2.nextLine();
-                    if (month.equalsIgnoreCase("q")) {
-                        displayOptions();
-                    }
-                    hourlyEmployee.submithours(month.toUpperCase(), year, employeeID);
-                    displayOptions();
-                case 5:
-                    System.out.println("Logging out");
-                    Userbase.Login();
-                default:
-                    System.out.println("Please enter a valid Command");
-                    displayOptions();
-                    break;
-            }
-        } else {
+       
+        
             System.out.println("4. Logout");
             // Add any other options specific to employees
             Scanner sc = new Scanner(System.in);
@@ -270,7 +227,7 @@ public class Employee extends User {
                     displayOptions();
                     break;
             }
-        }
+        
 
     }
 
