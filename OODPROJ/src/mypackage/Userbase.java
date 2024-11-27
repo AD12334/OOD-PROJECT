@@ -76,6 +76,10 @@ public class Userbase {
         }
     }
 
+    /**
+     * Returns our userbase
+     * @return
+     */
     public static HashMap<String, User> getUsersbase() {
         return usersbase;
     }

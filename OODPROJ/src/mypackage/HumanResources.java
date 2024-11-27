@@ -60,7 +60,10 @@ public class HumanResources extends User {
     }
 
     
-   
+   /**
+    * Returns hashmap info
+    * @return
+    */
     public static LinkedHashMap<String, Integer> getHashMap() {
         return hashMap;
     }

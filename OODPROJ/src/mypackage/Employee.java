@@ -29,6 +29,7 @@ public class Employee extends User {
 
     /**
      * Constructor to make an employee
+     * with a given name,username,employeeid,etc.
      * 
      * @param name
      * @param username
@@ -144,12 +145,11 @@ public class Employee extends User {
     }
 
     /**
-     * Bumps up the employees scale if applicable
+     * Moves up the employees scale if applicable
      * 
      */
     public void checkDate() {
         if (date.getMonthValue() == 10 && date.getDayOfMonth() == 1) {
-            // TODO: if scale is at max, don't increase the scale
             setScale(getScale() + 1);
         }
     }
@@ -463,7 +463,7 @@ public class Employee extends User {
         int targetCol2 = 5; // Update the scale to 1
         int targetCol3 = 4; // Update their position
 
-        // Step 1: Read all rows from the CSV
+        //  Read all rows from the CSV
         ArrayList<String[]> csvData = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(filePath))) {
             while (scanner.hasNextLine()) {
@@ -473,7 +473,7 @@ public class Employee extends User {
             }
         }
 
-        // Step 2: Edit the specific cell
+        //  Edit the specific cell
         if (targetRow < csvData.size() &&
                 targetCol < csvData.get(targetRow).length) {
             csvData.get(targetRow)[targetCol] = newValue;
@@ -485,7 +485,7 @@ public class Employee extends User {
             return;
         }
 
-        // Step 3: Write the updated data back to the CSV
+        //  Write the updated data back to the CSV
         try (FileWriter writer = new FileWriter(filePath)) {
             for (String[] row : csvData) {
                 writer.write(String.join(",", row));
@@ -714,7 +714,9 @@ public class Employee extends User {
 
         return NetPay;
     }
-
+/**
+ * To string method
+ */
     @Override
     public String toString() {
         return "Personal Details:\nName: " + name + ", EmployeeID: " + employeeID + ", Salary: " +

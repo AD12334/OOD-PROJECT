@@ -11,7 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 /**
- * This class is used to make payslips
+ * This class is used to make payslips for employees
  */
 public class BasicPayslip {
     private int monthIndex;
@@ -82,7 +82,7 @@ public class BasicPayslip {
                 }
                 int year = Integer.parseInt(year_s);
 
-                if (mypackage.Time.currentTime != null) {
+                if (Time.getCurrentDate() != null) {
                     while (year > Time.getCurrentDate().getYear()) { // If the employee wants to view a payslip
                                                                           // that
                         // they cant
@@ -501,10 +501,10 @@ public class BasicPayslip {
         // This method is used to make it easier for the employee to enter in the month
         // in the required format
         int targetyear;
-        if (mypackage.Time.currentTime == null) {
+        if (Time.getCurrentDate() == null) {
             targetyear = LocalDate.now().getYear();
         } else {
-            targetyear = mypackage.Time.currentTime.getYear();
+            targetyear = Time.getCurrentDate().getYear();
             // System.out.println("I WORK");
         }
         // System.out.println("TARGET YEAR IS " + targetyear);
@@ -531,7 +531,7 @@ public class BasicPayslip {
             }
             return monthoptions; // If we want to view all payslips for a previous year then all months are
                                  // available to view
-        } else if (year == targetyear && mypackage.Time.currentTime == null) {// If the year we want to view payslips
+        } else if (year == targetyear && Time.getCurrentDate() == null) {// If the year we want to view payslips
                                                                               // for is the current year
             String Month = LocalDate.now().getMonth().toString(); // Find the current month
 
@@ -573,10 +573,10 @@ public class BasicPayslip {
 
             }
             return monthoptions;
-        } else if (year == targetyear && mypackage.Time.currentTime != null) {
-            String Month = mypackage.Time.currentTime.getMonth().toString().toUpperCase(); // Find the current month
+        } else if (year == targetyear && Time.getCurrentDate() != null) {
+            String Month = Time.getCurrentDate().getMonth().toString().toUpperCase(); // Find the current month
             System.out.println(Month);
-            // System.out.println("HELLLLLLLLLLLLLLO");
+           
             for (int i = 1; i < 13; i++) {
                 if (months.get(i).equals(Month)) { // Iterate through our hashmap keys and check if their value is equal
                                                    // to the current month
@@ -600,7 +600,7 @@ public class BasicPayslip {
                 } else {
                     dayofpayment = 25;
                 }
-                if (mypackage.Time.currentTime.isAfter(LocalDate.of(year, i, dayofpayment))) { // If the current day is
+                if (Time.getCurrentDate().isAfter(LocalDate.of(year, i, dayofpayment))) { // If the current day is
                                                                                                // past the
                     // 25th of a certain month then we
                     // can print a payslip (the day has

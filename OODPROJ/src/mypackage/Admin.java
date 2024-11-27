@@ -92,7 +92,7 @@ public class Admin extends User {
    * <p>
    * When creating an employee we need files to store payslips so we also create
    * a payslip.csv to store their payslips, Hourly employees are also created
-   * with an hours.csv to store their hours worked since current year We cant have more
+   * with an hours.csv to store their hours worked since current year, we cant have more
    * than one president or one vice president at a given time
    *
    * @throws IOException if the file path is invalid throw an error
@@ -274,7 +274,7 @@ public class Admin extends User {
   /**
    * Creates a unique employee ID for each created employee
    * <p>
-   * Uses the first eight digits of unixTime to create a unique employee id for
+   * Uses the  digits of unixTime to create a unique employee id for
    * each new created employee
    *
    * @return Returns a unique employee id

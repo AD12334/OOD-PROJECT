@@ -74,9 +74,7 @@ public class HourlyEmployee extends Employee {
         // hashmap
     }
 
-    public void addSubmittable(LocalDate newMonth) {
-        submittable.add(newMonth);
-    }
+
 
     /**
      * This method recognises the employees attempt to submit hours.
@@ -309,8 +307,8 @@ public class HourlyEmployee extends Employee {
             System.out.println("Log hour for current month: ");
                 
                 // log hours for selected month
-                submithours(mypackage.Time.currentTime.getMonth().toString(),
-                            mypackage.Time.currentTime.getYear(),  getEmployeeID());
+                submithours(Time.getCurrentDate().getMonth().toString(),
+                Time.getCurrentDate().getYear(),  getEmployeeID());
 
                 break;
                 

@@ -11,15 +11,19 @@ import java.util.Scanner;
 /**
  * This class enables us to simulate moving forward in time
  */
-//TODO FIX MONTHS
+
 public class Time {
     private static Time instance;
-    protected static LocalDate currentTime;
+    private static LocalDate currentTime;
     private boolean hasScaled;
     private String lastentry;
     private ArrayList<String> userids;
 
     // Private constructor to prevent instantiation
+    /**
+     * Creates an instance of the Time object with currenttime set to the present
+     * <p> Creates a userid arraylist
+     */
     private Time() {
         currentTime = LocalDate.now();
         hasScaled = false;
@@ -27,6 +31,10 @@ public class Time {
     }
 
     // Public method to provide access to the instance
+    /**
+     * Ensures an instance of time is created else it creates an instance of time
+     * @return
+     */
     public static Time getInstance() {
         if (instance == null) {
             instance = new Time();
@@ -91,7 +99,7 @@ public class Time {
     }
 
     /**
-     * This method simulates the forward movement of time
+     * This method simulates the forward movement of time in days
      * 
      * @param length The integer number of days we are moving forward by
      * @throws IOException
@@ -153,6 +161,12 @@ public class Time {
             }
         }
     }
+    /**
+     * Counts the number of Octobers passed when simulating time forward
+     * <p> this indicates the number of scales we must increase an employee by
+     * @param months
+     * @return
+     */
         private int OctoberCheck( ArrayList<LocalDate> months){
           int count =0;
           for (int i =0;i < months.size();i++){
@@ -241,7 +255,8 @@ public class Time {
     }
 
     /**
-     * @param ArrayList<LocalDate> This is an array of the amount of months that
+     * This method populates the entries of an employees hours csv with null values
+     * @param ArrayList<LocalDate> This is an arraylist of the amount of months that
      *                             have passed since the present time
      * @param String               this is the employee id of the csv we are
      *                             updating
