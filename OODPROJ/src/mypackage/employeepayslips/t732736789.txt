@@ -1,0 +1,33 @@
+---------------------------------------------------------------------------------------
+Date: 25/5/2020
+Name: JOEBERT
+Hours Worked: 0.0
+PRSI CLASS: A
+Field: ULAC
+Position: LEAD INSTRUCTOR
+Scale: 1
+Gross hourly pay: 14.12
+PAYE: 0.0
+PRSI: 0.0
+USC: 0.0
+Gross pay: 0.0
+Total Deductions: 0.0
+Net pay: 0.0
+Pay method: PayPath
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Date: 25/3/2020
+Name: JOEBERT
+Hours Worked: 0.0
+PRSI CLASS: A
+Field: ULAC
+Position: LEAD INSTRUCTOR
+Scale: 1
+Gross hourly pay: 14.12
+PAYE: 0.0
+PRSI: 0.0
+USC: 0.0
+Gross pay: 0.0
+Total Deductions: 0.0
+Net pay: 0.0
+Pay method: PayPath
+----------------------------------------------------------------------------------------

@@ -23,8 +23,8 @@ public class HourlyEmployee extends Employee {
             int salary, String field, String role, int scale)
             throws FileNotFoundException {
         super(name, username, employeeID, field, role, scale);
-        System.out.println(username);
-        System.out.println(employeeID);
+       // System.out.println(username);
+        System.out.println();
         Scanner sc = new Scanner(new File("OODPROJ/src/mypackage/Hourlyemployeehours/" +
                 employeeID + "Hours.csv"));
         sc.useDelimiter(",");
@@ -217,9 +217,23 @@ public class HourlyEmployee extends Employee {
      *         the
      *         specified month and year
      */
-    public float gethour1(String month, String year) {
-        float[] arr = hours.get(month + year);
+    public float gethour1(String month, String year) throws FileNotFoundException {
+        
+        try{float[] arr = hours.get(month + year);
         return arr[0];
+        }catch (NullPointerException e){
+            System.out.println("Employee has not submitted hours for this timeframe try again");
+            System.out.println();
+            BasicPayslip payslip = new BasicPayslip(getEmployeeID(), getPassword().substring(1,getPassword().length()));
+            
+            try {
+                this.displayOptions();
+            } catch (Exception e1) {
+               
+                e1.printStackTrace();
+            }
+        }
+        return -1;
     }
 
     /**
@@ -269,31 +283,34 @@ public class HourlyEmployee extends Employee {
      */
     @Override
     public void displayOptions() throws Exception {
-        System.out.println("Employee Options:");
-        System.out.println("1. View Personal Details");
-        System.out.println("2. View Payslip");
-        System.out.println("3. Check for promotion");
-        System.out.println("4. Log Hours");
+            System.out.println("Employee Options:");
+            System.out.println("1. View Personal Details");
+            System.out.println("2. View Payslip");
+            System.out.println("3. Check for promotion");
+            System.out.println("4. Log Hours");
+        
+            System.out.println("5. Logout");
     
-        System.out.println("5. Logout");
-
-        // Add any other options specific to employees
-        Scanner input = new Scanner(System.in);
-        int command = input.nextInt();
-        switch (command) {
-            case 1:
-                System.out.println(toString());
-                displayOptions();
+            // Add any other options specific to employees
+            Scanner input = new Scanner(System.in);
+            int command = input.nextInt();
+            switch (command) {
+                case 1:
+                    System.out.println(toString());
+                    this.displayOptions();
 
             case 2:
                 String password = getPassword().substring(1, getPassword().length());
-                System.out.println(password);
+                
+
                 BasicPayslip payslip = new BasicPayslip(getUsername(), password);
-                displayOptions();
+                this.displayOptions();
                 break;
             case 3:
-            HandlePromotion(getEmployeeID());
-            displayOptions();
+            String id =getEmployeeID().substring(1,getEmployeeID().length());
+           // System.out.println(id);
+            HandlePromotion(id);
+            this.displayOptions();
 
                 /*System.out.println("Log hour for current month: ");
                 
@@ -317,7 +334,7 @@ public class HourlyEmployee extends Employee {
                
             default:
                 System.out.println("Please enter a valid Command");
-                displayOptions();
+                this.displayOptions();
                 break;
         }
     }

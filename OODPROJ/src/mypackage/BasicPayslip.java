@@ -79,6 +79,12 @@ public class BasicPayslip {
                                                                                            // accepting user input
                 try{
                      year_s = sc.nextLine();
+                     while (Integer.parseInt(year_s) <= 2019){
+                        System.out.println("Error employee payslips are only available from 2020 onwards");
+                        System.out.println("Please enter a valid year");
+                        year_s = sc.nextLine();
+
+                     }
                 }catch (Exception e){
                     System.out.println("Invalid input");
                     BasicPayslip payslip = new BasicPayslip(Employeeid, Password);
@@ -173,6 +179,12 @@ public class BasicPayslip {
                                                                                          // accepting user input
                 try{
                      year_s = sc.nextLine();
+                     while (Integer.parseInt(year_s) <= 2019){
+                        System.out.println("Error employee payslips are only available from 2020 onwards");
+                        System.out.println("Please enter a valid year");
+                        year_s = sc.nextLine();
+
+                     }
                 }catch (Exception e){
                     System.out.println("Invalid input");
                     BasicPayslip payslip = new BasicPayslip(Employeeid, Password);

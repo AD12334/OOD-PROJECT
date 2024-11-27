@@ -218,6 +218,7 @@ public class Employee extends User {
                     break;
                 case 3:
                     HandlePromotion(employeeID);
+                    
                     displayOptions();
                 case 4:
                     System.out.println("Logging out");
@@ -263,15 +264,17 @@ public class Employee extends User {
            
             String[] lines = line.split(",");
             String field = lines[3];
-            String id = lines[1];
+            String id = lines[2];
             int scale = Integer.parseInt(lines[5]);
 
             String position = lines[4];
 
             int promotion = Integer.parseInt(lines[6]);
-            if (id.equals(  targetid) ){
+            counter++;
+            if (id.equals(targetid) ){
             if (promotion != 1) {
                 System.out.println("No promotions available");
+                System.out.println();
             } else if (promotion == 1) {
                 System.out.println(
                         "Congratulations you have been selected for promotion");
@@ -294,14 +297,21 @@ public class Employee extends User {
                 if (response.equals("N")) {
                     System.out.println("Promotion has been rejected you will remain as " +
                             position);
+                            System.out.println(employeeID);
                     RejectPromotion(counter);
+                    
                 } else if (response.equals("Y")) {
                     System.out.println(
                             "Congratulations on accepting your new promotion !!!!");
-                    AcceptPromotion(counter, changePosition(position));
+
+                    try{
+                        AcceptPromotion(counter, changePosition(position));
+                    }catch (ArrayIndexOutOfBoundsException e){
+
+                    }
                 }
             }
-            counter++;
+            
         }
     }
     }
@@ -329,10 +339,9 @@ public class Employee extends User {
             String[] lines = line.split(",");
             String field = lines[0];
             String Employee = lines[1];
-            int salary = Integer.parseInt(lines[2]);
+    
             int scale = Integer.parseInt(lines[3]);
-            int promotion = Integer.parseInt(lines[4]);
-            int employeeID = Integer.parseInt(lines[5]);
+            
             scales.add(scale);
             positions.add(Employee);
         }
@@ -371,6 +380,8 @@ public class Employee extends User {
      * @throws IOException
      */
     public void RejectPromotion(int targetRow) throws IOException {
+     
+        targetRow-=1;
         String filePath = "OODPROJ/src/mypackage/employee_database.csv";
         String newValue = "0";
         int targetCol = 6; // Change the promotion id back to 0
@@ -414,6 +425,7 @@ public class Employee extends User {
      */
     public void AcceptPromotion(int targetRow, String newposition)
             throws IOException {
+              targetRow -= 1;
         String filePath = "OODPROJ/src/mypackage/employee_database.csv";
         String newValue = "0";
         int targetCol = 6; // Change the promotion id back to 0
@@ -448,6 +460,8 @@ public class Employee extends User {
                 writer.write(String.join(",", row));
                 writer.write("\n"); // Add a newline after each row
             }
+        }catch (ArrayIndexOutOfBoundsException e){
+
         }
     }
     // myWriter.write(name + "," + id + "," + field + "," + position + "," +

@@ -456,7 +456,7 @@ public class Admin extends User {
    * @return returns the arraylist of randomly generated hours.
    */
   public String occupyCSV() {
-    int startYear =Time.getCurrentDate().getYear();
+    int startYear = 2020;
     int currentYear = LocalDate.now().getYear();
     int currentMonth = LocalDate.now().getMonthValue();
     LocalDate now = LocalDate.now();

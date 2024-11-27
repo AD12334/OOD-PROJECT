@@ -90,6 +90,7 @@ public class HumanResources extends User {
         // to promote An employee can only be promoted if they are at the max scale
         // We need to check if they are at the max scale
         Scanner sc2 = new Scanner(new File("OODPROJ/src/mypackage/employee_database.csv"));
+        ArrayList<String> ids = new ArrayList<>();
         sc2.useDelimiter("\n");
         int rowCounter = 0;
         while (sc2.hasNext()) {
@@ -97,6 +98,7 @@ public class HumanResources extends User {
             line = line.trim();
             String[] lines = line.split(",");
             String id = lines[2];
+            ids.add(id);
             int scale = Integer.parseInt(lines[5]);
             String position = lines[4];
             // String name = lines[0];
@@ -121,6 +123,10 @@ public class HumanResources extends User {
             }
             rowCounter++;
         }
+        if (!ids.contains(DesiredId)){
+            System.out.println("Employee ID is not recognised");
+            displayOptions();
+        }
     }
 
     /**
@@ -133,14 +139,14 @@ public class HumanResources extends User {
         System.out.println("1. View Employee Details");
         System.out.println("2. Promote Employee");
         System.out.println("3. Logout");
-        int command = input.nextInt();
+        String command = input.nextLine();
         switch (command) {
-            case 1:
+            case "1":
                 System.out.println("Employees:");
                 viewEmployeeList();
                 displayOptions();
                 break;
-            case 2:
+            case "2":
                 try {
                     setPromotion();
                 } catch (Exception e) {
@@ -148,12 +154,12 @@ public class HumanResources extends User {
                 }
                 displayOptions();
                 break;
-            case 3:
+            case "3":
                 System.out.println("Logging out");
                 Userbase.Login();
                 // System.exit(0);
             default:
-                System.out.println("Incorrect Input");
+                System.out.println("Please input a valid number");
                 displayOptions();
                 break;
         }
