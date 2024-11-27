@@ -23,7 +23,7 @@ public class Main {
         //ID = 12345
         // HourlyEmployee hourlyEmployee = new HourlyEmployee("WALTER WHITE",
         // "t17316811", "t17316811", 10, "ULAC",
-        // "ASSISTANT INSTRUCTOR",
+        // "ASSISTANT INSTRUCTOR",1
         // 1);
         // hourlyEmployee.submithours("JULY", 2024, "t17316811");
         // Package pkg = Main.class.getPackage();

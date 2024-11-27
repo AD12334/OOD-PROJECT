@@ -283,7 +283,7 @@ public class Admin extends User {
   private String generateEmployeeID() {
     Date now = new Date();
     Long unixTime = now.getTime() / 1000;
-    String id = unixTime.toString().substring(0, 8); // Get the first 8 digits
+    String id = unixTime.toString().substring(unixTime.toString().length() - 9, unixTime.toString().length()); // Get the first 8 digits
     return checkUnique(id);
   }
 
@@ -295,7 +295,7 @@ public class Admin extends User {
           Date now = new Date();
           Long unixTime = now.getTime() / 1000;
           String newId =
-              unixTime.toString().substring(0, 8); // Get the first 8 digits
+              unixTime.toString().substring(unixTime.toString().length() - 9,unixTime.toString().length() ) ; // Get the first 8 digits
           checkUnique(newId);
         }
       }
