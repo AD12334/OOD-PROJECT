@@ -41,6 +41,7 @@ public class BasicPayslip {
      */
     public BasicPayslip(String Employeeid, String Password) throws FileNotFoundException {
         String year_s = "";
+        int year = -1;
         Scanner sc2 = new Scanner(new File("OODPROJ/src/mypackage/employee_database.csv")); // One scanner for reading
                                                                                             // off of our database
         sc2.useDelimiter("\n");
@@ -88,7 +89,14 @@ public class BasicPayslip {
                     System.out.println("Cancelled payslip generation");
                     return;
                 }
-                int year = Integer.parseInt(year_s);
+                try{
+                 year = Integer.parseInt(year_s);
+                }
+                catch (NumberFormatException e) {
+                    // Handle invalid number format
+                    System.out.println("Invalid input. Please enter a valid year.");
+                    return; // Exit the method after invalid input
+                }
 
                 if (Time.getCurrentDate() != null) {
                     while (year > Time.getCurrentDate().getYear()) { // If the employee wants to view a payslip
@@ -174,7 +182,14 @@ public class BasicPayslip {
                     System.out.println("Cancelled payslip generation");
                     return;
                 }
-                int year = Integer.parseInt(year_s);
+                try{
+                    year = Integer.parseInt(year_s);
+                   }
+                   catch (NumberFormatException e) {
+                       // Handle invalid number format
+                       System.out.println("Invalid input. Please enter a valid year.");
+                       return; // Exit the method after invalid input
+                   }
                 int targetyear;
                 if (mypackage.Time.getCurrentDate() == null) {
                     targetyear = LocalDate.now().getYear();
