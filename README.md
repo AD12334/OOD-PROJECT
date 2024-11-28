@@ -17,11 +17,10 @@ CLI tool to sumulate a payroll system for UL employees. It supports three unique
 ### Human Resources
 - View employee list
 - Promote eligable employees
-## Instructions for Use
+## Instructions
 Run in terminal:
 ```
-cd  /path-to-repo/OOD-PROJECT/OODJPROJ/src
-javac mypackage/
-cd../../
+cd  /path-to-repo/OOD-PROJECT/
+javac OODPROJ/src/mypackage/*.java
 java OODPROJ/src/maypackge/Main.java
 ```
