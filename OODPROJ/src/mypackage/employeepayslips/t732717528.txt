@@ -13,4 +13,19 @@ USC: 428
 Total Deductions: 3380
 Net pay: 5610
 Pay method: PayPath
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Date: 24/5/2024
+Name: NATHAN
+PRSI CLASS: A
+Field: ADMINISTRATIVE
+Position: SENIOR ADMINISTRATIVE OFFICER 2
+Scale: 1
+Gross annual pay: 94941
+Gross monthly pay: 659
+PAYE: 2152
+PRSI: 324
+USC: 342
+Total Deductions: 2818
+Net pay: 5094
+Pay method: PayPath
 ----------------------------------------------------------------------------------------

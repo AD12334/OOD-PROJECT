@@ -31,12 +31,12 @@ public class Userbase {
         loadEmployees(); // Reload employees in case of new additions or
                          // modifications
         Scanner sc = new Scanner(System.in);
-        System.out.println("\nPlease enter your username (or \"q\" to quit): ");
+        System.out.print("\nPlease enter your username (or \"q\" to quit): ");
         String username = sc.nextLine();
         if (username.equals("q")) {
             System.exit(0);
         }
-        System.out.println("Please enter your password: ");
+        System.out.print("Please enter your password: ");
         String password = sc.nextLine();
 
         try {
