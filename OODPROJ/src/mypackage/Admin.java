@@ -179,10 +179,10 @@ public class Admin extends User {
       }
 
       // name, username, id (which is also the password), field, role, scale
-      myWriter.write(name + ",t" + id + "," + id + "," + field + "," + role +
+      myWriter.write("\n" + name + ",t" + id + "," + id + "," + field + "," + role +
                      "," + scale + ",0"
                      + ",HOURLY"
-                     + "\n");//Write the new hourly employee details to our employee database
+                     );//Write the new hourly employee details to our employee database
       File file =
           new File("OODPROJ/src/mypackage/employeepayslips/t" + id + ".txt");//Create a new payslips.csv for our new employee
       file.createNewFile();
@@ -257,9 +257,9 @@ public class Admin extends User {
       }
 
       // name, username, id (which is also the password), field, role, scale
-      myWriter.write(name + ",t" + id + "," + id + "," + field + "," + role +
+      myWriter.write("\n" + name + ",t" + id + "," + id + "," + field + "," + role +
                      "," + scale + ",0"
-                     + "\n");
+                    );
       File file =
           new File("OODPROJ/src/mypackage/employeepayslips/t" + id + ".txt");
       file.createNewFile();

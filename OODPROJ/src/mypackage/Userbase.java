@@ -56,7 +56,7 @@ public class Userbase {
                         // throws FileNotFoundException {
                         // super(name, username, employeeID, field, role, scale);
 
-                        emp = new HourlyEmployee(emp.getName(), emp.getUsername(), "t" + emp.getEmployeeID(),
+                        emp = new HourlyEmployee(emp.getName(), emp.getUsername(),  emp.getEmployeeID(),
                                 emp.getSalary(), emp.getField(), emp.getRole(), emp.getScale());
                         emp.displayOptions();
 

@@ -23,9 +23,9 @@ public class HourlyEmployee extends Employee {
             int salary, String field, String role, int scale)
             throws FileNotFoundException {
         super(name, username, employeeID, field, role, scale);
-       // System.out.println(username);
+       
         System.out.println();
-        Scanner sc = new Scanner(new File("OODPROJ/src/mypackage/Hourlyemployeehours/" +
+        Scanner sc = new Scanner(new File("OODPROJ/src/mypackage/Hourlyemployeehours/t" +
                 employeeID + "Hours.csv"));
         sc.useDelimiter(",");
         sc.useDelimiter("\n");
@@ -118,7 +118,7 @@ public class HourlyEmployee extends Employee {
             float[] worked = new float[] { hours1, hours2, hours3, hours4 };
             hours.put(month + "" + year, worked);//Key -> Value
 
-            String filePath = "OODPROJ/src/mypackage/Hourlyemployeehours/" +
+            String filePath = "OODPROJ/src/mypackage/Hourlyemployeehours/t" +
                     employeeid + "Hours.csv";
             String[] workedValues = new String[] { String.valueOf(hours1), String.valueOf(hours2),
                     String.valueOf(hours3), String.valueOf(hours4) };
@@ -167,12 +167,14 @@ public class HourlyEmployee extends Employee {
         } else if (Time.getCurrentDate().isAfter(LocalDate.of(year, monthno, 10)) &&
                 Arrays.equals(hours.get(key),
                         new float[] { 0.0f, 0.0f, 0.0f, 0.0f })) {
+                         
             System.out.println("Unfortunately you have missed the deadline to "
                     + "submit your hours for the given month");
 
         } else if (Time.getCurrentDate().isBefore(LocalDate.of(year, monthno, 10)) &&
                 !Arrays.equals(hours.get(key),
                         new float[] { 0.0f, 0.0f, 0.0f, 0.0f })) {
+                            System.out.println(hours.get(key));
             System.out.println("You have already submitted your hours report for "
                     +
                     "this month would you like to edit these hours Y/N?");
@@ -224,7 +226,7 @@ public class HourlyEmployee extends Employee {
         }catch (NullPointerException e){
             System.out.println("Employee has not submitted hours for this timeframe try again");
             System.out.println();
-            BasicPayslip payslip = new BasicPayslip(getEmployeeID(), getPassword().substring(1,getPassword().length()));
+            BasicPayslip payslip = new BasicPayslip(getEmployeeID(), getPassword());
             
             try {
                 this.displayOptions();
@@ -283,7 +285,7 @@ public class HourlyEmployee extends Employee {
      */
     @Override
     public void displayOptions() throws Exception {
-            System.out.println("Employee Options:");
+            System.out.println("\nEmployee Options for " + getName());
             System.out.println("1. View Personal Details");
             System.out.println("2. View Payslip");
             System.out.println("3. Check for promotion");
@@ -300,16 +302,14 @@ public class HourlyEmployee extends Employee {
                     this.displayOptions();
 
             case 2:
-                String password = getPassword().substring(1, getPassword().length());
-                
-
-                BasicPayslip payslip = new BasicPayslip(getUsername(), password);
+            
+                BasicPayslip payslip = new BasicPayslip(getEmployeeID(), getPassword());
                 this.displayOptions();
                 break;
             case 3:
-            String id =getEmployeeID().substring(1,getEmployeeID().length());
+            
            // System.out.println(id);
-            HandlePromotion(id);
+            HandlePromotion(getEmployeeID());
             this.displayOptions();
 
                 /*System.out.println("Log hour for current month: ");
@@ -505,6 +505,6 @@ public class HourlyEmployee extends Employee {
     public String toString() {
         return "Name: " + getName() + "\nField : " + getField() + "\nEmployee : " + getRole() +
 
-                "\nSalary : " + getSalary() + "\nScale : " + getScale() + "\n";
+                "\nSalary : " + getSalary() + "\nScale : " + getScale() + "\n" +  "ID: "  +   getEmployeeID() + "\n" ;
     }
 }

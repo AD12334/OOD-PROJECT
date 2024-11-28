@@ -40,6 +40,7 @@ public class BasicPayslip {
      * @throws FileNotFoundException
      */
     public BasicPayslip(String Employeeid, String Password) throws FileNotFoundException {
+     System.out.println(Employeeid);
         String year_s = "";
         int year = -1;
         Scanner sc2 = new Scanner(new File("OODPROJ/src/mypackage/employee_database.csv")); // One scanner for reading
@@ -50,7 +51,7 @@ public class BasicPayslip {
 
             line = line.trim();
             String[] lines = line.split(",");
-            String id = lines[1];
+            String id = lines[2];
             String field = lines[3];
             fields.add(field);
             ids.add(id);
@@ -64,7 +65,7 @@ public class BasicPayslip {
 
         }
         if (!ids.contains(Employeeid) || !passwordArrayList.contains(Password)) {
-          // System.out.println("Login not recognised");
+           //System.out.println("Login not recognised");
         } else {
             int index = ids.indexOf(Employeeid); // This corresponds to the row index of our employee id
             int scale = scales.get(index);
@@ -164,6 +165,7 @@ public class BasicPayslip {
                 System.out.println(Employeeid);
                 System.out.println("Fetching payslip for " + month);
                 try {
+                    
                     HourlyPayslip(Employeeid, month, day, year);
                 } catch (IOException e) {
 
@@ -304,11 +306,11 @@ public class BasicPayslip {
 
         while (sc2.hasNext()) {
             String line = sc2.next();
-            FileWriter myWriter = new FileWriter("OODPROJ/src/mypackage/employeepayslips/" + id + ".txt", true);
+            FileWriter myWriter = new FileWriter("OODPROJ/src/mypackage/employeepayslips/t" + id + ".txt", true);
 
             line = line.trim();
             String[] lines = line.split(",");
-            if (lines[1].equals(id)) {
+            if (lines[2].equals(id)) {
                 String name = lines[0];
                 String field = lines[3];
 
@@ -450,11 +452,11 @@ public class BasicPayslip {
 
         while (sc2.hasNext()) {
             String line = sc2.next();
-            FileWriter myWriter = new FileWriter("OODPROJ/src/mypackage/employeepayslips/" + id + ".txt", true);
+            FileWriter myWriter = new FileWriter("OODPROJ/src/mypackage/employeepayslips/t" + id + ".txt", true);
 
             line = line.trim();
             String[] lines = line.split(",");
-            if (lines[1].equals(id)) {
+            if (lines[2].equals(id)) {
                 String name = lines[0];
                 String field = lines[3];
 

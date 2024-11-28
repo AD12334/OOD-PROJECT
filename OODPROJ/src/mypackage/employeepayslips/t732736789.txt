@@ -30,4 +30,20 @@ Gross pay: 0.0
 Total Deductions: 0.0
 Net pay: 0.0
 Pay method: PayPath
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Date: 24/5/2024
+Name: JOEBERT
+Hours Worked: 0.0
+PRSI CLASS: A
+Field: ULAC
+Position: LEAD INSTRUCTOR
+Scale: 1
+Gross hourly pay: 14.12
+PAYE: 0.0
+PRSI: 0.0
+USC: 0.0
+Gross pay: 0.0
+Total Deductions: 0.0
+Net pay: 0.0
+Pay method: PayPath
 ----------------------------------------------------------------------------------------

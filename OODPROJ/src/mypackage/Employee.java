@@ -195,7 +195,7 @@ public class Employee extends User {
      */
     @Override
     public void displayOptions() throws Exception {
-        System.out.println("\nEmployee Options:");
+        System.out.println("\nEmployee Options for " + getName());
         checkDate();
         System.out.println("1. View Personal Details");
         System.out.println("2. View Payslip");
@@ -238,7 +238,7 @@ public class Employee extends User {
      * @throws FileNotFoundException
      */
     public void viewPayslip() throws FileNotFoundException {
-        BasicPayslip payslip = new BasicPayslip(getUsername(), getPassword());//Invokes the basicPayslip constructor
+        BasicPayslip payslip = new BasicPayslip(getEmployeeID(), getPassword());//Invokes the basicPayslip constructor
     }
 
     /**
@@ -306,8 +306,8 @@ public class Employee extends User {
 
                     try{
                         AcceptPromotion(counter, changePosition(position));
-                    }catch (ArrayIndexOutOfBoundsException e){
-
+                    }catch (Exception e){
+                        System.out.println();
                     }
                 }
             }
@@ -426,6 +426,7 @@ public class Employee extends User {
     public void AcceptPromotion(int targetRow, String newposition)
             throws IOException {
               targetRow -= 1;
+              
         String filePath = "OODPROJ/src/mypackage/employee_database.csv";
         String newValue = "0";
         int targetCol = 6; // Change the promotion id back to 0
@@ -443,11 +444,15 @@ public class Employee extends User {
         }
 
         //  Edit the specific cell
-        if (targetRow < csvData.size() &&
-                targetCol < csvData.get(targetRow).length) {
+        if (targetRow < csvData.size() && targetCol < csvData.get(targetRow).length) {
+            try{
             csvData.get(targetRow)[targetCol] = newValue;
             csvData.get(targetRow)[targetCol2] = "1";
             csvData.get(targetRow)[targetCol3] = newposition;
+            }
+            catch (Exception e){
+
+            }
 
         } else {
             System.out.println("Invalid row/column index.");
@@ -456,12 +461,16 @@ public class Employee extends User {
 
         //  Write the updated data back to the CSV
         try (FileWriter writer = new FileWriter(filePath)) {
-            for (String[] row : csvData) {
-                writer.write(String.join(",", row));
-                writer.write("\n"); // Add a newline after each row
+            for (int i = 0 ; i< csvData.size();i++) {
+                writer.write(String.join(",", csvData.get(i)));
+                if (i != csvData.size()-1){
+                    writer.write("\n"); // Add a newline after each row
+                }
+                
+                
             }
-        }catch (ArrayIndexOutOfBoundsException e){
-
+        }catch (Exception e){
+            System.out.println("");
         }
     }
     // myWriter.write(name + "," + id + "," + field + "," + position + "," +

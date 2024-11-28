@@ -114,8 +114,10 @@ public class Time {
             if (previousTime.getDayOfMonth() >= 25) { /// If we are past the 25th then we add months *******
                 previousTime = previousTime.plusMonths(1);
             }
-            while (currentTime.getMonthValue() > previousTime.getMonthValue() ||
-                    currentTime.getYear() > previousTime.getYear()) {//
+            previousTime = previousTime.plusDays(1 - previousTime.getDayOfMonth());
+            while (currentTime.getMonthValue() >= previousTime.getMonthValue() ||
+                    currentTime.getYear() > previousTime.getYear()) {
+                System.out.println(previousTime);
                 months.add(previousTime);
                 previousTime = previousTime.plusMonths(1);
             }
@@ -265,6 +267,7 @@ public class Time {
             throws IOException {
         FileWriter myWriter2 = new FileWriter(
                 "OODPROJ/src/mypackage/Hourlyemployeehours/" + id + "Hours.csv", true);
+                System.out.println(arr);
         for (int i = 0; i < arr.size(); i++) {
             myWriter2.write(arr.get(i).getMonth().toString() + "" +
                     arr.get(i).getYear() + ",0,0,0,0 "
