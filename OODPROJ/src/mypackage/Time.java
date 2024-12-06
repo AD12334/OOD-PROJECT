@@ -15,9 +15,9 @@ import java.util.Scanner;
 public class Time {
     private static Time instance;
     private static LocalDate currentTime;
-    private boolean hasScaled;
+  /*  private boolean hasScaled;
     private String lastentry;
-    private ArrayList<String> userids;
+    private ArrayList<String> userids;*/
 
     // Private constructor to prevent instantiation
     /**
@@ -26,8 +26,7 @@ public class Time {
      */
     private Time() {
         currentTime = LocalDate.now();
-        hasScaled = false;
-        userids = new ArrayList<String>();
+      
     }
 
     // Public method to provide access to the instance
@@ -77,25 +76,7 @@ public class Time {
           }
         }
       }
-      if (ct.getDayOfMonth() == 25) { // If the day of the month is the 25th we must issue new payslips when
-                                      // moving forward in time
-          // iterates through hashmap & checks if they are hourly/full time
-        for (User user : new ArrayList<>(Userbase.getUsersbase().values())) {
-          if (user instanceof Employee fullTime) { // If our user is a full time employee
-            String month = ct.getMonth().toString();
-            String day = ct.getDayOfWeek().toString();
-            try {
-              // Generate a payslip for them based on the new day and time etc.
-             // BasicPayslip payslip = new BasicPayslip(fullTime.getEmployeeID(),
-                     // fullTime.getPassword());
-             // payslip.FullTimePayslip(fullTime.getEmployeeID(), month, day, 
-             // ct.getYear());
-            } catch (Exception e) {
-                System.err.println("could not create payslip");
-            }
-          }
-        }
-      }
+     
     }
 
     /**
@@ -111,9 +92,9 @@ public class Time {
             LocalDate previousTime = currentTime; // The day which we are moving from is the present moment
             currentTime = currentTime.plusDays(length); // The day we are moving to is the present plus x number of days
            
-            if (previousTime.getDayOfMonth() >= 25) { /// If we are past the 25th then we add months *******
+             /// If we are past the 25th then we add months *******
                 previousTime = previousTime.plusMonths(1);
-            }
+            
             previousTime = previousTime.plusDays(1 - previousTime.getDayOfMonth());
             while (currentTime.getMonthValue() >= previousTime.getMonthValue() ||
                     currentTime.getYear() > previousTime.getYear()) {
